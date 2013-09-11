@@ -1,0 +1,178 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+\begin{tabular}{llclcr}
+ \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}\hspace{35pt} \\
+\hline
+\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 6 febbraio 2012}\end{center}
+
+\begin{esercizio}
+\textbf{[7 punti]} Si scriva una classe \texttt{Television.java} che implementa un \emph{televisore},
+sintonizzato su un canale. Tale classe deve avere un costruttore pubblico senza argomenti
+che crea un televisore sintonizzato sul canale numero 1.
+Inoltre deve avere i seguenti metodi pubblici:
+%
+\begin{itemize}
+\item \texttt{getChannel}, che restituisce il numero del canale su cui il televisore
+      \`e sintonizzato;
+\item \texttt{setChannel}, che riceve come argomento il numero intero di un canale
+      e sintonizza il televisore su tale canale;
+\item \texttt{toString}, che restituisce una stringa che descrive il televisore, del
+      tipo:
+\begin{verbatim}
+******************************
+*        canale cinto        *
+******************************
+\end{verbatim}
+      In particolare, il canale 1 si chiama \texttt{rave uno}, il canale 2
+      \texttt{rave due}, il canale 3 \texttt{rave tre}, il canale 4
+      \texttt{tele squatto} e il canale 5 \texttt{tele cinto}. Tutti gli altri
+      canali si chiamano \texttt{canale sconosciuto}. La larghezza della
+      stringa ritornata deve essere la stessa per tutti i nomi dei canali
+      (nell'esempio, 30 caratteri).
+\end{itemize}
+%
+Ogni altro metodo, costruttore o campo deve essere dichiarato \texttt{private}.
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[11 punti]} Si definisca l'interfaccia \texttt{Command.java} che ha un unico metodo, chiamato
+\texttt{execute}, senza argomenti e che ritorna \texttt{void}.
+Si definisca un'implementazione
+\texttt{SetChannelCommand.java} di \texttt{Command.java} il cui metodo \texttt{execute}
+sintonizza un televisore su
+un canale indicato con un numero intero. Entrambe queste informazioni devono in qualche
+modo essere dentro un \texttt{SetChannelCommand}!
+Si definisca un'implementazione
+\texttt{EmptyCommand.java} di \texttt{Command.java} il cui metodo \texttt{execute}
+non fa nulla.
+
+Si definisca quindi una classe \texttt{Controller.java} che implementa un \emph{telecomando}
+di un televisore, con solo 7 pulsanti a disposizione, identificati con $0\ldots 6$.
+Un telecomando si crea con un costruttore
+pubblico con un solo argomento: il televisore a cui il telecomando \`e connesso.
+L'effetto \`e di costruire un telecomando in cui la pressione del tasto
+%
+\begin{enumerate}
+\item[0.] sintonizza il televisore su \texttt{rave uno};
+\item sintonizza il televisore su \texttt{rave due};
+\item sintonizza il televisore su \texttt{rave tre};
+\item sintonizza il televisore sul canale di numero intero successivo a quello attuale;
+\item non fa nulla
+\item non fa nulla
+\item non fa nulla
+\end{enumerate}
+%
+La classe \texttt{Controller.java} deve avere anche i metodi pubblici:
+%
+\begin{itemize}
+\item \texttt{pressKey}, che preme il pulsante il cui numero \`e passato come
+      argomento (tra 0 e 6, non controllate);
+\item \texttt{programKey}, che riceve come argomento il numero intero di un pulsante
+      (tra 0 e 6, non controllate) e un comando, e fa s\`{\i} che da quel momento
+      quel pulsante eseguir\`a quel comando;
+\item \texttt{undo}, che annulla l'effetto dell'ultimo pulsante premuto. Per esempio,
+      se l'ultimo pulsante premuto ha sintonizzato il televisore dal canale 2 al canale 4,
+      questo metodo lo risintonizza sul canale 2. \`E possibile eseguire pi\`u volte di seguito
+      il metodo \texttt{undo}, tornando sempre pi\`u indietro nel tempo fino al canale
+      iniziale su cui era sintonizzato il televisore all'inizio. Il metodo dovr\`a ritornare
+      \texttt{true} se e solo se \`e stato possibile annullare l'ultimo comando, mentre
+      \texttt{false} indicher\`a che non c'\`e pi\`u nessun comando da annullare.
+\end{itemize}
+%
+Ogni altro metodo, costruttore o campo deve essere dichiarato \texttt{private}.
+
+\textbf{Suggerimento}: per l'\texttt{undo} pu\`o essere utile gestire uno stack. A tal fine
+usate gli stack gi\`a disponibili in Java: \texttt{java.util.Stack<E>} con un costruttore
+senza argomenti e metodi
+%
+\begin{itemize}
+\item \texttt{void push(E element)}
+\item \texttt{E pop()}
+\end{itemize}
+%
+\end{esercizio}
+%
+\begin{esercizio}
+%
+\textbf{[4 punti]} Si scriva una classe \texttt{Test.java} con un metodo \texttt{main} che effettua le seguenti
+operazioni in sequenza:
+%
+\begin{enumerate}
+\item crea un televisore e lo stampa
+\item lo sincronizza sul canale 4 e lo stampa
+\item crea un telecomando per quel televisore
+\item preme il tasto 3 del telecomando e stampa il televisore
+\item preme il tasto 6 del telecomando e stampa il televisore
+\item preme il tasto 0 del telecomando e stampa il televisore
+\item riprogramma il tasto 6 del telecomando in modo che sintonizzi il televisore
+      sul canale di numero precedente a quello attuale
+\item preme il tasto 6 del telecomando e stampa il televisore
+\item esegue l'\texttt{undo} finch\'e c'\`e qualche pressione di tasto da annullare, stampando
+      ogni volta il televisore.
+\end{enumerate}
+%
+L'effetto del \texttt{main} dovrebbe essere di stampare qualcosa del tipo:
+%
+{\small\begin{verbatim}
+******************************
+*          rave uno          *
+******************************
+******************************
+*       canale squatto       *
+******************************
+premo il tasto 3
+******************************
+*        canale cinto        *
+******************************
+premo il tasto 6
+******************************
+*        canale cinto        *
+******************************
+premo il tasto 0
+******************************
+*          rave uno          *
+******************************
+riprogrammo il tasto 6
+premo il tasto 6
+******************************
+*     canale sconosciuto     *
+******************************
+undo
+******************************
+*          rave uno          *
+******************************
+undo
+******************************
+*        canale cinto        *
+******************************
+undo
+******************************
+*        canale cinto        *
+******************************
+undo
+******************************
+*       canale squatto       *
+******************************
+\end{verbatim}}
+%
+\end{esercizio}
+%
+\end{document}

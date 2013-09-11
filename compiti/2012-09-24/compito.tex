@@ -1,0 +1,152 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     245.0mm
+\topmargin      -22.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 24 settembre 2012}\end{center}
+
+Si consideri la seguente classe, che rappresenta una sequenza di numeri interi, stampabile e su su cui \`e
+possibile iterare:
+
+{\small
+\begin{verbatim}
+public abstract class Numbers implements Iterable<Integer> {
+  
+  @Override
+  public final String toString() {
+    String result = "";
+
+    for (Integer i: this)
+      result += i + " ";
+
+    return result;
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+Una sua estensione, che rappresenta la sequenza infinita di numeri interi
+da una costante \texttt{start} in su, \`e:
+
+{\small
+\begin{verbatim}
+import java.util.Iterator;
+
+// i numeri interi da una costante in poi
+public class From extends Numbers {
+
+  private final int start;
+
+  public From(int start) {
+    this.start = start;
+  }
+
+  @Override
+  public Iterator<Integer> iterator() {
+    return new Iterator<Integer>() {
+
+      private int next = start;
+
+      @Override
+      public boolean hasNext() {
+        return true;
+      }
+
+      @Override
+      public Integer next() {
+        return next++;
+      }
+
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+      
+    };
+  }
+
+}
+\end{verbatim}
+}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+Si implementi una sottoclasse \texttt{UpTo} di \texttt{Numbers} con un costruttore
+\texttt{UpTo(int max, Numbers base)}. Essa deve rappresentare la sequenza di numeri interi
+di \texttt{base} fino al primo che supera \texttt{max}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[8 punti]}
+Si implementi una sottoclasse \texttt{Concat} di \texttt{Numbers} con un costruttore
+\texttt{Concat(Numbers first, Numbers second)}. Essa deve rappresentare la sequenza di
+numeri interi \texttt{first} seguita dalla sequenza di numeri interi \texttt{second}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[8 punti]}
+Si implementi una sottoclasse \texttt{Alternate} di \texttt{Numbers} con un costruttore
+\texttt{Alternate(Numbers first, Numbers second)}. Essa deve rappresentare la sequenza di
+numeri interi presi alternativamente da \texttt{first}
+e da \texttt{second} (uno da \texttt{first}, uno da \texttt{second}, uno da \texttt{first},
+uno da \texttt{second}, ecc.). Se una delle due sequenza finisce prima
+dell'altra, si continua con gli elementi della sequenza pi\`u lunga.
+\end{esercizio}
+
+\mbox{}\\
+\mbox{}\\
+
+Se tutto \`e corretto, l'esecuzione del seguente programma:
+
+{\small
+\begin{verbatim}
+public class Main {
+
+  public static void main(String[] args) {
+    Numbers from8To25 = new UpTo(25, new From(8));
+    System.out.println(from8To25);
+    Numbers from100To120 = new UpTo(120, new From(100));
+    System.out.println(from100To120);
+    Numbers concat = new Concat(from8To25, from100To120);
+    System.out.println(concat);
+    Numbers alternate = new Alternate(from8To25, from100To120);
+    System.out.println(alternate);
+    System.out.println(new UpTo(100, alternate));
+  }
+
+}
+\end{verbatim}
+}
+
+\noindent
+stamper\`a:
+
+{\scriptsize
+\begin{verbatim}
+8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+8 100 9 101 10 102 11 103 12 104 13 105 14 106 15 107 16 108 17 109 18 110 19 111 20 112 21 113 22 114 23 115 24 116 25 117 118 119 120 
+8 100 9 
+\end{verbatim}
+}
+
+\end{document}

@@ -1,0 +1,148 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     245.0mm
+\topmargin      -22.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 3 settembre 2012}\end{center}
+
+Si considerino le seguenti interfacce:
+
+{\small
+\begin{verbatim}
+public interface Set extends Iterable<Object> {
+  boolean contains(Object element);
+  boolean intersects(Set other);
+  int size();
+}
+
+public interface ModifiableSet extends Set {
+  boolean add(Object element);
+  boolean remove(Object element);
+  boolean addAll(Set set);
+  boolean removeAll(Set set);
+}
+\end{verbatim}
+}
+
+\noindent
+La prima specifica l'interfaccia di un insieme senza metodi di modifica, mentre la seconda
+quella di un insieme con metodi di modifica.
+
+\begin{esercizio}
+\textbf{[11 punti]}
+
+Si scriva una classe \texttt{ArraySet} che implementa \texttt{Set}, utilizza un array per contenere
+i suoi elementi e implementa i seguenti costruttori e metodi:
+
+{\small
+\begin{verbatim}
+public ArraySet(Object... elements)
+protected Object[] getElements()
+protected void setElements(Object[] elements)
+public boolean contains(Object element)
+public boolean intersects(Set other)
+public int size()
+public Iterator<Object> iterator()
+public boolean equals(Object other)
+public int hashCode()
+\end{verbatim}
+}
+
+\noindent
+Si noti che il costruttore costruisce un insieme non modificabile che contiene gli elementi forniti.
+I metodi \texttt{getElements} e \texttt{setElements} forniscono accesso in lettura e scrittura
+agli elementi contenuti nell'insieme.
+Il metodo \texttt{contains} determina se un elemento \`e contenuto nell'insieme.
+Il metodo \texttt{intersects} determina se \texttt{this} interseca \texttt{other}.
+Il metodo \texttt{size} restituisce il numero di elementi contenuti nell'insieme.
+Il metodo \texttt{iterator} restituisce un iteratore sugli elementi dell'insieme. Il metodo
+\texttt{equals} determina se \texttt{this} e \texttt{other} sono due \texttt{Set} che contengono gli stessi
+elementi, in qualsiasi ordine. Il metodo \texttt{hashCode} deve essere non banale e consistente con \texttt{equals}.
+
+L'uguaglianza fra gli elementi degli insiemi deve essere determinata dal metodo \texttt{equals} di tali elementi,
+non da \texttt{==}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[11 punti]}
+Si scriva una classe \texttt{ModifiableArraySet} che implementa \texttt{ModifiableSet} ed estende
+\texttt{ArraySet}. Oltre ai metodi di \texttt{ArraySet}, deve implementare quindi anche i metodi
+e costruttori:
+
+{\small
+\begin{verbatim}
+public ModifiableArraySet()
+public ModifiableArraySet(Object... elements)
+public ModifiableArraySet(Set father)
+public boolean add(Object element)
+public boolean remove(Object element)
+public boolean addAll(Set set)
+public boolean removeAll(Set set)
+\end{verbatim}}
+
+\noindent
+Si noti che il costruttore senza argomenti costruisce un insieme inizialmente vuoto.
+Il costruttore che riceve come argomento
+un altro insieme \texttt{father} costruisce un insieme modificabile
+che contiene inizialmente gli stessi elementi di \texttt{father}.
+Le funzioni che aggiungono o rimuovono uno o pi\`u elementi restituiscono \texttt{true} se e solo se
+viene effettivamente aggiunto o rimosso un elemento. Per esempio, se si aggiunge un elemento a un insieme
+che gi\`a lo contiene, \texttt{add} deve restituire \texttt{false}; se si rimuove un elemento da un
+insieme che non lo contiene, \texttt{remove} deve restituire \texttt{false}.
+\end{esercizio}
+
+\pagebreak
+Se tutto \`e corretto, l'esecuzione del seguente programma:
+
+{\small
+\begin{verbatim}
+public class Main {
+
+  public static void main(String[] args) {
+    Set s1 = new ArraySet("ciao", "amico", "come", "va?");
+    Set s2 = new ModifiableArraySet("oggi", "va?", 12, 113);
+
+    System.out.println("1: " + s1.equals(s2));
+    System.out.println("2: " + s1.intersects(s2));
+
+    ModifiableSet s3 = new ModifiableArraySet("amico", "va?", "ciao", "va?");
+    s3.add("come");
+    s3.add(new String("ciao"));
+
+    System.out.println("3: " + s1.equals(s3));
+    System.out.println("4: " + s1.intersects(s3));
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+dovr\`a stampare:
+
+{\small
+\begin{verbatim}
+1: false
+2: true
+3: true
+4: true
+\end{verbatim}
+}
+
+\end{document}

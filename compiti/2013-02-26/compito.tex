@@ -1,0 +1,188 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 26 febbraio 2013 (2 ore)}\end{center}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+Si completi la seguente classe \texttt{Time} che rappresenta un istante temporale.
+Due istanti temporali devono essere \texttt{equals} se rappresentano lo stesso momento,
+esattamente. Il metodo \texttt{hashCode} deve essere non banale. Il metodo
+\texttt{compareTo} deve esprimere l'ordinamento cronologico fra istanti temporali.
+Il metodo \texttt{toString} deve restituire una stringa del tipo
+\textit{yy/mm/dd, hh:mm}, ad esempio \texttt{14/2/2013, 21:00}.
+%
+{\small
+\begin{verbatim}
+public class Time implements Comparable<Time> {
+
+  public Time(int year, int month, int day, int hour, int minute) { .... }
+
+  @Override
+  public String toString() { .... }
+
+  @Override
+  public boolean equals(Object other) { .... }
+
+  @Override
+  public int hashCode() { .... }
+
+  @Override
+  public int compareTo(Time other) { .... }
+}
+\end{verbatim}
+}
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+Si completi la seguente classe, che implementa un evento che comincia
+a un certo istante temporale e ha un nome che lo descrive:
+%
+{\small
+\begin{verbatim}
+public abstract class Event implements Comparable<Event> {
+
+  protected Event(Time startingTime, String name) { .... }
+
+  public abstract void delete();
+
+  @Override
+  public final String toString() { .... }
+
+  @Override
+  public final int compareTo(Event other) { .... }
+
+  @Override
+  public final boolean equals(Object other) { .... }
+
+  @Override
+  public final int hashCode() { .... }
+}
+\end{verbatim}}
+
+\noindent
+Il metodo \texttt{toString} restituisce una stringa che fornisce il
+nome dell'evento e il momento di inizio, del tipo
+\texttt{uscire con la fidanzata @ 14/2/2013, 21:00}.
+Due eventi sono \texttt{equals} se hanno stesso nome e stesso
+momento di inizio. Il metodo \texttt{hashCode} deve
+essere non banale. Il metodo \texttt{compareTo} deve ordinare
+gli eventi per momento di inizio; a parit\`a di momento
+di inizio, li deve ordinare in ordine alfabetico per nome.
+\textbf{Suggerimento: } \texttt{String} implementa
+\texttt{java.lang.Comparable<String>}.
+
+Il metodo \texttt{delete} \`e astratto e dovr\`a quindi essere
+implementato nelle sottoclassi concrete di \texttt{Event}.
+Il suo effetto sar\`a di cancellare l'evento, eliminandolo
+dal calendario a cui appartiene.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[10 punti]}
+Si definisca una classe \texttt{Calendar} che implementa una collezione di eventi
+temporali (un calendario quindi). Deve fornire:
+%
+\begin{itemize}
+\item un costruttore vuoto, che costruisce un calendario inizialmente privo di eventi;
+\item un metodo \texttt{addEvent(Time startingTime, String name)} che prende nota
+      che al momento indicato inizia un evento dal nome indicato;
+\item un metodo \texttt{toString} che restituisce una stringa che enumera gli
+      eventi in calendario, su righe successive.
+\end{itemize}
+%
+La classe \texttt{Calendar} deve essere iterabile (\texttt{java.lang.Iterable}), nel senso che
+iterando su un calendario si ottengono gli eventi (classe \texttt{Event})
+in calendario, in ordine
+cronologico (dal pi\`u vecchio al pi\`u nuovo). Quindi avr\`a un altro
+metodo pubblico oltre a quelli enumerati sopra.
+
+\textbf{Suggerimento: } la classe iterabile di libreria
+\texttt{java.util.TreeSet<C>} realizza un insieme
+ordinato purch\'e \texttt{C} implementi \texttt{java.lang.Comparable<C>}.
+L'ordinamento avviene rispetto al metodo \texttt{compareTo} degli elementi
+dell'insieme. Gli elementi vengono aggiunti con il metodo
+\texttt{add(C elemento)} (se l'elemento c'\`e gi\`a, non fa nulla)
+e rimossi con il metodo
+\texttt{remove(C elemento)} (se l'elemento non c'\`e, non fa nulla).
+\end{esercizio}
+
+\vspace*{3ex}
+\hrule
+\vspace*{3ex}
+Se tutto \`e corretto, il seguente programma:
+%
+{\small
+\begin{verbatim}
+import java.util.HashSet;
+import java.util.Set;
+
+public class Main {
+
+  public static void main(String[] args) {
+    Calendar cal = new Calendar();
+    cal.addEvent(new Time(2013, 2, 14, 21, 00), "uscire con la fidanzata");
+    cal.addEvent(new Time(2013, 2, 26, 12, 45), "andare in mensa");
+    cal.addEvent(new Time(2013, 2, 27, 9, 10), "andare a sciare");
+    cal.addEvent(new Time(2013, 2, 26, 10, 00), "esame di Programmazione II");
+    cal.addEvent(new Time(2013, 2, 26, 12, 45), "chiamare la mamma");
+    cal.addEvent(new Time(2013, 3, 4, 8, 30), "ricominciare ad andare a lezione");
+
+    System.out.println(cal);
+
+    // ok, la fidanzata e' andata a sciare con qualcun altro:
+    // collezioniamo tutti gli eventi che riguardano sciare o che hanno
+    // a che fare con la ex-fidanzata....
+    Set<Event> deleteThese = new HashSet<Event>();
+    for (Event e: cal)
+      if (e.toString().contains("sciare") || e.toString().contains("fidanzata"))
+        deleteThese.add(e);
+
+    // ....e rimuoviamoli!
+    for (Event e: deleteThese)
+      e.delete();
+
+    System.out.println(cal);
+  }
+}
+\end{verbatim}}
+
+\noindent
+stamper\`a:
+%
+{\small
+\begin{verbatim}
+uscire con la fidanzata @ 14/2/2013, 21:00
+esame di Programmazione II @ 26/2/2013, 10:00
+andare in mensa @ 26/2/2013, 12:45
+chiamare la mamma @ 26/2/2013, 12:45
+andare a sciare @ 27/2/2013, 9:10
+ricominciare ad andare a lezione @ 4/3/2013, 8:30
+
+esame di Programmazione II @ 26/2/2013, 10:00
+andare in mensa @ 26/2/2013, 12:45
+chiamare la mamma @ 26/2/2013, 12:45
+ricominciare ad andare a lezione @ 4/3/2013, 8:30
+\end{verbatim}}
+%
+\end{document}

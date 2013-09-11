@@ -1,0 +1,206 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 24 giugno 2013 (2 ore)}\end{center}
+
+Le note musicali sono normalmente divise in 12 \emph{semitoni}, come nella seguente tabella:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+  semitono & nome italiano & nome inglese \\\hline
+  0 & do & C \\
+  1 & do\# & C\#\\
+  2 & re & D\\
+  3 & re\# & D\#\\
+  4 & mi & E \\
+  5 & fa & F \\
+  6 & fa\# & F\# \\
+  7 & sol & G \\
+  8 & sol\# & G\# \\
+  9 & la & A \\
+  10 & la\# & A\# \\
+  11 & si & B
+\end{tabular}
+\end{center}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Si completi la seguente classe che rappresenta una nota musicale:
+%
+{\small
+\begin{verbatim}
+public abstract class Nota {
+  protected Nota(int semitono) { ... }
+
+  @Override
+  public abstract String toString();
+
+  public abstract Nota incrementa(int inc);
+
+  protected final int getSemitono() { ... }
+}
+\end{verbatim}
+}
+
+\noindent
+dove \texttt{getSemitono()} restituisce il semitono della nota, che era stato passato al costruttore.
+Il metodo \texttt{incrementa()}, che deve essere implemetato nelle sottoclassi concrete,
+restituisce una nota ottenuta aumentando il semitono della nota di \texttt{inc} semitoni. Si noti
+che la scala \`e circolare per cui, dopo il \emph{si}, si ritorna sul \emph{do}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[4 punti]}
+Si scrivano le sottoclassi concrete \texttt{NotaIT} e \texttt{NotaUK} di \texttt{Nota} che si differenziano
+per il metodo \texttt{toString()}, che restituisce una rappresentazione della nota usando, rispettivamente,
+la notazione italiana e quella inglese.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[4 punti]}
+Si consideri l'interfaccia:
+%
+{\small
+\begin{verbatim}
+public interface Canzone extends Iterable<Nota> {
+  public String getNome();
+}
+\end{verbatim}
+}
+
+\noindent
+che implementa una canzone. Il metodo \texttt{getNome()} restituisce il nome delle canzone.
+Iterando su una canzone si deve iterare sulle sue note.
+
+Si implementi quindi una sottoclasse astratta di \texttt{Canzone}:
+%
+{\small
+\begin{verbatim}
+public abstract class AbstractCanzone implements Canzone {
+
+  @Override
+  public final String toString() { ... }
+}
+\end{verbatim}
+}
+
+\noindent
+completando il metodo \texttt{toString()} in modo che restituisca il nome della canzone
+e il nome delle note usate nella canzone, nel loro ordine di iterazione.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si completi la seguente classe concreta:
+%
+{\small
+\begin{verbatim}
+public class CanzoneImpl extends AbstractCanzone {
+  public CanzoneImpl(String nome, Nota... note) { ... }
+
+  @Override
+  public String getNome() { ... }
+
+  @Override
+  public Iterator<Nota> iterator() { ... }
+}
+\end{verbatim}
+}
+
+\noindent
+in modo che al costruttore vengano passati il nome della canzone e la sequenza di note che
+la compongono. Se si itera su questa canzone, saranno quelle le note che verranno ottenute dall'iterazione.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[7 punti]}
+Si completi la seguente classe concreta:
+%
+{\small
+\begin{verbatim}
+public class CanzoneRibasata extends AbstractCanzone {
+  public CanzoneRibasata(Canzone base, int inc) { ... }
+
+  @Override
+  public Iterator<Nota> iterator() { ... }
+
+  @Override
+  public String getNome() { ... }
+}
+\end{verbatim}
+}
+
+\noindent
+che definisce una canzone identica a \texttt{base} ma le cui note sono spostate di \texttt{inc} semitoni
+rispetto a quelle di \texttt{base}.
+\end{esercizio}
+
+\vspace*{3ex}
+\hrule
+\vspace*{3ex}
+Se tutto \`e corretto, il seguente programma:
+%
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Canzone boccaDiRosa = new CanzoneImpl
+      ("Bocca di Rosa", new NotaIT(11), new NotaIT(2), new NotaIT(3), new NotaIT(6));
+    Canzone letItBe = new CanzoneImpl("Let it be", new NotaUK(3), new NotaUK(5), new NotaUK(0));
+
+    System.out.println(boccaDiRosa);
+    System.out.println(letItBe);
+    System.out.println(new CanzoneRibasata(boccaDiRosa, 5));
+    System.out.println(new CanzoneRibasata(letItBe, 23));
+  }
+}
+\end{verbatim}}
+
+\noindent
+stamper\`a:
+%
+{\small
+\begin{verbatim}
+Bocca di Rosa:
+si
+re
+re#
+fa#
+
+Let it be:
+D#
+F
+C
+
+Bocca di Rosa:
+mi
+sol
+sol#
+si
+
+Let it be:
+D
+E
+B
+\end{verbatim}}
+%
+\end{document}

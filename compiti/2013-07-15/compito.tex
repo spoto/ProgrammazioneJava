@@ -1,0 +1,202 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%\`
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 15 luglio 2013 (2 ore)}\end{center}
+
+Un foglio elettronico \`e una tabella bidimensionale di celle. Dentro le celle \`e posizionata
+un'espressione, il cui valore \`e visualizzato dentro la cella. L'espressione di
+una cella pu\`o essere una costante numerica intera, una stringa, un'operazione aritmetica fra
+due altre espressioni, la concatenazione fra due altre espressioni o un riferimento a una cella.
+Per esempio, il seguente programma costruisce un foglio eletronico, popola alcune sue celle con
+espressioni e infine lo stampa:
+
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Sheet sheet = new Sheet(5, 6);
+    sheet.setCell(1, 0, new NumericConstant(13));
+    sheet.setCell(2, 0, new NumericConstant(-45));
+    sheet.setCell(1, 1, new NumericConstant(11));
+    sheet.setCell(2, 1, new NumericConstant(23));
+    sheet.setCell(1, 2, new NumericConstant(1));
+    sheet.setCell(2, 2, new NumericConstant(4));
+    sheet.setCell(0, 3, new StringExp("totale:"));
+    sheet.setCell(1, 3, new Add(sheet.getCell(1, 0), new Add(sheet.getCell(1, 1), sheet.getCell(1, 2))));
+    sheet.setCell(2, 3, new Add(sheet.getCell(2, 0), new Add(sheet.getCell(2, 1), sheet.getCell(2, 2))));
+    sheet.setCell(1, 4, new Div(sheet.getCell(2, 3), new NumericConstant(0)));
+    sheet.setCell(2, 4, new Append(sheet.getCell(2, 3), sheet.getCell(1, 4)));
+    sheet.setCell(3, 4, new Append(sheet.getCell(2, 3), sheet.getCell(0, 3)));
+    sheet.setCell(3, 5, new Add(sheet.getCell(0, 1), sheet.getCell(3, 4)));
+    //sheet.setCell(1, 0, sheet.getCell(1, 3));
+    System.out.println(sheet);
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+ottenendo a video:
+
+{\scriptsize
+\begin{verbatim}
+|          |        13|       -45|          |          |
+|          |        11|        23|          |          |
+|          |         1|         4|          |          |
+|   totale:|        25|       -18|          |          |
+|          |       ###|       ###|-18 totale|          |
+|          |          |          |       ###|          |
+\end{verbatim}
+}
+
+\noindent
+dove \texttt{\#\#\#} indica un errore di valutazione.
+Se si decommenta il penultimo comando del \texttt{main}, si crea un ciclo nel foglio elettronico
+e la sua stampa risulta differente:
+
+{\scriptsize
+\begin{verbatim}
+|          |       @@@|       -45|          |          |
+|          |        11|        23|          |          |
+|          |         1|         4|          |          |
+|   totale:|       @@@|       -18|          |          |
+|          |       ###|       ###|-18 totale|          |
+|          |          |          |       ###|          |
+\end{verbatim}
+}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Si definisca l'eccezione \texttt{EvaluationException} che estende \texttt{java.lang.RuntimeException}
+ed indica che la valutazione di un'espressione \`e fallita per un errore di tipo o una divisione per zero.
+Si definisca la sua sottoclasse \texttt{CyclicEvaluationException} che indica che la valutazione di un'espressione
+\`e finita in un ciclo.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la seguente classe, che implementa un'espressione posta in una cella:
+
+{\small
+\begin{verbatim}
+public abstract class Exp {
+  public abstract int getNumericValue() throws EvaluationException;
+  public abstract int String getStringValue() throws EvaluationException;
+  @Override public final String toString() { ... }
+}
+\end{verbatim}
+}
+
+\noindent
+Il metodo \texttt{getNumericValue()} restituisce il valore dell'espressione se tale valore 
+\`e numerico; lancia un'eccezione fra quelle dell'esercizio 1 altrimenti. Il metodo
+\texttt{getStringValue()} restituisce il valore dell'espressione visto come stringa; questo \`e
+possibile sempre, anche se l'espressione ha un valore intero, poich\'e un intero pu\`o essere convertito
+nella stringa corrispondente. Il metodo \texttt{toString()} si comporta come un sinonimo di
+\texttt{getStringValue()} ma non lancia eccezioni. Infatti, se la valutazione d\`a un errore, deve restituire
+\texttt{\#\#\#} oppure \texttt{@@@}, a secondo della classe dell'eccezione.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[8 punti]}
+Si completino le seguenti sottoclassi concrete di \texttt{Exp}, implementando quindi i suoi metodi
+astratti. Non ci si preoccupi per ora di controllare se la valutazione di un'espressione
+finisce in un ciclo.
+%
+{\small
+\begin{verbatim}
+public class NumericConstant extends Exp {  // costante numerica
+  public NumericConstant(int value) { ... }
+  {...}
+}
+
+public class StringConstant extends Exp {  // costante stringa
+  public StringConstant(String value) { ... }
+  {...}
+}
+
+public class Add extends Exp {  // addizione di due espressioni
+  public Add(Exp left, Exp right) { ... }
+  {...}
+}
+
+public class Div extends Exp {  // divisione fra due espressioni
+  public Div(Exp left, Exp right) { ... }
+  { ... attenzione al caso in cui il valore numerico di right e' zero! }
+}
+
+public class Append extends Exp {  // concatenazione fra due espressioni viste come stringa
+  public Append(Exp left, Exp right) { ... }
+  { ... }
+}
+
+public final class Cell extends Exp {  // un riferimento a una cella
+  private Exp exp;
+  protected Cell() { this.exp = new StringConstant(""); } // una cella nasce vuota
+  public void setExp(Exp exp) { this.exp = exp; }
+  { ... }
+}
+
+\end{verbatim}
+}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la classe che implementa il foglio elettronico vero e proprio:
+
+{\small
+\begin{verbatim}
+public class Sheet {
+  private final Cell[][] cells;
+  public Sheet(int width, int height) { ... inizializza cells a celle vuote }
+  public void setCell(int x, int y, Exp exp) { ... setta exp come espressione della cella in x,y }
+  public Cell getCell(int x, int y) { ... ritorna la cella in x,y }
+  @Override public String toString() {
+    String result = "";
+    for (int y = 0; y < cells[0].length; y++) {
+      result += "|";
+      for (int x = 0; x < cells.length; x++) {
+        String content = cells[x][y].toString();
+        if (content.length() > 10) content = content.substring(0, 10);
+        result += String.format("%10s|", content);
+      }
+      result += "\n";
+    }
+    return result;
+  }
+}
+\end{verbatim}
+}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+Si modifichino la classe \texttt{Exp} e le sue sottoclassi concrete in modo da fare lanciare
+una \texttt{CyclicEvaluationException} ai metodi \texttt{getNumericValue()} e
+\texttt{getStringValue()} quando la valutazione finisce in un ciclo e quindi non pu\`o terminare.
+\end{esercizio}
+
+\end{document}

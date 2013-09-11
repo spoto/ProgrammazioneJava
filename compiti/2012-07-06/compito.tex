@@ -1,0 +1,199 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     245.0mm
+\topmargin      -22.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 6 luglio 2012}\end{center}
+
+Si consideri il seguente programma:
+%
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) throws DuplicatedSampleException, InconsistentSampleSizeException {
+    Sample s1 = new Sample("Cars", new float[] { 187.2f, 201.4f, 88.2f, 75.8f, 156.1f } );
+    Sample s2 = new Sample("Bikes", new float[] { 91.3f, 98.7f, 111.3f, 120.4f, 100.2f } );		
+    Sample s3 = new Sample("Motorbikes", new float[] { 122.3f, 118.7f, 144.0f, 125.4f, 88.9f } );		
+    Sample s4 = new Sample("Skateboards", new float[] { 21.3f, 6.3f, 44.0f, 24.3f, 18.9f } );		
+    Plot p1 = new SequentialPlot();
+    p1.add(s1); p1.add(s2); p1.add(s3); p1.add(s4);
+
+    Sample s5 = new Sample("Cars", new float[] { 187.2f, 201.4f, 88.2f, 75.8f, 156.1f } );
+    Sample s6 = new Sample("Bikes", new float[] { 91.3f, 98.7f, 111.3f, 120.4f, 100.2f } );		
+    Sample s7 = new Sample("Motorbikes", new float[] { 122.3f, 118.7f, 144.0f, 125.4f, 88.9f } );		
+    Plot p2 = new AlternatePlot();
+    p2.add(s5); p2.add(s6); p2.add(s7); p2.add(s4);
+
+    System.out.println(p1); System.out.println(p2); System.out.println(p1.equals(p2));
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+che stampa:
+%
+{\scriptsize
+\begin{verbatim}
+Cars:
+| ************************************* (187.2)
+| **************************************** (201.4)
+| ***************** (88.2)
+| *************** (75.8)
+| ******************************* (156.1)
+
+Motorbikes:
+| @@@@@@@@@@@@@@@@@@@@@@@@ (122.3)
+| @@@@@@@@@@@@@@@@@@@@@@@ (118.7)
+| @@@@@@@@@@@@@@@@@@@@@@@@@@@@ (144.0)
+| @@@@@@@@@@@@@@@@@@@@@@@@ (125.4)
+| @@@@@@@@@@@@@@@@@ (88.9)
+
+Bikes:
+| $$$$$$$$$$$$$$$$$$ (91.3)
+| $$$$$$$$$$$$$$$$$$$ (98.7)
+| $$$$$$$$$$$$$$$$$$$$$$ (111.3)
+| $$$$$$$$$$$$$$$$$$$$$$$ (120.4)
+| $$$$$$$$$$$$$$$$$$$ (100.2)
+
+Skateboards:
+| **** (21.3)
+| * (6.3)
+| ******** (44.0)
+| **** (24.3)
+| *** (18.9)
+
+
+Cars            | ************************************* (187.2)
+Motorbikes      | @@@@@@@@@@@@@@@@@@@@@@@@ (122.3)
+Bikes           | $$$$$$$$$$$$$$$$$$ (91.3)
+Skateboards     | **** (21.3)
+
+Cars            | **************************************** (201.4)
+Motorbikes      | @@@@@@@@@@@@@@@@@@@@@@@ (118.7)
+Bikes           | $$$$$$$$$$$$$$$$$$$ (98.7)
+Skateboards     | * (6.3)
+
+Cars            | ***************** (88.2)
+Motorbikes      | @@@@@@@@@@@@@@@@@@@@@@@@@@@@ (144.0)
+Bikes           | $$$$$$$$$$$$$$$$$$$$$$ (111.3)
+Skateboards     | ******** (44.0)
+
+Cars            | *************** (75.8)
+Motorbikes      | @@@@@@@@@@@@@@@@@@@@@@@@ (125.4)
+Bikes           | $$$$$$$$$$$$$$$$$$$$$$$ (120.4)
+Skateboards     | **** (24.3)
+
+Cars            | ******************************* (156.1)
+Motorbikes      | @@@@@@@@@@@@@@@@@ (88.9)
+Bikes           | $$$$$$$$$$$$$$$$$$$ (100.2)
+Skateboards     | *** (18.9)
+
+
+true
+\end{verbatim}
+}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Una \texttt{Sample} \`e una sequenza di valori con un nome associato. Si completi la sua classe:
+
+{\small
+\begin{verbatim}
+public class Sample {
+  private final String name;
+  private final float[] values;
+
+  public Sample(String name, float[] values) {
+    this.name = name;
+    this.values = values;
+    ....
+  }
+
+  public String getName() { return name; }
+  public int getSize() { return values.length; }
+  public float getValue(int pos) { return values[pos]; }
+  public boolean equals(Object other) ....
+  public int hashCode() ....
+}
+\end{verbatim}}
+
+\noindent
+in modo che \texttt{equals} consideri uguali due \texttt{Sample} se e solo se hanno stesso nome e stesso
+numero di valori nello stesso ordine. \texttt{hashCode} deve essere consistente con \texttt{equals} e non banale
+(cio\`e non deve ritornare sempre la stessa costante). Il costruttore deve lanciare una
+\texttt{java.lang.IllegalArgumentException} se un valore \`e negativo.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[7 punti]}
+Un \texttt{Plot} \`e un insieme di \texttt{Sample} con nomi diversi. \`E possibile
+aggiungere una \texttt{Sample} a un \texttt{Plot} ed \`e possibile aggiungere a un \texttt{Plot} tutte le
+\texttt{Sample} di un altro \texttt{Plot}. Si completi la sua classe:
+
+{\small
+\begin{verbatim}
+import java.util.HashSet;
+import java.util.Set;
+
+public abstract class Plot {
+  private final Set<Sample> samples = new HashSet<Sample>();
+
+  public final void add(Sample sample) throws DuplicatedSampleException, InconsistentSampleSizeExceptio....
+  public final void add(Plot plot) throws DuplicatedSampleException, InconsistentSampleSizeException....
+
+  public final float getMax() {  // il massimo valore fra tutte le sample
+    float max = 0f;
+    for (Sample sample: samples)
+      for (int pos = 0; pos < sample.getSize(); pos++)
+        max = Math.max(max, sample.getValue(pos));
+    return max;
+  }
+
+  public final boolean equals(Object other) ....
+  public final int hashCode() ....
+  protected final Set<Sample> getSamples() { return samples; }
+  public abstract String toString();
+}
+\end{verbatim}}
+
+\noindent
+I metodi \texttt{add} devono lanciare una \texttt{DuplicatedSampleException} se si prova ad aggiungere
+una \texttt{Sample} che ha lo stesso nome di una delle \texttt{Sample} gi\`a presente nel \texttt{Plot};
+devono lanciare una \texttt{InconsistentSampleSizeException} se si prova ad aggiungere una \texttt{Sample}
+che ha una lunghezza (\texttt{getSize}) diversa dalla lunghezza delle altre \texttt{Sample} gi\`a presenti
+nel \texttt{Plot}. Le due classi di eccezione devono essere definite.
+Due \texttt{Plot} devono essere \texttt{equals} se e solo se contengno \texttt{Sample} \texttt{equals} (si
+studi l'esempio della prima pagina). Il metodo \texttt{hashCode} deve essere consistente con \texttt{equals}
+e non banale.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[10 punti]}
+Si scrivano le classi \texttt{SequentialPlot} e \texttt{AlternatePlot} che estendono
+\texttt{Plot} ridefinendo il metodo astratto \texttt{toString}. Tali ridefinizioni devono restituire
+delle stringhe come nell'esempio della pagina precedente: in \texttt{SequentialPlot}
+viene presentata una \texttt{Sample} alla volta; in \texttt{AlternatePlot} le \texttt{Sample}
+sono alternate. In entrambi i casi, i caratteri alternati sono \texttt{*@\$}. La lunghezza delle
+barre orizzontali deve essere proporzionale al valore che ciascuna barra
+rappresenta. Si riservino 40 caratteri per il valore pi\`u grande (metodo \texttt{getMax}).
+\end{esercizio}
+
+\end{document}

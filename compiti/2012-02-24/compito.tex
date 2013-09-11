@@ -1,0 +1,224 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 24 febbraio 2012}\end{center}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Un \texttt{Draw} \`e un rettangolo di caratteri. Per esempio, il seguente \`e un \texttt{Draw} di
+altezza (\emph{height}) 4 e larghezza (\emph{width}) 6:
+%
+{\small
+\begin{verbatim}
+DrAw
+123ABC
+  $@@@
+abcdef
+\end{verbatim}
+}
+
+\noindent
+Si noti che le righe di un \texttt{Draw} sono tutte lunghe tanto quanto la larghezza del \texttt{Draw}
+e non hanno nessun new line alla fine. Per esempio, la prima riga del \texttt{Draw} visto sopra \`e
+la stringa \texttt{DrAw\_\_} (con due spazi alla fine).
+La terza riga \`e \texttt{\_\_\$@@@} (con due spazi all'inizio).
+
+Si completi la definizione di un \texttt{Draw} data dalle seguente classe astratta:
+%
+{\small
+\begin{verbatim}
+public abstract class Draw {
+  public abstract int getWidth();
+  public abstract int getHeight();
+  protected abstract String getRow(int num) throws IllegalArgumentException;
+
+  @Override
+  public final String toString() {
+    // questo dovete scriverlo voi
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+Lo scopo del metodo \texttt{getRow} (implementato nelle sottoclassi!) sar\`a di restituire la riga
+numero \texttt{num} del \texttt{Draw} (dove \texttt{num} \`e 0 per la riga pi\`u in alto ed \`e
+\texttt{getHeight() - 1} per quella pi\`u in basso). Tale metodo genera un'eccezione non controllata di classe
+\texttt{java.lang.IllegalArgumentException} (classe gi\`a esistente in Java)
+se \texttt{num} non sta dentro tali limiti. Tutto quello che dovete fare in questo
+esercizio \`e di implementare
+il metodo \texttt{toString()} che restituisce la concatenazione delle righe del \texttt{Draw}, andando
+a capo alla fine di ciascuna riga.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si definisca una sottoclasse astratta \texttt{Letter} di \texttt{Draw} i cui oggetti
+hanno larghezza 7 e altezza 8. Queste dimensioni non devono essere
+modificabili dalle sottoclassi di \texttt{Letter}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si definiscano delle sottoclassi finali di \texttt{Letter}, chiamate \texttt{H}, \texttt{E},
+\texttt{L} e \texttt{O}, che implementano i seguenti \texttt{Draw} (si ricordi che \texttt{\_} \`e
+solo un modo per evidenziare gli spazi):
+%
+{\small
+\begin{verbatim}
+_______      _______      _______      _______
+_*___*_      _*****_      _*_____      _*****_
+_*___*_      _*_____      _*_____      _*___*_
+_*___*_      _*_____      _*_____      _*___*_
+_*****_      _*****_      _*_____      _*___*_
+_*___*_      _*_____      _*_____      _*___*_
+_*___*_      _*_____      _*_____      _*___*_
+_*___*_      _*****_      _*****_      _*****_
+\end{verbatim}}
+
+Si definisca quindi una sottoclasse finale \texttt{Star} di \texttt{Draw} che implementa il seguente
+\texttt{Draw}:
+%
+{\small
+\begin{verbatim}
+X___X
+_X_X_
+__X__
+_X_X_
+X___X
+\end{verbatim}}
+%
+\end{esercizio}
+%
+\begin{esercizio}
+\textbf{[6 punti]}
+Un \texttt{HorizontalDraw} \`e un \texttt{Draw} formato concatenando orizzontalmente uno o pi\`u
+\texttt{Draw} (i suoi \emph{figli}). I figli posso avere altezze e larghezze diverse e
+vengono tutti allineati in alto. Per esempio, l'\texttt{HorizontalDraw} con due figli, uno \texttt{Star}
+e una \texttt{H}, \`e il seguente:
+%
+{\small
+\begin{verbatim}
+X___X_______
+_X_X__*___*_
+__X___*___*_
+_X_X__*___*_
+X___X_*****_
+______*___*_
+______*___*_
+______*___*_
+\end{verbatim}}
+
+\noindent
+Si noti che \texttt{Star} ed \texttt{H} hanno altezze diverse e le righe mancanti allo \texttt{Star} diventano spazi aggiuntivi.
+
+Si completi la seguente implementazione di un \texttt{HorizontalDraw}:
+%
+{\small
+\begin{verbatim}
+public final class HorizontalDraw extends Draw {
+  private final Draw[] children;
+
+  public HorizontalDraw(Draw... children) throws IllegalArgumentException {
+    if (children.length == 0)
+      throw new IllegalArgumentException("HorizontalDraw: one Draw is needed at least");
+    this.children = children;
+  }
+  // qui dovete continuare voi
+}
+\end{verbatim}}
+%
+\end{esercizio}
+%
+\begin{esercizio}
+\textbf{[6 punti]}
+Un \texttt{FrameDraw} \`e un \texttt{Draw} che inserisce un altro \texttt{Draw} (il \emph{figlio}) dentro
+una cornice di \texttt{@}. Per esempio, il \texttt{FrameDraw} che ha come figlio l'\texttt{HorizontalDraw}
+dell'esercizio precedente \`e:
+%
+{\small
+\begin{verbatim}
+@@@@@@@@@@@@@@
+@X___X_______@
+@_X_X__*___*_@
+@__X___*___*_@
+@_X_X__*___*_@
+@X___X_*****_@
+@______*___*_@
+@______*___*_@
+@______*___*_@
+@@@@@@@@@@@@@@
+\end{verbatim}}
+
+Si completi la seguente implementazione di un \texttt{FrameDraw}:
+%
+{\small
+\begin{verbatim}
+public final class FrameDraw extends Draw {
+  private final Draw child;
+
+  public FrameDraw(Draw child) {
+    this.child = child;
+  }
+  // qui dovete continuare voi
+}
+\end{verbatim}}
+%
+\end{esercizio}
+%
+\hrule
+\hrule
+\hrule
+\mbox{}\\
+
+Se tutto \`e corretto, il seguente \texttt{main}:
+%
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Draw h = new H(), e = new E(), l = new L(), o = new O(), star = new Star();
+    Draw hello = new HorizontalDraw(star, h, e, l, l, o, star);
+    Draw frame = new FrameDraw(hello);
+    System.out.println(new HorizontalDraw(hello, frame));
+  }
+}
+\end{verbatim}}
+
+\noindent
+stamper\`a:
+%
+{\small
+\begin{verbatim}
+X   X                                   X   X@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ X X  *   *  *****  *      *      *****  X X @X   X                                   X   X@
+  X   *   *  *      *      *      *   *   X  @ X X  *   *  *****  *      *      *****  X X @
+ X X  *   *  *      *      *      *   *  X X @  X   *   *  *      *      *      *   *   X  @
+X   X *****  *****  *      *      *   * X   X@ X X  *   *  *      *      *      *   *  X X @
+      *   *  *      *      *      *   *      @X   X *****  *****  *      *      *   * X   X@
+      *   *  *      *      *      *   *      @      *   *  *      *      *      *   *      @
+      *   *  *****  *****  *****  *****      @      *   *  *      *      *      *   *      @
+                                             @      *   *  *****  *****  *****  *****      @
+                                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\end{verbatim}}
+%
+\end{document}

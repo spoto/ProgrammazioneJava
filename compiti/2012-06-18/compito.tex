@@ -1,0 +1,168 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 18 giugno 2012}\end{center}
+
+Si consideri il seguente programma:
+%
+{\small
+\begin{verbatim}
+import java.util.HashSet;
+import java.util.Set;
+
+public class Main {
+
+  public static void main(String[] args) {
+    Polynomial poly1 = new Polynomial(new int[] { -3, 4, 0, 0, -2} );
+    Polynomial poly2 = new Polynomial(new int[] { 5, -11, 0, 0 } );
+    Polynomial poly3 = new Polynomial(new int[] { 3, -4, 3, 1, -1} );
+    Polynomial poly4 = new Polynomial(new int[] { 0, 0, -3, 4, 0, 0, -2} );
+    Polynomial poly5 = new Polynomial(new int[] { 4, 2, -1 } );
+
+    System.out.println("poly1: "+ poly1 + " with degree " + poly1.degree());
+    System.out.println("poly2: "+ poly2 + " with degree " + poly2.degree());
+    System.out.println("poly3: "+ poly3 + " with degree " + poly3.degree());
+    System.out.println("poly4: "+ poly4 + " with degree " + poly4.degree());
+    System.out.println("poly5: "+ poly5 + " with degree " + poly5.degree());
+
+    Polynomial sum = poly1.add(poly2);
+    System.out.println("poly1 + poly2: " + sum + " with degree " + sum.degree());
+
+    sum = poly1.add(poly3);
+    System.out.println("poly1 + poly3: " + sum + " with degree " + sum.degree());
+
+    SecondDegreePolynomial poly6 = new SecondDegreePolynomial(4, 2, -1);
+    System.out.println(poly6 + " can be 0: " + poly6.canBe0());
+
+    SecondDegreePolynomial poly7 = new SecondDegreePolynomial(4, 2, 3);
+    System.out.println(poly7 + " can be 0: " + poly7.canBe0());
+    System.out.println(poly7 + " at x = 7 is " + poly7.evaluate(7));
+
+    Set<Polynomial> set = new HashSet<Polynomial>();
+    set.add(poly1);
+    set.add(poly2);
+    set.add(poly3);
+    set.add(poly4);
+    set.add(poly5);
+    set.add(poly6);
+    set.add(poly7);
+
+    System.out.println("set: " + set);
+
+    // questo e' illegale:
+    new SecondDegreePolynomial(0, 2, 3);
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+che stampa:
+%
+{\small
+\begin{verbatim}
+poly1:  - 3x^4 + 4x^3 - 2x^0 with degree 4
+poly2:  + 5x^3 - 11x^2 with degree 3
+poly3:  + 3x^4 - 4x^3 + 3x^2 + 1x^1 - 1x^0 with degree 4
+poly4:  - 3x^4 + 4x^3 - 2x^0 with degree 4
+poly5:  + 4x^2 + 2x^1 - 1x^0 with degree 2
+poly1 + poly2:  - 3x^4 + 9x^3 - 11x^2 - 2x^0 with degree 4
+poly1 + poly3:  + 3x^2 + 1x^1 - 3x^0 with degree 2
+ + 4x^2 + 2x^1 - 1x^0 can be 0: true
+ + 4x^2 + 2x^1 + 3x^0 can be 0: false
+ + 4x^2 + 2x^1 + 3x^0 at x = 7 is 213
+set: [ ................. ]
+Exception in thread "main" java.lang.IllegalArgumentException: first coefficient cannot be 0
+\end{verbatim}
+}
+
+\begin{esercizio}
+\textbf{[14 punti]}
+Un \texttt{Polynomial} rappresenta un polinomio a coefficienti interi:
+\[
+  c_nx^n+c_{n-1}x^{n-1}+\ldots+c_1x+c_0
+\]
+dove $c_n\cdots c_0$ sono i coefficienti del polinomio, in $\mathbb{Z}$.
+Il \emph{grado} (\emph{degree}) del polinomio \`e il pi\'u grande $d$ tale che $c_d\not=0$.
+
+La classe \texttt{Polynomial} deve mettere a disposizione il costruttore pubblico:
+%
+\begin{itemize}
+\item \texttt{Polynomial(int[] coefficients)}, che costruisce il polinomio con i coefficienti forniti
+      (il primo elemento dell'array \`e $c_n$, l'ultimo \`e $c_0$).
+\end{itemize}
+%
+Inoltre deve mettere a disposizione il metodo protetto:
+%
+\begin{itemize}
+\item \texttt{int[] getCoefficients()}, che restituisce i coefficienti del polinomio;
+\end{itemize}
+%
+e i metodi pubblici:
+%
+\begin{itemize}
+\item \texttt{int degree()}, che restituisce il grado del polinomio;
+\item \texttt{Polynomial add(Polynomial other)}, che restituisce un polinomio ottenuto sommando
+      \texttt{other} a \texttt{this};
+\item \texttt{int evaluate(int x)}, che restituisce il valore del polinomio al punto indicato;
+\item \texttt{String toString()}, che restituisce una stringa che descrive il polinomio
+      (si vedano gli esempi alla pagina precedente).
+      In particolare, non deve riportare i monomi di coefficiente 0;
+\item \texttt{boolean equals(Object other)}, che determina se \texttt{other} \`e un polinomio uguale
+      a \texttt{this}; due polinomi sono uguali se e solo se hanno gli stessi coefficienti, senza considerare
+      i coefficienti iniziali pari a 0 (nell'esempio della pagina precedente,
+      \texttt{poly1} e \texttt{poly4} sono uguali);
+\item \texttt{int hashCode()}, che restituisce un codice hash non banale per \texttt{this}. Per non banale
+      si intende che non deve restituire sempre la stessa costante.
+\end{itemize}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[7 punti]}
+Si definisca la sottoclasse \texttt{SecondDegreePolynomial} di \texttt{Polynomial} che rappresenta
+un polinomio di grado due: $ax^2+bx+c$. Tale classe deve mettere a disposizione il costruttore pubblico:
+%
+\begin{itemize}
+\item \texttt{SecondDegreePolynomial(int a, int  b, int c)},
+      che costruisce il polinomio di secondo grado con i coefficienti forniti,
+      ma lancia una \texttt{java.lang.IllegalArgumentException} se $a$ \`e $0$.
+\end{itemize}
+%
+Tutti i metodi di \texttt{Polynomial} devono essere applicabili anche a un \texttt{SecondDegreePolynomial} e
+funzionare correttamente (serve ridefinirli esplicitamente?). Inoltre deve essere fornito un metodo
+pubblico ulteriore:
+%
+\begin{itemize}
+\item \texttt{boolean canBe0()}, che determina se il polinomio di secondo grado si pu\`o annullare
+      (cio\`e se esiste un $x$ per cui $ax^2+bx+c = 0$).
+\end{itemize}
+%
+\end{esercizio}
+%
+\begin{esercizio}
+\textbf{[1 punto]}
+Quanti polinomi vengono stampati dentro l'insieme \texttt{set} al posto dei puntini alla fine della pagina precedente,
+in basso?
+\end{esercizio}
+
+\end{document}
