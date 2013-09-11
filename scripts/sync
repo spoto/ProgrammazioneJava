@@ -1,0 +1,1 @@
+rsync -avzr . spoto@profs.sci.univr.it:public_html/programmazione_II/
