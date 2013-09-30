@@ -1,0 +1,18 @@
+- storia di Java
+- bytecode, JVM, JIT
+- oggetti, metodi
+- programma HelloWorld
+- java, javac
+- sintassi degli identificatori
+- variabili
+- espressioni, comandi
+- tipi primitivi di base
+- assegnamento, semplice e composto
+- pre e post decremento e incremento
+- compatibilità in assegnamento fra i tipi primitivi
+- letterali costanti
+- espressioni aritmetiche
+- regole di precedenza
+- ordine di valutazione
+- divisione intera e in virgola mobile
+- cast numerici (conversione di tipo)
