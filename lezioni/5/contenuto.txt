@@ -1,4 +1,5 @@
-- si scriva un programma Java che legge una frase da tastiera e costruisce
-  una stringa che è uguale alla frase rovesciata. Alla fine stampa la stringa.
-  Per esempio, se la frase immessa è "Ciao amico" la stringa generata e
-  poi stampata è "ocima oaiC"
+- si scriva, usando Eclipse, un programma il cui main legge un intero
+  non negativo da tastiera (se negativo, lo richiede ad oltranza)
+  e lo trasforma in una stringa che rappresenta lo stesso numero
+  in binario, che infine stampa. Per esempio, se viene immesso
+  l'intero 123, deve costruire e poi stampare la stringa "1111011".

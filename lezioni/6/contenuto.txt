@@ -1,0 +1,4 @@
+- si scriva un programma Java che legge una frase da tastiera e costruisce
+  una stringa che è uguale alla frase rovesciata. Alla fine stampa la stringa.
+  Per esempio, se la frase immessa è "Ciao amico" la stringa generata e
+  poi stampata è "ocima oaiC"
