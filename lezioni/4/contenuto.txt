@@ -1,0 +1,2 @@
+- cicli in Java: for, while, do...while
+- la classe java.util.Random
