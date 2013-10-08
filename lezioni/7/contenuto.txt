@@ -7,7 +7,5 @@
 - metodi che ritornano un valore e metodi void
 - variabili locali ai metodi
 - lista dei parametri dei metodi
-- parametri formali e attuali (o argomenti)
-- passaggio dei parametri primitivi per valore: nessun side-effect
 
 
