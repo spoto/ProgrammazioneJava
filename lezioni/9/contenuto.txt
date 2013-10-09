@@ -1,6 +1,5 @@
 - costruttore di default
 - costruttori non di default
 - this dentro i costruttori
-- disambiguazione dei campi dalle variabili locali
 - valori di default dei campi
 - inizializzazione esplicita dei campi
