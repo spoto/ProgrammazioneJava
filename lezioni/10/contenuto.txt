@@ -10,7 +10,7 @@
     del mese di gennaio dell'anno 2008
   * Data() che costruisce una data che rappresenta il 13 gennaio 1973
 
-  Se si tenta di costruire una data inesistente op recedente al
+  Se si tenta di costruire una data inesistente o precedente il
   primo gennaio 1900, deve essere segnalato un messaggio di errore a video.
   Si tenga conto degli anni bisestili.
 
