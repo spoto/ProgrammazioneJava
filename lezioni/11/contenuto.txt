@@ -1,3 +1,3 @@
 - soluzione dell'esercizio delle date
 - uso di this() per la concatenazione dei costruttori
-- variabili d'istanza: sono stato, non temporanei
+- campi statici
