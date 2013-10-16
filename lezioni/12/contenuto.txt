@@ -1,2 +1,3 @@
 - variabili d'istanza: sono stato, non temporanei
-- la libreria junit per sviluppare test
+- stato di un oggetto e sua consistenza
+- metodi statici
