@@ -1,3 +1,1 @@
-- espressioni e comandi
-- espressioni assolute (usate come comandi): quelle che possono avere side-effect
 - costruttore di copia: superficiale e profonda

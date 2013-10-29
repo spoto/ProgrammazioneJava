@@ -1,0 +1,9 @@
+- esempi di copia superficiale e profonda
+- espressioni e comandi
+- espressioni assolute (usate come comandi): quelle che possono avere side-effect
+- package
+- javadoc
+- dichiarazione e creazione di array unidimensionali
+- inizializzazione degli elementi di un array
+- array come argomenti di funzione e come valore di ritorno
+
