@@ -1,0 +1,12 @@
+- Il ciclo for-each sugli array
+- Metodi con un numero variabile di argomenti
+- Tipi enumerati, loro metodi tra cui values()
+- Tipi enumerati negli switch
+- Array multidimensionali
+- Array sparsi
+- Ereditarietà
+- Notazione super() per la concatenazione dei costruttori
+- Metodi ereditati e metodi sovrascritti
+- La notazione final per i metodi
+- Cambiamento del tipo di ritorno e dei permessi per i metodi sovrascritti
+
