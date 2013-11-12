@@ -1,0 +1,6 @@
+- la notazione final per le variabili, i campi, i metodi e le classi
+- visibilità protected e package
+- ridefinizione dei metodi e modifica della loro visibilità
+- l'operatore instanceof
+- la classe java.lang.Object e i suo metodi equals(), getClass() e toString()
+- ridefinizione del metodo equals()
