@@ -1,3 +1,2 @@
 - Metodi sovrascritti
-- La notazione final per i metodi
-- Cambiamento del tipo di ritorno e dei permessi per i metodi sovrascritti
+- Cambiamento del tipo di ritorno per i metodi sovrascritti

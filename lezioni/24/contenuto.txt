@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 - differenze e somiglianze fra cast e conversioni di tipo
 - l'operatore instanceof
 - il class tag degli oggetti
 - metodi e classi abstract
 
+=======
+- la notazione final per le variabili, i campi, i metodi e le classi
+- visibilità protected e package
+- ridefinizione dei metodi e modifica della loro visibilità
+- l'operatore instanceof
+- la classe java.lang.Object e i suo metodi equals(), getClass() e toString()
+- ridefinizione del metodo equals()
+>>>>>>> bb3bccf5b129a7f09b97b00e601ce446d1ef19e7
