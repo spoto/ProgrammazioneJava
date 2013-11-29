@@ -23,8 +23,8 @@ private.
 Si definisca la classe Command.java che ha un unico metodo, astratto, chiamato
 execute, senza argomenti e che ritorna void. Si definisca una sottoclasse
 SetChannelCommand.java di Command.java il cui metodo execute sintonizza un
-televisore su un canale indicato con un numero intero. Il televisore deve
-essere passato al costruttore. Si definisca un'implementazione
+televisore su un canale indicato con un numero intero. Il televisore e il
+canale devono essere passati al costruttore. Si definisca un'implementazione
 EmptyCommand.java di Command.java il cui metodo execute non fa nulla.
 
 Si definisca quindi una classe Controller.java che implementa un telecomando
