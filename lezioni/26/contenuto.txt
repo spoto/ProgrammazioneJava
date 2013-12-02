@@ -36,7 +36,7 @@ di costruire un telecomando in cui la pressione del tasto
 0. sintonizza il televisore su rave uno;
 1. sintonizza il televisore su rave due;
 2. sintonizza il televisore su rave tre;
-3. sintonizza il televisore sul canale di numero intero successivo a quello attuale, modulo 7;
+3. sintonizza il televisore sul canale di numero intero successivo a quello attuale;
 4. non fa nulla;
 5. non fa nulla;
 6. non fa nulla.
