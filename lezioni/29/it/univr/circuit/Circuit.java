@@ -1,8 +1,6 @@
 package it.univr.circuit;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public abstract class Circuit {
 
@@ -16,7 +14,7 @@ public abstract class Circuit {
 	 * @return il circuito generato a caso
 	 */
 
-	public static Circuit mkRandom(int depth, Set<String> variables) {
+	public static Circuit mkRandom(int depth, String[] variables) {
 		if (depth == 1)
 			return chooseOneFrom(variables);
 		else {
@@ -36,14 +34,12 @@ public abstract class Circuit {
 	/**
 	 * Sceglie e ritorna una variabile a caso fra quelle passate come argomento.
 	 *
-	 * @param variables l'insieme dei nomi delle variabili fra cui si può scegliere
+	 * @param variables i nomi delle variabili fra cui si può scegliere
 	 * @return la variabile scelta
 	 */
 
-	private static Variable chooseOneFrom(Set<String> variables) {
-		String[] variablesAsArray = variables.toArray(new String[variables.size()]);
-
-		return new Variable(variablesAsArray[random.nextInt(variablesAsArray.length)]);
+	private static Variable chooseOneFrom(String[] variables) {
+		return new Variable(variables[random.nextInt(variables.length)]);
 	}
 
 	/**
@@ -57,13 +53,12 @@ public abstract class Circuit {
 	public abstract boolean isTrueIn(Assignment assignment);
 
 	/**
-	 * Restituisce l'insieme dei nomi delle variabili che occorrono
-	 * libere in questo circuito.
+	 * Restituisce le variabili che occorrono libere in questo circuito.
 	 *
-	 * @return l'insieme dei nomi
+	 * @return le variabili
 	 */
 
-	public abstract Set<String> freeVariables();
+	public abstract Variable[] freeVariables();
 
 	/**
 	 * Restituisce true sse other è un circuito logicamente equivalente a
@@ -72,8 +67,36 @@ public abstract class Circuit {
 
 	@Override
 	public final boolean equals(Object other) {
-	    // da completare!
-            return true;
+		if (other instanceof Circuit) {
+			Circuit otherAsCircuit = (Circuit) other;
+
+			Variable[] fv = new And(this, otherAsCircuit).freeVariables();
+
+			return agreeOnAllPossibleAssignments(this, otherAsCircuit, fv, 0, new String[0]);
+		}
+
+		return false;
+	}
+
+	private boolean agreeOnAllPossibleAssignments(Circuit circuit1, Circuit circuit2, Variable[] vars, int pos, String[] choice) {
+		if (pos == vars.length) {
+			Assignment assignment = new Assignment(choice);
+			return circuit1.isTrueIn(assignment) == circuit2.isTrueIn(assignment);
+		}
+		else {
+			// devono coincidere sia se la variabile pos-esima è vera...
+			return agreeOnAllPossibleAssignments(circuit1, circuit2, vars, pos + 1, expand(choice, vars[pos].getName()))
+				// sia se è falsa...
+				&& agreeOnAllPossibleAssignments(circuit1, circuit2, vars, pos + 1, choice);
+		}
+	}
+
+	private String[] expand(String[] names, String name) {
+		String[] res = new String[names.length + 1];
+		System.arraycopy(names, 0, res, 0, names.length);
+		res[names.length] = name;
+
+		return res;
 	}
 
 	/**
@@ -83,7 +106,8 @@ public abstract class Circuit {
 
 	@Override
 	public final int hashCode() {
-	    return 0; // si può fare di meglio?
+		//TODO
+	    return 0; // sapete fare di meglio?
 	}
 
 	@Override

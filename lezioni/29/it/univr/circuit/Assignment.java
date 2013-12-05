@@ -1,32 +1,17 @@
 package it.univr.circuit;
 
-import java.util.Set;
-import java.util.HashSet;
-
 /**
  * Un assegnamento specifica quali variabili sono considerate
  * vere e quali false.
  */
 
-public class Assignment {
+public final class Assignment {
 
 	/**
-	 * L'insieme delle variabili considerate vere.
+	 * Le variabili considerate vere.
 	 */
 
-	private final Set<String> trueVariables = new HashSet<String>();
-
-	/**
-	 * Costruisce un assegnamento che assume vere esattamente
-	 * le variabili indicate.
-	 *
-	 * @param trueVariables i nomi delle variabili da considerare vere
-	 */
-
-	public Assignment(Set<String> trueVariables) {
-		for (String var: trueVariables)
-			this.trueVariables.add(var);
-	}
+	private final String[] trueVariables;
 
 	/**
 	 * Costruisce un assegnamento che assume vere esattamente
@@ -36,8 +21,7 @@ public class Assignment {
 	 */
 
 	public Assignment(String... trueVariables) {
-		for (String var: trueVariables)
-			this.trueVariables.add(var);
+		this.trueVariables = trueVariables;
 	}
 
 	/**
@@ -49,6 +33,10 @@ public class Assignment {
 	 */
 
 	public boolean valueOf(Variable var) {
-		return trueVariables.contains(var.toString());
+		for (String trueVariable: trueVariables)
+			if (var.getName().equals(trueVariable))
+				return true;
+
+		return false;
 	}
 }
