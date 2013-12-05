@@ -1,0 +1,14 @@
+<li> Si parta dalle classi
+     <a href="lezione22_2012/incompleto/it/univr/circuit/Assignment.java"><tt>it.univr.circuit.Assignment.java</tt></a>,
+     che rappresenta un assegnamento di verit&agrave; (un insieme di variabili considerate vere, le altre
+     sono considerate false) e
+     <a href="lezione22_2012/incompleto/it/univr/circuit/Circuit.java"><tt>it.univr.circuit.Circuit.java</tt></a>,
+     che rappresenta un circuito logico. In quest'ultima classe rimane ancora da implementare il metodo
+     <tt>equals()</tt> in modo che due circuiti siano considerati equivalenti quando hanno lo stesso valore
+     di verit&agrave; in ogni possibile assegnamento. I metodi <tt>abstract</tt> devo essere tutti implementati in
+     tutte le sottoclassi. Per esempio, una sottoclasse, ancora da completare, &egrave;
+     <a href="lezione22_2012/incompleto/it/univr/circuit/Variable.java"><tt>it.univr.circuit.Variable.java</tt></a>,
+     che rappresenta un circuito che &egrave; vero se e solo se una variabile di ingresso &egrave; vera.
+<li> Oltre a completare le classi date sopra, si devono scrivere i circuiti di tipo or, and e not.
+<li> Un esempio di utilizzo &egrave; questa classe
+     <a href="lezione22_2012/it/univr/circuit/Main.java"><tt>it.univr.circuit.Main.java</tt></a>.
