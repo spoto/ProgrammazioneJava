@@ -1,0 +1,4 @@
+- metodi ricorsivi di una gerarchia di classi
+- ereditarietà singola e multipla
+- interfacce
+- l'esempio dell'interfaccia Ordered su date ed esami

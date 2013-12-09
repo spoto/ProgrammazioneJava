@@ -1,0 +1,12 @@
+Si sviluppi il giorno della dama, con un'interfaccia grafica basata sulla
+libreria Swing. Si seguano le regole della dama italiana:
+
+http://it.wikipedia.org/wiki/Dama_italiana
+
+Il gioco deve consistere in un confronto contro il computer. Le mosse
+saranno alternativamente quelle del giocatore umano e del computer.
+Il computer dovrà scegliere sulla base di un ragionamento a mossa e
+contromossa: per ogni mossa possibile al computer, dovrà considerare
+tutte le contromosse dell'utente. Alla fine sceglierà la mossa del computer
+che per ogni mossa dell'utente massimizza il proprio vantaggio.
+
