@@ -1,3 +1,4 @@
 - ereditarietà singola e multipla
 - interfacce
-- l'esempio dell'interfaccia Ordered su date ed esami
+- l'esempio dell'interfaccia Ordinabile su date e persone
+- classi interne
