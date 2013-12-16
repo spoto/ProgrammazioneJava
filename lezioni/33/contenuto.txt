@@ -1,0 +1,5 @@
+- tipi generici: variabili di tipo nella dichiarazione di una classe/interfaccia
+- interfaccia java.lang.Comparable
+- interfaccia java.util.Iterator
+- interfaccia java.lang.Iterable
+- ciclo foreach su tipi iterabili
