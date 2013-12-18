@@ -3,7 +3,6 @@
 - ciclo foreach su tipi iterabili
 - la classe java.util.ArrayList<T> e i suoi metodi
 - la classe java.util.Vector<T>: deprecata ma ancora usata
-- metodi generici
 - A <= B implica A[] <= B[]
 - A <= B non implica Classe<A> <= Classe<B>
 
