@@ -1,4 +1,4 @@
-package it.univr.gioco15;
+package it.univr.quindici;
 
 public interface FattoriaDiTessere {
 	public Tessera mkRandom();

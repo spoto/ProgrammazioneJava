@@ -1,16 +1,14 @@
-package it.univr.gioco15;
+package it.univr.quindici;
 
 import java.util.Random;
 
 public class FattoriaDiTessereNumeriche implements FattoriaDiTessere {
-
+	private final static Random random = new Random();
 	private final int max;
 
 	public FattoriaDiTessereNumeriche(int max) {
 		this.max = max;
 	}
-
-	private final static Random random = new Random();
 
 	@Override
 	public Tessera mkRandom() {
