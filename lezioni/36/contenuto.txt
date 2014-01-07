@@ -1,2 +1,3 @@
 - le classi java.util.Set e java.util.HashSet
 - confronto con java.util.ArrayList
+- la funzione hashCode() per gli HashSet

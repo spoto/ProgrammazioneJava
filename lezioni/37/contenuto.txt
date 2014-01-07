@@ -1,0 +1,14 @@
+- librerie grafiche AWT e Swing
+- classi javax.swing.JFrame, javax.swing.Button
+- listeners: classe java.awt.event.ActionListener e java.awt.event.ActionEvent
+- uso di classi interne anonime per la definizione dei listeners
+- terminazione di un programma Swing
+- definizione di JFrame e componenti grafici per estensione
+- costanti della classe java.awt.Color
+- cambio del colore con getContentPanel().setBackground(Color)
+- classe javax.swing.JLabel
+- container classes e layout managers
+- classe java.awt.BorderLayout, metodo add a due argomenti per specifica
+  della posizione col secondo argomento
+- classe java.awt.FlowLayout
+
