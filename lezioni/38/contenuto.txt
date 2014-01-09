@@ -1,0 +1,20 @@
+- si realizzi un programma Swing che apre una finestra e visualizza al
+  suo interno l'immagine piggy.jpg. Se si clicca su tale immagine, essa
+  deve essere sostituita dall'immagine pork.jpg. Se si clicca su quest'ultima,
+  essa deve essere sostituita da piggy.jpg, e così via.
+
+  Nota: i JButton hanno a disposizione il metodo setIcon(icona) che setta
+  la loro immagina. Come icona di può passare un
+
+    new javax.swing.ImageIcon(filename)
+
+- si realizzi un programma Swing che visualizza una finestra con delle
+  caselle a caso, numerate da 1 in su, disposte in una griglia di dimensioni
+  width e height parametrici. Una sola casella (a caso) deve essere
+  vuota. Cliccando su tali caselle si deve stampare un messaggio in un'altra
+  finestra, del tipo: "hai cliccato su 6" oppure "hai cliccato su empty".
+  Per la finestra con le caselle casuali, si usi un
+
+    new java.awt.GridLayout(righe, colonne)
+
+  come layout manager.
