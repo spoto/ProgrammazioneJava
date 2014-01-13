@@ -1,1 +1,2 @@
-gioco del 15 generalizzato
+- gioco del 15 generalizzato
+- schema model/view/controller

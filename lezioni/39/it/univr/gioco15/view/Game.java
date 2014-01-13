@@ -57,9 +57,6 @@ public class Game extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!isSolved()) {
-					System.out.println("hai cliccato su " + x + " e " + y);
-					System.out.println(board);
-
 					if (new Move(board, x, y).isLegal()) {
 						getContentPane().removeAll();
 						showBoard();
