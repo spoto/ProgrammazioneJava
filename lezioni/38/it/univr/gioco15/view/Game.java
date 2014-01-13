@@ -18,7 +18,7 @@ public class Game extends JFrame {
 	public Game(Board board) {
 		super("Gioco del 15");
 
-		setLayout(new GridLayout(board.getWidth(), board.getHeight()));
+		setLayout(new GridLayout(board.getHeight(), board.getWidth()));
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
