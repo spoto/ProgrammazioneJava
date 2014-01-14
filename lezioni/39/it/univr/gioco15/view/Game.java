@@ -37,7 +37,7 @@ public class Game extends JFrame {
 	public void setVisible(boolean isVisible) {
 		super.setVisible(isVisible);
 
-		commands.setVisible(true);
+		commands.setVisible(isVisible);
 	}
 
 	private void showBoard() {

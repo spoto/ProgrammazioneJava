@@ -29,16 +29,16 @@ public class Game extends JFrame {
 	public void setVisible(boolean isVisible) {
 		super.setVisible(isVisible);
 
-		commands.setVisible(true);
+		commands.setVisible(isVisible);
 	}
 
 	private void setBoard(Board board) {
 		this.board = board;
 
-		for (int i = 0; i < board.getWidth(); i++)
-			for (int j = 0; j < board.getHeight(); j++)
-				if (board.getNumberAt(i, j) != 0)
-					addTile(new NumberedTile(board.getNumberAt(i, j)));
+		for (int y = 0; y < board.getHeight(); y++)
+			for (int x = 0; x < board.getWidth(); x++)
+				if (board.getNumberAt(x, y) != 0)
+					addTile(new NumberedTile(board.getNumberAt(x, y)));
 				else
 					addTile(new EmptyTile());
 	}
