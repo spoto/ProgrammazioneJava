@@ -1,2 +1,2 @@
-- gioco del 15 generalizzato
-- schema model/view/controller
+- i pannelli javax.swing.JPanel
+- organizzazione gerarchica del layout grafico
