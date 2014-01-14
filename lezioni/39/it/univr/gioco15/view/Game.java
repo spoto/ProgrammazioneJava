@@ -66,7 +66,9 @@ public class Game extends JFrame {
 						else
 							commands.setMessage("mossa legale");
 
-						revalidate();
+						invalidate();
+						validate();
+						// oppure solo revalidate(); in Java 7
 					}
 					else
 						commands.setMessage("mossa illegale");
