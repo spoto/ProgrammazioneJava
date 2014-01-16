@@ -1,0 +1,5 @@
+Si scriva un'applicazione Swing che permette di scegliere
+due date per un viaggio (partenza e ritorno). Ciascuna data deve
+essere selezionata tramite un selettore di data fatto da
+tre caselle di immissione di testo etichettate come "day",
+"month" e "year".

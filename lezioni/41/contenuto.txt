@@ -1,0 +1,79 @@
+Si scriva un'applicazione Swing che permette di scegliere
+due date per un viaggio (partenza e ritorno). Ciascuna data deve
+essere selezionata tramite un selettore di data fatto da
+tre caselle di immissione di testo etichettate come "day",
+"month" e "year". Accanto a ciascuna casella devono esserci due
+icone per aumentare e diminuire il valore della casella.
+In basso deve essere aggiunto un bottone "Book now". Premendolo,
+deve essere posizionato sotto un messaggio del tipo
+"leaving on 1/1/2014 and coming back on 6/3/2013".
+
+La classe Date.java rappresenta una data e ha già i metodi per
+incrementare/decrementare giorno/mese/anno.
+
+Si cerchi di definire la grafica tramite componenti grafici personalizzati.
+Come suggerimento:
+
+- RotationButtons.java potrebbe essere il pannello con le due icone
+  di aumento/decremento. Lo si realizzi completando questo schema:
+
+public abstract class RotationButtons extends javax.swing.JPanel {
+  private final JButton up;
+  private final JButton down;
+
+  public RotationButtons() {
+    setLayout(new GridLayout(2, 1));
+
+    up = new JButton(new ImageIcon("images/arrow_up.png"));
+    up.setBorder(BorderFactory.createEmptyBorder());
+    up.addActionListener(....);
+    add(up);
+
+    down = ....
+    ....
+  }
+
+  // dovete chiamarlo quando si preme il pulsante up
+  protected abstract void onUpClicked();
+
+  // dovete chiamarlo quando si preme il pulsante down
+  protected abstract void onDownClicked();
+}
+
+- Picker.java potrebbe essere un pannello fatto da etichetta, campo di
+  inserimento testo e RotationButtons. Potete completare questo schema:
+
+public abstract class Picker extends JPanel {
+
+  public Picker(String name, int initialValue, int charCount) {
+    // usa name come etichetta, usa initialValue come valore iniziale
+    // del cmapo di inserimento testo, he sarà lungo charCount
+    ....
+  }
+
+  public int getValue() {
+    // ritornato il valore numerico del campo di inserimento testo,
+    // restituendo 1 quando il campo non risulta numerico
+    ....
+  }
+
+  public void setValue(int value) {
+    // setta la stringa del campo di inserimento testo
+    ....
+  }
+
+  // dovete chiamarlo quando viene premuto il pulsante up
+  protected abstract void onUpClicked();
+
+  // dovete chiamarlo quando viuene premuto il pulsante down
+  protected abstract void onDownClicked();
+}
+
+- DatePicker.java potrebbe essere un pannello fatto da tre Picker
+  (day/month/year). Dategli un costruttore DatePicker(String title) dove
+  title è il titolo da mettere in alto al selettore. Dategli inoltre i metodi
+
+  void setDate(Date)
+  Date getDate()
+
+  che rispettivamente settano e restituiscono la data indicata dal selettore.
