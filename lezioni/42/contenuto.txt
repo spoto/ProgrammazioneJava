@@ -1,0 +1,2 @@
+- barra dei menu, menu e sottomenu
+- classe java.awt.event.WindowListener
