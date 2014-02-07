@@ -1,0 +1,190 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 7 febbraio 2014}\end{center}
+%\`
+
+Si osservi il seguente programma, che utilizza delle classi che implementano un carrello della
+spesa (classe \texttt{Cart})
+nel quale \`e possibile inserire dei prodotti. Questi sono rappresentati dalla classe
+\texttt{Product}. Esiste una sottoclasse \texttt{DiscountedProduct} che rappresenta un
+prodotto scontato di una certa percentuale. Inoltre esiste la sottoclasse
+\texttt{Buy2Take3Product} che rappresenta un prodotto offerto con la formula
+del 3 per 2: paghi 2 e prendi 3. In altri termini, se ne ottiene uno gratis ogni tre acquistati.
+Si noti che l'offerta del 3 per 2 non \`e cumulabile con ulteriori offerte.
+
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Cart cart = new Cart();
+
+    Product tv = new Product("Super Baffo", "TV al plasma", 589.99);
+    Product cd = new Product("Roberto Malandrino", "CD di Laura Masini", 0.89);
+    Product modem = new Product("Giorgio Rubacchioni", "modem ADSL", 30.40);
+
+    cart.addProduct(tv);
+    cart.addProducts(modem, cd);
+    cart.addProduct(new DiscountedProduct(tv, 13.5));
+    cart.addProduct(new DiscountedProduct(new DiscountedProduct(modem, 11.6), 15.9));
+    cart.addProduct(tv, 2);
+
+    // un cd offerto come prendi due e paghi tre!
+    Product specialOffer = new Buy2Take3Product(cd);
+    // ne compriamo sette esemplari
+    cart.addProduct(specialOffer, 7);
+
+    System.out.println(cart);
+
+    // non posso scontare un 3 per 2: otterro' un'eccezione a questo punto
+    cart.addProduct(new DiscountedProduct(specialOffer, 21.00));
+  }
+}
+\end{verbatim}}
+
+\noindent
+Il programma dovrebbe stampare
+
+{\small
+\begin{verbatim}
+TV al plasma    589.99 euro. Venduto da Super Baffo
+modem ADSL    30.40 euro. Venduto da Giorgio Rubacchioni
+CD di Laura Masini    0.89 euro. Venduto da Roberto Malandrino
+TV al plasma [scontato del 13.50%]    510.34 euro. Venduto da Super Baffo
+modem ADSL [scontato del 11.60%] [scontato del 15.90%]    22.60 euro. Venduto da Giorgio Rubacchioni
+TV al plasma    589.99 euro. Venduto da Super Baffo
+TV al plasma    589.99 euro. Venduto da Super Baffo
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+CD di Laura Masini    0.64 euro. Venduto da Roberto Malandrino
+
+Exception in thread "main" java.lang.IllegalArgumentException: cannot reduce the price of CD di Laura Masini
+\end{verbatim}}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+%
+Si completi la seguente classe, che implementa un prodotto generico:
+{\small
+\begin{verbatim}
+public class Product {
+  ...
+  public Product(String seller, String name, double price) { ... }
+  protected Product(Product original) { ... crea una copia di original }
+  public final String getSeller() { ...restituisce seller }
+  public final String getName() { ...restituisce name }
+  public double getPrice(Cart cart) { ...restituisce price }
+  public boolean canBeReduced() { ... tutti i prodotti possono essere scontati meno il 3 per 2}
+  @Override public String toString() {
+    return getName();
+  }
+}
+\end{verbatim}}
+
+\noindent
+Si noti che il metodo che restituisce il prezzo del prodotto richiede il carrello poich\'e, nelle sottoclassi, tale
+prezzo potrebbe dipendere dagli altri prodotti presenti nel carrello (si pensi al 3 per 2).
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+%
+Si completi la seguente classe, che rappresenta un prodotto scontato del \texttt{discount} per cento:
+%
+{\small
+\begin{verbatim}
+public class DiscountedProduct extends Product {
+  ...
+  public DiscountedProduct(Product original, double discount) {
+    ... deve lanciare una IllegalArgumentException se original non puo' essere scontato
+  }
+
+  @Override public double getPrice(Cart cart) {
+    ... si tenga conto dello sconto da applicare al prezzo del prodotto original
+  }
+  @Override public String toString() {
+    ... si aggiunga "[scontato del XX%]" in fondo alla stampa di original
+  }
+}
+\end{verbatim}}
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+Si completi la seguente classe, che rappresenta un prodotto offerto con il 3 per 2:
+%
+{\small
+\begin{verbatim}
+public class Buy2Take3Product extends Product {
+  ...
+  public Buy2Take3Product(Product original) {
+    ... deve lanciare una IllegalArgumentException se original non puo' essere scontato
+  }
+
+  @Override public boolean canBeReduced() { ... non puo' essere scontato! }
+  @Override public double getPrice(Cart cart) {
+    ... tenete conto di quanti altri prodotti uguali (==) ci sono nel carrello
+  }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si completi la seguente classe, che rappresenta il carrello della spesa, nel quale
+\`e possibile aggiungere dei prodotti. Si noti che questa classe implementa
+\texttt{java.lang.Iterable}, per cui \`e possibile iterare su un carrello, ottenendo i prodotti
+contenuti, uno alla volta.
+%
+{\small
+\begin{verbatim}
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Cart implements Iterable<Product> {
+  // i prodotti contenuti in questo carrello
+  private final List<Product> products = new ArrayList<Product>();
+
+  public void addProduct(Product product) { ... aggiunge il prodotto indicato }
+  public void addProducts(Product... products) { ... aggiunge tutti i prodotti indicati }
+  public void addProduct(Product product, int howManyTimes) { ... aggiunge il prodotto howManyTimes volte }
+
+  @Override public String toString() {
+    String result = "";
+    for (Product product: this)
+      result += product + "    " + String.format("%.2f euro", product.getPrice(this))
+         + ". Venduto da " + product.getSeller() + "\n";
+    return result;
+  }
+
+  @Override public Iterator<Product> iterator() { ... }
+}
+\end{verbatim}}
+\end{esercizio}
+
+\end{document}
