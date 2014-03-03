@@ -1,0 +1,200 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 28 febbraio 2014}\end{center}
+%\`
+
+\begin{esercizio}
+\textbf{[5 punti]}
+%
+Si completi la seguente classe, che implementa un momento temporale preciso fino al minuto:
+
+{\small
+\begin{verbatim}
+public class Time implements Comparable<Time> {
+  ...
+  public Time(int year, int month, int day, int hours, int minutes) {
+    ...
+  }
+
+  @Override
+  public int compareTo(Time other) {
+    ...
+  }
+
+  public String toStringOnlyHour() {
+    ... ritorna stringhe del tipo hh:mm (solo ore e minuti)
+  }
+}
+\end{verbatim}}
+
+\noindent
+Si noti che comparare due istanti temporali significa metterli in ordine temporale (chi viene
+prima nel tempo).
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[4 punti]}
+%
+Si completi la seguente classe, che implementa un treno che parte a un certo istante
+temporale, ha un certo numero identificativo e una data destinazione:
+%
+{\small
+\begin{verbatim}
+public class Train implements Comparable<Train> {
+  ...
+  public Train(Time time, int number, String destination) { ... }
+
+  @Override
+  public String toString() {
+    return String.format("%s : treno %d per %s", time.toStringOnlyHour(), number, destination);
+  }
+
+  @Override
+  public int compareTo(Train other) {
+    ... li mette in ordine temporale di partenza. A parita' di partenza, li mette
+    in ordine crescente per numero di treno
+  }
+}
+\end{verbatim}}
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la seguente classe astratta, che rappresenta un cartellone che enumera (se iterato)
+i treni in partenza:
+%
+{\small
+\begin{verbatim}
+public abstract class Cartellone implements Iterable<Train> {
+
+  @Override
+  public final String toString() {
+    ... ritorna la concatenazione del toString() di tutti i treni nel cartellone
+  }
+}
+
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si completi la seguente classe, che implementa un cartellone al quale \`e possibile
+aggiungere treni in partenza. I treni devono essere visualizzati in ordine crescente
+secondo il loro metodo \texttt{compareTo()}:
+%
+{\small
+\begin{verbatim}
+public class CartelloneModificabile extends Cartellone {
+  ...
+  public CartelloneModificabile() {}
+  public void add(Train train) { ...aggiunge train a questo cartellone }
+  public void add(Iterable<Train> trains) { ...aggiunge tutti i trains a questo cartellone }
+  public void add(Train... trains) { ...aggiunge tutti i trains a questo cartellone }
+
+  @Override
+  public Iterator<Train> iterator() { ...ritorna un iteratore sui trains di questo cartellone }
+}
+\end{verbatim}}
+
+\noindent\textbf{Suggerimento:} la classe di libreria
+\texttt{java.util.TreeSet} implementa un insieme che, se iterato, restituisce i suoi
+elementi in ordine crescente rispetto al loro \texttt{compareTo}. Ha un metodo \texttt{add(elemento)}
+che aggiunge l'elemento all'insieme.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si completi la seguente classe, che implementa un cartellone che mostra solo i primi
+\texttt{max} treni (al massimo) mostrati da un altro cartellone. In altri termini, iterando
+su un \texttt{CartelloneLimitato} si ottengono i primi \texttt{max} treni (al massimo)
+del cartellone originale.
+%
+{\small
+\begin{verbatim}
+public class CartelloneLimitato extends Cartellone {
+  ...
+  public CartelloneLimitato(Cartellone original, int max) { ... }
+
+  @Override
+  public Iterator<Train> iterator() {
+    ...ritorna un iteratore sui primi max treni di original (al massimo)
+  }
+}
+\end{verbatim}}
+\end{esercizio}
+
+\hrule
+
+\vspace*{1ex}
+Se tutto \`e corretto, l'esecuzione del seguente \texttt{main}:
+%
+{\small
+\begin{verbatim}
+public class Main {
+
+  public static void main(String[] args) {
+    CartelloneModificabile c = new CartelloneModificabile();
+
+    // treno 1549 per Venezia delle 10:30 del 28/2/2014
+    c.add(new Train(new Time(2014, 28, 2, 10, 30), 1549, "Venezia"));
+
+    // treno 1804 per Bologna delle 11:45 del 28/2/2014
+    c.add(new Train(new Time(2014, 28, 2, 11, 45), 1804, "Bologna"));
+
+    // treno 1802 per Milano delle 11:45 del 28/2/2014
+    c.add(new Train(new Time(2014, 28, 2, 11, 45), 1802, "Milano"));
+
+    // treno 211 per Trieste delle 12:01 del 28/2/2014
+    c.add(new Train(new Time(2014, 28, 2, 12, 01), 211, "Trieste"));
+
+    // treno 1561 per Venezia delle 11:59 del 28/2/2014
+    c.add(new Train(new Time(2014, 28, 2, 11, 59), 1561, "Venezia"));
+
+    System.out.println(c);
+    Cartellone lim = new CartelloneLimitato(c, 3);
+    System.out.println("\nI prossimi 3 treni");
+    System.out.println(lim);
+  }
+}
+\end{verbatim}}
+
+\noindent
+deve stampare:
+
+{\small
+\begin{verbatim}
+10:30 : treno 1549 per Venezia
+11:45 : treno 1802 per Milano
+11:45 : treno 1804 per Bologna
+11:59 : treno 1561 per Venezia
+12:01 : treno 211 per Trieste
+
+
+I prossimi 3 treni
+10:30 : treno 1549 per Venezia
+11:45 : treno 1802 per Milano
+11:45 : treno 1804 per Bologna
+\end{verbatim}}
+
+\end{document}
