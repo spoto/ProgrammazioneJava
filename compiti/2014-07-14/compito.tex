@@ -1,0 +1,210 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 14 luglio 2014}\end{center}
+%\`
+
+Gli identificatori di un linguaggio di programmazione sono spesso scritti
+in \emph{camel-style}, come ad esempio \texttt{camelsAreSweet}, oppure in
+\emph{snake-style}, come ad esempio \texttt{snakes\_are\_slow\_food}. Inoltre vengono
+spesso usati nella loro versione \emph{progressiva}, come ad esempio
+\texttt{camelsAreSweet\_113} oppure \texttt{snakes\_are\_slow\_food\_113}.
+
+Si consideri la superclasse che definisce un \emph{identificatore}, il cui unico metodo
+permette di tradurre un identificare in stringa:
+
+{\small\begin{verbatim}
+public interface Identifier {
+  @Override public String toString();
+}
+\end{verbatim}}
+
+\begin{esercizio}
+\textbf{[9 punti]}
+%
+Si completi la seguente classe astratta, che implementa un identificatore composto da pi\`u parole.
+I costruttori controllano che le parole componenti non siano vuote e contengano solo
+caratteri alfabetici minuscoli. Inoltre, controllano che ci sia almeno una parola. Altrimenti
+lanciano un'eccezione:
+
+{\small
+\begin{verbatim}
+public abstract class AbstractMultiWordsIdentifier implements Identifier {
+  private final String[] words;
+
+  // Fallisce con un'eccezione se non c'e' alcuna parola o se c'e' una parola vuota
+  // o se una parola contiene un carattere non alfabetico minuscolo
+  protected AbstractMultiWordsIdentifier(String... words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  // Fallisce con un'eccezione nelle stesse condizioni viste sopra
+  protected AbstractMultiWordsIdentifier(Iterable<String> words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  // restituisce le parole fornite al momento della costruzione
+  protected final String[] getWords() {
+    return words;
+  }
+}
+\end{verbatim}}
+
+\noindent
+Si noti che si tratta di una classe astratta in cui il metodo \texttt{toString()} non \`e
+ancora implementato.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+%
+Si implementino le tre eccezioni usate nel punto precedente, tutte sottoclassi dell'eccezione
+unchecked \texttt{java.lang.IllegalArgumentException}. Le clausole \texttt{throws} usate
+nell'esercizio precedente sono necessarie o possono essere eliminate senza problemi di compilazione?
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la seguente classe che implementa un identificatore camel-style, formato da pi\`u
+parole congiunte:
+%
+{\small
+\begin{verbatim}
+public class CamelStyleIdentifier extends AbstractMultiWordsIdentifier {
+  protected CamelStyleIdentifier(String... words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  protected CamelStyleIdentifier(Iterable<String> words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  @Override public String toString() { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la seguente classe che implementa un identificatore snake-style, formato da pi\`u
+parole congiunte:
+%
+{\small
+\begin{verbatim}
+public class SnakeStyleIdentifier extends AbstractMultiWordsIdentifier {
+  protected SnakeStyleIdentifier(String... words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  protected SnakeStyleIdentifier(Iterable<String> words)
+    throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
+
+  @Override public String toString() { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[4 punti]}
+Si completi la seguente classe, che implementa una versione progressiva di un altro identificatore
+\texttt{base},
+in cui cio\`e viene aggiunto un numero non-negativo \texttt{num}
+in fondo alla rappresentazione stringa dell'identificatore,
+separandolo con un underscore:
+%
+{\small
+\begin{verbatim}
+public class ProgressiveIdentifier implements Identifier {
+  ...
+  protected ProgressiveIdentifier(Identifier base, int num) throws NegativeProgressiveNumberException { ... }
+
+  @Override public String toString() { ... }
+}
+\end{verbatim}}
+
+\noindent
+L'identificatore \texttt{base}, in fondo a cui si aggiunge il numero, pu\`o essere di qualsiasi
+tipo, anche di una classe di identificatore al momento non ancora definita.
+
+Il costruttore deve lanciare una \texttt{NegativeProgressiveNumberException} se si tenta di
+usare un numero progressivo \texttt{num} negativo. Si scriva tale eccezione, sottoclasse di
+\texttt{java.lang.IllegalArgumentException}.
+\end{esercizio}
+
+\vspace*{2ex}
+\hrule
+
+\vspace*{2ex}
+
+Se tutto \`e corretto, un'esecuzione del seguente \texttt{main}:
+%
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Iterable<String> words = readWords();
+
+    System.out.println("In camel-style, le parole che hai inserito diventano");
+    System.out.println(new CamelStyleIdentifier(words));
+    System.out.println("In snake-style, le parole che hai inserito diventano");
+    System.out.println(new SnakeStyleIdentifier(words));
+    System.out.println("Le loro versioni progressive 816 sono");
+    System.out.println(new ProgressiveIdentifier(new CamelStyleIdentifier(words), 816));
+    System.out.println(new ProgressiveIdentifier(new SnakeStyleIdentifier(words), 816));
+  }
+
+  private static Iterable<String> readWords() {
+    List<String> words = new ArrayList<String>();
+    Scanner keyboard = new Scanner(System.in);
+
+    while (true) {
+      String word = keyboard.nextLine();
+      if (word.equals("END"))
+        break;
+      words.add(word);
+    }
+
+    keyboard.close();
+
+    return words;
+  }
+}
+\end{verbatim}}
+
+\noindent
+potrebbe essere:
+
+{\small
+\begin{verbatim}
+camels    <-- input dell'utente
+are       <-- input dell'utente
+sweet     <-- input dell'utente
+and       <-- input dell'utente
+clever    <-- input dell'utente
+animals   <-- input dell'utente
+END       <-- input dell'utente
+In camel-style, le parole che hai inserito diventano
+CamelsAreSweetAndCleverAnimals
+In snake-style, le parole che hai inserito diventano
+camels_are_sweet_and_clever_animals
+Le loro versioni progressive 816 sono
+CamelsAreSweetAndCleverAnimals_816
+camels_are_sweet_and_clever_animals_816
+\end{verbatim}}
+
+\end{document}
