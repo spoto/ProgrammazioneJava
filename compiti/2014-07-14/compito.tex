@@ -87,10 +87,10 @@ parole congiunte:
 {\small
 \begin{verbatim}
 public class CamelStyleIdentifier extends AbstractMultiWordsIdentifier {
-  protected CamelStyleIdentifier(String... words)
+  public CamelStyleIdentifier(String... words)
     throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
 
-  protected CamelStyleIdentifier(Iterable<String> words)
+  public CamelStyleIdentifier(Iterable<String> words)
     throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
 
   @Override public String toString() { ... }
@@ -107,10 +107,10 @@ parole congiunte:
 {\small
 \begin{verbatim}
 public class SnakeStyleIdentifier extends AbstractMultiWordsIdentifier {
-  protected SnakeStyleIdentifier(String... words)
+  public SnakeStyleIdentifier(String... words)
     throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
 
-  protected SnakeStyleIdentifier(Iterable<String> words)
+  public SnakeStyleIdentifier(Iterable<String> words)
     throws NoWordsProvidedException, WordIsNotAlphabeticalLowercaseException, EmptyWordException { ... }
 
   @Override public String toString() { ... }
@@ -131,7 +131,7 @@ separandolo con un underscore:
 \begin{verbatim}
 public class ProgressiveIdentifier implements Identifier {
   ...
-  protected ProgressiveIdentifier(Identifier base, int num) throws NegativeProgressiveNumberException { ... }
+  public ProgressiveIdentifier(Identifier base, int num) throws NegativeProgressiveNumberException { ... }
 
   @Override public String toString() { ... }
 }
