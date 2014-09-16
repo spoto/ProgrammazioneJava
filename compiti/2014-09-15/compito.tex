@@ -1,0 +1,167 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 15 settembre 2014}\end{center}
+%\`
+
+Una tokenizzazione \`e un iterabile su stringhe:
+
+{\small\begin{verbatim}
+public interface Tokenization extends Iterable<String> {
+}
+\end{verbatim}}
+
+\noindent
+L'idea \`e che, iterando su una tokenizzazione, si ottengano,
+una alla volta, le sottostringhe di una scomposizione di una stringa di partenza
+\texttt{s}, divisa sulla base di un criterio
+specificato dalla specifica implementazione della tokenizzazione. Per esempio, una tokenizzazione
+potrebbe usare un insieme di caratteri delimitatori, dopo i quali separare le sottostringhe di
+\texttt{s}.
+
+\begin{esercizio}
+\textbf{[7 punti]}
+%
+Si scriva un'implementazione \texttt{StringTokenization} di \texttt{Tokenization}, che divide
+una stringa \texttt{s}
+subito dopo uno dei caratteri delimitatori forniti al momento della costruzione:
+
+{\small
+\begin{verbatim}
+public class StringTokenization implements Tokenization {
+  ...
+  public StringTokenization(String s, String delimiters) { ... }
+
+  @Override
+  public Iterator<String> iterator() { ... }
+}
+\end{verbatim}}
+
+\noindent
+Per esempio, iterando su una \texttt{new StringTokenization("Questa\$e'\&una\&prova!", "\$\&")} si
+devono ottenere una dopo l'altra le stringhe:
+
+{\small
+\begin{verbatim}
+Questa$
+e'&
+una&
+prova!
+\end{verbatim}}
+
+\noindent
+Se la stringa dei delimitatori \`e vuota, il costruttore deve lanciare una
+\texttt{NoDelimitersException}, che dovete scrivere.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+%
+Si scriva un'implementazione \texttt{CharacterTokenization} di \texttt{Tokenization}, che divide
+la stringa \texttt{s}
+subito dopo un ben preciso carattere \texttt{c} fornito al momento della costruzione:
+
+{\small
+\begin{verbatim}
+public class CharacterTokenization extends StringTokenization {
+  public CharacterTokenization(String s, char c) { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+%
+Si scriva un'implementazione \texttt{SpaceTokenization} di \texttt{Tokenization}, che divide
+la stringa \texttt{s} subito dopo uno spazio:
+
+{\small
+\begin{verbatim}
+public class SpaceTokenization extends CharacterTokenization {
+  public SpaceTokenization(String s) { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[11 punti]}
+%
+Si scriva un'implementazione \texttt{DoubleTokenization} di \texttt{Tokenization}, che divide
+la stringa \texttt{s} prima secondo un'altra tokenizzazione fornita al costruttore e poi
+divide ciascuna di tali stringhe dopo uno dei caratteri delimitatori forniti al costruttore:
+
+{\small
+\begin{verbatim}
+public class DoubleTokenization implements Tokenization {
+  ...
+  public DoubleTokenization(Tokenization base, String delimiters) { ... }
+
+  @Override
+  public Iterator<String> iterator() { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\newpage
+
+\hrule
+
+\vspace*{2ex}
+
+Se tutto \`e corretto, un'esecuzione del seguente \texttt{main}:
+%
+{\small
+\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    Tokenization tok = new StringTokenization("Questa$e'&una&prova!", "$&");
+    for (String s: tok)
+      System.out.println(s);
+
+    Tokenization tok2 = new DoubleTokenization(tok, "ou");
+    for (String s: tok2)
+      System.out.println(s);
+  }
+}
+\end{verbatim}}
+
+\noindent
+dovr\`a stampare:
+
+{\small
+\begin{verbatim}
+Questa$
+e'&
+una&
+prova!
+Qu
+esta$
+e'&
+u
+na&
+pro
+va!
+\end{verbatim}}
+
+\end{document}
