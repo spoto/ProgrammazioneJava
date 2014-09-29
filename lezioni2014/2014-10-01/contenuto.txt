@@ -5,6 +5,8 @@
 - java, javac
 - sintassi degli identificatori
 - variabili
+- costanti
+- commenti
 - espressioni, comandi
 - tipi primitivi di base
 - assegnamento, semplice e composto

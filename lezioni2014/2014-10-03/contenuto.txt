@@ -5,5 +5,3 @@
 - altri metodi di java.lang.String: equals(), equalsIgnoreCase(),
   toLowerCase(), tuUpperCase(), trim(), charAt(), substring(), indexOf(),
   lastIndexOf(), compareTo(), compareToIgnoreCase()
-- costanti (parola chiave final)
-- commenti
