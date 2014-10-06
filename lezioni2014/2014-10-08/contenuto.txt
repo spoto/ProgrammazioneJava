@@ -1,0 +1,9 @@
+- tipi primitivi e tipi riferimento
+- classi e istanze
+- operatore di istanziazione new
+- variabili d'istanza (campi)
+- metodi d'istanza
+- oggetto ricevitore, riferimento this
+- metodi che ritornano un valore e metodi void
+- variabili locali ai metodi
+- lista dei parametri dei metodi
