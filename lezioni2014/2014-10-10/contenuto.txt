@@ -6,4 +6,4 @@
   l'intero 123, deve costruire e poi stampare la stringa "1111011".
 - si faccia la stessa cosa in ottale e in esadecimale
 - si scriva un programma Java che legge una frase da tastiera e
-  determina se la stringa e palindroma
+  determina se la stringa e' palindroma
