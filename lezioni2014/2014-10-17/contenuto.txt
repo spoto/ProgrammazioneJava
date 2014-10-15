@@ -1,3 +1,7 @@
+- costruttore di default
+- costruttori non di default
+- this dentro i costruttori
+
 - si scriva una classe Data.java che rappresenta una data del calendario
   dal primo gennaio 1900 in poi. Tale classe deve avere i costruttori:
 
