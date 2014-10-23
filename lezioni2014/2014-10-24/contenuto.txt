@@ -1,3 +1,5 @@
+- libreria JUnit per il testing
+
 Si scriva una classe Display.java che implementa un display
 elettronico per una cifra decimale. Deve fornire un costruttore
 
