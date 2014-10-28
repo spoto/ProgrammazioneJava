@@ -1,4 +1,6 @@
 - costanti definite con final
+- classi wrapper per i tipi primitivi e loro metodi statici
+- import static
 - classi e oggetti mutabili e immutabili
 - privacy leak: metodi che ritornano componenti dello stato privato o
   metodi che settano componenti dello stato privato o costruttori che

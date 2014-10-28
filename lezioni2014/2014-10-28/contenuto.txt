@@ -1,4 +1,2 @@
 - realizzare un display doppio (il tabellone della mensa)
 - metodi statici di java.lang.Math
-- classi wrapper per i tipi primitivi e loro metodi statici
-- import static
