@@ -1,13 +1,30 @@
 
-public class MainTabellone {
+public class Tabellone {
 
-	public static void main(String[] args) {
-		Tabellone c = new Tabellone(13);
+	private Display left;
+	private Display right;
 
-		for (int i = 13; i <= 99; i++) {
-			System.out.println(c);
-			c.next();
-		}
+	public Tabellone(int n) {
+		left = new Display(n / 10);
+		right = new Display(n % 10);
 	}
 
+	public String getRow(int pos) {
+		return left.getRow(pos) + ' ' + right.getRow(pos);
+	}
+
+	public String toString() {
+		String result = "";
+
+		for (int pos = 0; pos < 5; pos++)
+			result += getRow(pos) + '\n';
+
+		return result;
+	}
+
+	public void next() {
+		right.next();
+		if (right.getDigit() == 0)
+			left.next();
+	}
 }

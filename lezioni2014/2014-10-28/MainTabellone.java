@@ -1,4 +1,3 @@
-
 public class MainTabellone {
 
 	public static void main(String[] args) {
