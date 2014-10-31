@@ -1,0 +1,7 @@
+- javadoc
+- dichiarazione e creazione di array unidimensionali
+- inizializzazione degli elementi di un array
+- array come argomenti di funzione e come valore di ritorno
+- array multidimensionali
+- array sparsi
+- la classe di utilità java.util.Arrays

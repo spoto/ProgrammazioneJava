@@ -1,0 +1,3 @@
+- garbage collection
+- espressioni e comandi
+- espressioni assolute (usate come comandi): quelle che possono avere side-effect
