@@ -1,0 +1,5 @@
+- Tipi enumerati, loro metodi tra cui values()
+- Tipi enumerati negli switch
+- Ereditarietà
+- Notazione super() per la concatenazione dei costruttori
+- Metodi ereditati

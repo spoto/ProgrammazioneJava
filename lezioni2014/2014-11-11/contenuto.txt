@@ -1,0 +1,3 @@
+- la classe di utilità java.util.Arrays
+- Il ciclo for-each sugli array
+- Metodi con un numero variabile di argomenti

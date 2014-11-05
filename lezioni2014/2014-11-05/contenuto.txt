@@ -4,4 +4,3 @@
 - array come argomenti di funzione e come valore di ritorno
 - array multidimensionali
 - array sparsi
-- la classe di utilità java.util.Arrays
