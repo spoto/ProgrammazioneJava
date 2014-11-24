@@ -1,0 +1,3 @@
+- principio di Liskov
+- modifica del tipo di ritorno e della visibilità dei metodi ridefiniti
+- la notazione final per le variabili, i campi, i metodi e le classi
