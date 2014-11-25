@@ -1,3 +1,5 @@
+- la notazione final per le variabili, i campi, i metodi e le classi
+
 Un circuito logico proposizionale è una formula fatta da variabili, not, and e or. Il suo valore
 di verità può essere vero o falso e si può determinare una volta fissate le variabili che si
 considerano vere. Una enumerazione delle variabili da considerarsi vere è detta assegnamento di verità
