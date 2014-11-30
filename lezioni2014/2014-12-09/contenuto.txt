@@ -1,0 +1,3 @@
+- ereditarietà singola e multipla
+- interfacce
+- esempio dell'interfaccia java.lang.Comparable applicata a date e studenti

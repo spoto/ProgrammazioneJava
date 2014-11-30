@@ -1,0 +1,3 @@
+- tipi generici: variabili di tipo nella dichiarazione di una classe/interfaccia
+- interfaccia java.lang.Comparable<T>
+- variabili di tipo nella definizione di un metodo
