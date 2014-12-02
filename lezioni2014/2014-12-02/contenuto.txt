@@ -1,5 +1,2 @@
 - metodi ricorsivi su una gerarchia di classi
 - metodi e classi abstract
-- il class tag degli oggetti
-- differenze e somiglianze fra cast e conversioni di tipo
-- l'operatore instanceof
