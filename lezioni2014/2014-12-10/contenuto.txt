@@ -1,3 +1,6 @@
+- ereditarietà singola e multipla
+- interfacce
+- esempio dell'interfaccia java.lang.Comparable applicata a date e studenti
 - tipi generici: variabili di tipo nella dichiarazione di una classe/interfaccia
 - interfaccia java.lang.Comparable<T>
 - variabili di tipo nella definizione di un metodo

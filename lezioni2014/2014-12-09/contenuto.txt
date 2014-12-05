@@ -1,3 +1,2 @@
-- ereditarietà singola e multipla
-- interfacce
-- esempio dell'interfaccia java.lang.Comparable applicata a date e studenti
+- Eccezioni controllate e non controllate
+- La dichiarazione throws

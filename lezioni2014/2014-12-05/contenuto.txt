@@ -3,5 +3,4 @@
 - L'operatore instanceof
 - Eccezioni
 - Il costrutto try/catch/finally
-- Eccezioni controllate e non controllate
-- La dichiarazione throws
+- Lancio di un'eccezione col comando throw
