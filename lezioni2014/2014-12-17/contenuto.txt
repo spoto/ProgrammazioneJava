@@ -1,0 +1,8 @@
+- le classi java.util.Set e java.util.HashSet
+- confronto con java.util.ArrayList
+- l'utilizzo di equals() e hashCode() per gli HashSet
+- le classi java.util.Map e java.util.HashMap
+- interfaccia java.lang.Iterable<T>
+- interfaccia java.util.Iterator<T>
+- ciclo foreach su tipi iterabili
+
