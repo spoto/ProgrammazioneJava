@@ -1,8 +1,10 @@
-- le classi java.util.Set e java.util.HashSet
-- confronto con java.util.ArrayList
-- l'utilizzo di equals() e hashCode() per gli HashSet
-- le classi java.util.Map e java.util.HashMap
+- la classe java.util.LinkedList<T>
 - interfaccia java.lang.Iterable<T>
 - interfaccia java.util.Iterator<T>
 - ciclo foreach su tipi iterabili
+- A <= B implica A[] <= B[]
+- A <= B non implica Classe<A> <= Classe<B>
+- le classi java.util.Set e java.util.HashSet
+- l'utilizzo di equals() e hashCode() per gli HashSet
+- le classi java.util.Map e java.util.HashMap
 
