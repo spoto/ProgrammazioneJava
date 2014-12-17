@@ -1,0 +1,4 @@
+- le classi java.util.Set e java.util.HashSet
+- l'utilizzo di equals() e hashCode() per gli HashSet
+- le classi java.util.Map e java.util.HashMap
+
