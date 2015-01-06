@@ -23,7 +23,7 @@
 %\end{tabular}
 \begin{center} {\bf Esame di Programmazione II, 27 settembre 2013 (2 ore)}\end{center}
 
-Si consideri una gerarchia di classi che rappresentano dei numeri interi:
+Si consideri una gerarchia di classi che rappresentano dei numeri naturali:
 %
 \begin{center}
 \includegraphics[width=8.5cm]{classi.pdf}
@@ -55,7 +55,9 @@ Due numeri sono uguali se e solo se hanno lo stesso valore.
 Si scriva la classe astratta \texttt{AbstractNumero} che implementa,
 \underline{come \texttt{final}}, i metodi
 \texttt{getValue}, \texttt{aggiungi}, \texttt{sottrai}, \texttt{compareTo},
-\texttt{equals} e \texttt{hashCode}. Se servono campi, devono essere dichiarati \texttt{private}.
+\texttt{equals} e \texttt{hashCode}. Due numeri devono essere considerati
+\texttt{equals} se e solo se hanno lo stesso valore.
+Se servono campi, devono essere dichiarati \texttt{private}.
 Se servono costruttori, devono essere dichiarati \texttt{protected}.
 \end{esercizio}
 
@@ -72,7 +74,8 @@ protected NumeroInBase(int value, int base)
 
 \noindent
 che costruisce il numero \texttt{value} nella base indicata e che lancia una
-\texttt{java.lang.ArithmeticException} se la base non \`e fra due e sedici.
+\texttt{java.lang.IllegalArgumentException} se il valore \`e negativo
+o se la base non \`e fra due e sedici.
 \end{esercizio}
 
 \begin{esercizio}
@@ -89,7 +92,7 @@ public NumeroInBaseDue(int value)
 
 \noindent
 che costruisce il numero \texttt{value} in base due e che lancia una
-\texttt{java.lang.ArithmeticException} se il valore \`e negativo.
+\texttt{java.lang.IllegalArgumentException} se il valore \`e negativo.
 Deve avere un metodo \texttt{toString} che restituisce una stringa che descrive
 il numero (quindi fatta solo di \texttt{'0'} e \texttt{'1'}).
 \end{esercizio}
@@ -107,7 +110,7 @@ public NumeroInBaseSedici(int value)
 
 \noindent
 che costruisce il numero \texttt{value} in base sedici e che lancia una
-\texttt{java.lang.ArithmeticException} se il valore \`e negativo.
+\texttt{java.lang.IllegalArgumentException} se il valore \`e negativo.
 Deve avere un metodo \texttt{toString} che restituisce una stringa che descrive
 il numero in esadecimale.
 \end{esercizio}
@@ -130,7 +133,7 @@ public NumeroBCD(int value)
 
 \noindent
 che costruisce il numero \texttt{value} in binario a codice decimale e che lancia una
-\texttt{java.lang.ArithmeticException} se il valore \`e negativo.
+\texttt{java.lang.IllegalArgumentException} se il valore \`e negativo.
 Deve avere un metodo \texttt{toString} che restituisce una stringa che descrive
 il numero in binario a codice decimale (quindi fatta solo di \texttt{'0'} e \texttt{'1'}).
 \end{esercizio}
