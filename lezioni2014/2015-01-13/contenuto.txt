@@ -1,0 +1,1 @@
+Classi interne, statiche e non statiche.
