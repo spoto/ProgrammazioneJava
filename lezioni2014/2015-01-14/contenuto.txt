@@ -1,0 +1,4 @@
+- la libreria Swing
+- finestre, componenti
+- contenitori, pannelli
+- listeners
