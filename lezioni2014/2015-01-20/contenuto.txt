@@ -1,0 +1,4 @@
+Sviluppo di applicazioni grafiche secondo il design pattern
+model/view/controller
+
+Esempio del gioco del 15
