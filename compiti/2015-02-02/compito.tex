@@ -1,0 +1,152 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 2 febbraio 2015}\end{center}
+%\`
+
+La ditta Paranoid produce l'omonimo sistema operativo
+per una linea di smartphone su cui \`e possibile installare applicazioni (\emph{app}).
+Esistono degli \emph{store} che accumulano app e le rendono disponibili ai clienti. Nel corso degli
+anni, il sistema operativo Paranoid ha subito delle evoluzioni, per cui esistono gi\`a quattro
+versioni successive, in ordine cronologico:
+%
+{\small
+\begin{verbatim}
+public enum OS {
+  LITTLE_LION,   // prima versione
+  RUNNING_TIGER,
+  ACKWARD_BEAR,
+  FLOATING_HIPPO // ultima versione
+}
+\end{verbatim}
+}
+
+\noindent
+In Java, gli \texttt{enum} implementano \texttt{java.lang.Comparable}, per cui ad esempio gli elementi
+di \texttt{OS} si possono comparare con il metodo \texttt{int compareTo(OS other)}.
+
+\begin{esercizio}
+\textbf{[5 punti]}
+%
+Si completi la seguente classe, che implementa un'app per il sistema Paranoid:
+%
+{\small
+\begin{verbatim}
+public class App implements Comparable<App> {
+  ... aggiungete campi private
+  public final OS MIN_OS;
+
+  // minOS e' la versione minima di sistema operativo richiesta da questa app
+  public App(String name, OS minOS, int version) {
+    this.MIN_OS = minOS;
+    ...
+  }
+
+  public String getName() { ...restituisce il nome dell'app }
+  public int getVersion() { ...restituisce la versione dell'app }
+  public String toString() { ...restituisce il nome dell'app seguito dalla sua versione }
+  public boolean equals(Object other) { ...due app sono uguali se hanno uguale nome e versione }
+  public int hashCode() { ...deve essere non banale }
+  public int compareTo(App other) { ...due app vengono prima ordinate per nome, poi per versione }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[7 punti]}
+%
+Un dispositivo (smartphone) permette di installare un numero arbitrario di app, purch\'e esse siano compatibili
+con la sua versione installata del sistema operativo Paranoid. \`E possibile reinstallare un'app gi\`a
+installata, ma solo se si passa a una versione successiva dell'app. In tal caso, la nuova
+versione sostituisce la vecchia versione della app. \`E sempre possibile deinstallare un'app.
+
+Si completi la seguente classe, che implementa un dispositivo:
+%
+{\small
+\begin{verbatim}
+public class Device {
+  public final OS os;
+  ... eventuali campi privati
+
+  // il dispositivo implementa il sistema operativo indicato e all'inizio non ha app installate
+  public Device(OS os) {
+    this.os = os;
+  }
+
+  // aggiunge l'app a quelle gia' installate, se possibile:
+  // * se il sistema operativo del dispositivo non supporta l'app, lancia una AppNotSupportedException
+  // * se l'app e' gia' installata in una versione non precedente, lancia una AppAlreadyInstalledException
+  // * se l'app e' gia' installata in una versione precedente, la sostituisce con la nuova versione
+  public void install(App app) { ... }
+
+  // rimuove l'app da quelle gia' installate. Se non era installata, non fa nulla
+  public void deInstall(App app) { ... }
+
+  // restituisce le app installate su questo dispositivo
+  public SortedSet<App> getInstalledApps() { ... }
+}
+\end{verbatim}}
+
+\noindent
+\textbf{Suggerimento:} pu\`o tornare utile la classe \texttt{java.util.TreeSet<E>}, che implementa
+un insieme ordinato di \texttt{E} (che deve essere un \texttt{Comparable}) e che implementa l'interfaccia \texttt{java.util.SortedSet<E>}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Sia \texttt{AppNotSupportedException} che \texttt{AppAlreadyInstalledException} sono sottoclassi
+concrete dell'eccezione astratta \texttt{InstallationException}, sottoclasse di
+\texttt{java.lang.RuntimeException}. Si scrivano queste tre classi di eccezione.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[8 punti]}
+Uno store contiene app e ha l'intelligenza per selezionare quelle compatibili con un dato dispositivo.
+Si completi la seguente classe che implementa uno store:
+%
+{\small
+\begin{verbatim}
+public class Store {
+  private final String name;
+  ... eventuali campi private
+
+  public Store(String name) {
+    this.name = name;
+  }
+
+  public void add(App app) {  ... aggiunge un'app a questo store }
+
+  public String toString() {
+    ... restituisce il nome dello store seguito dal toString() delle app contenute in questo store
+  }
+
+  public SortedSet<App> getAppsFor(Device device) {
+    ... restituisce le app di questo store compatibili con il sistema operativo del dispositivo indicato. 
+    Se piu' versioni sono compatibili col dispositivo, restituisce solo la versione piu' recente
+  }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\end{document}
