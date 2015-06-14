@@ -1,0 +1,179 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 23 febbraio 2015}\end{center}
+%\`
+
+Il gioco della vita \`e una tabella bidimensionale di cellule, le quali possono essere vive
+(rappresentante con un asterisco) oppure morte (rappresentate con uno spazio).
+Per esempio, la seguente \`e una  rappresentazione di un gioco della vita di dimensione
+$40\times 7$, in un certo istante:
+
+{\small
+\begin{verbatim}
+                                        
+  **                                    
+  **                      **            
+                          * *           
+                          *             
+                                        
+     ***                                
+\end{verbatim}}
+
+\`E possibile cambiare la tabella di cellule secondo due regole:
+%
+\begin{enumerate}
+\item una cellula morta con esattamente 3 vicini vivi viene sostituita con una cellula viva;
+\item una cellula viva con 2 o 3 vicini vivi viene sostituita con una cellula viva;
+      altrimenti viene sostituita con una cellula morta (per isolamento o sovraffollamento).
+\end{enumerate}
+
+\begin{esercizio}
+\textbf{[6 punti]}
+%
+Si completi la seguente classe, che implementa una cellula.
+%
+{\small
+\begin{verbatim}
+public class Cell {
+  private final boolean alive; // viva o morta?
+  public Cell(boolean alive) { ... } // costruisce una cellula, specificando se viva o morta
+  public String toString() { ... } // stringa di un solo carattere, asterisco o spazio
+  public Cell next(Iterable<Cell> neighbors) { ... }
+}
+\end{verbatim}}
+
+\noindent
+Il metodo \texttt{next} restituisce la cellula che deve sostituire \texttt{this}, implementando le due
+regole del gioco date sopra. Il parametro \texttt{neighbors} sono i vicini di \texttt{this},
+la cui vita o morte determina la scelta della cellula che deve sostituire \texttt{this}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+%
+Nel gioco della vita esistono delle \emph{figure}, cio\`e
+delle combinazioni di cellule che prendono nomi ben precisi. Per
+esempio, un \emph{blocco} \`e una figura fatta da quattro cellule vive:
+
+{\small\begin{verbatim}
+**
+**
+\end{verbatim}}
+
+\noindent
+La seguente classe implementa una figura, che conosce le coordinate di partenza, in alto a sinistra,
+in cui la figura \`e posizionata dentro una tabella di cellule:
+
+{\small\begin{verbatim}
+public abstract class Figure {
+  protected final int startX;
+  protected final int startY;
+  
+  protected Figure(int startX, int startY) {
+    this.startX = startX;
+    this.startY = startY;
+  }
+
+  public abstract Cell mkAliveCellAt(int x, int y);
+}
+\end{verbatim}}
+
+\noindent
+Il metodo \texttt{mkAliveCellAt} restituisce la cellula alle coordinate $x$ e $y$ della
+tabella di cellule solo se appartiene alla figura ed \`e viva; altrimenti ritorna \texttt{null}.
+Per esempio, la seguente \`e l'implementazione di un blocco:
+%
+\newpage
+{\small\begin{verbatim}
+public class Block extends Figure {
+  public Block(int startX, int startY) {
+    super(startX, startY);
+  }
+
+  @Override
+  public Cell mkAliveCellAt(int x, int y) {
+    x = x - startX; // calcola lo spostamento rispetto all'angolo in alto a sinistra della figura
+    y = y - startY;
+
+    // le cellule vive sono in coordinate tra 0 e 1, sia ascissa che ordinata
+    return 0 <= x && x <= 1 && 0 <= y && y <= 1 ? new Cell(true) : null;
+  }
+}
+\end{verbatim}}
+
+Si scrivano altre sottoclassi di \texttt{Figura}, in modo da implementare:
+\begin{itemize}
+\item un \emph{lampeggiatore} di dimensione $3\times 1$ (classe \texttt{Blinker.java}):
+{\small\begin{verbatim}
+***
+\end{verbatim}}      
+\item una \emph{barca} di dimensione $3\times 3$ (classe \texttt{Ship.java}):
+{\small\begin{verbatim}
+**
+* *
+ *
+\end{verbatim}}
+\item un \emph{rospo} di dimensione $4\times 2$ (classe \texttt{Toad.java}):
+{\small\begin{verbatim}
+ ***
+***
+\end{verbatim}}
+\item un \emph{aliante} di dimensione $3\times 3$ (classe \texttt{Glider.java}):
+{\small\begin{verbatim}
+***
+*
+ *
+\end{verbatim}}      
+\end{itemize}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[11 punti]}
+La tabella di cellule contiene le cellule del gioco e permette di sostituirle con quelle
+che risultano dalla due regole viste sopra. Si completi la seguente classe che
+implementa la tabella:
+
+{\small
+\begin{verbatim}
+public class Board {
+  private final int width;
+  private final int height;
+  private final Cell[][] cells;
+
+  // costruisce una tabella delle dimensioni indicate e in cui sono posizionate
+  // le figure indicate. Altrove le cellule devono essere inizialmente morte
+  public Board(int width, int height, Figure... figures) { ... }
+
+  // fa passare le cellule della tabella alla loro configurazione successiva
+  public void recomputeCells() { ... }
+
+  // restituisce una descrizione della tabella, fatta da spazi e asterischi,
+  // come quella mostrata all'inizio del compito
+  public String toString() { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\end{document}

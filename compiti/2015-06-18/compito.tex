@@ -1,0 +1,175 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 18 giugno 2015}\end{center}
+%\`
+
+La libreria Java standard contiene un'interfaccia che specifica una sequenza di caratteri di cui \`e possibile
+estrarre sottosequenze:
+
+{\small
+\begin{verbatim}
+public interface java.lang.CharSequence {
+  public abstract int length();
+  public abstract char charAt(int pos);
+  public abstract java.lang.CharSequence subSequence(int start, int end);
+  public abstract java.lang.String toString();
+}
+\end{verbatim}
+}
+
+\noindent
+Il metodo \texttt{length()} restituisce il numero di caratteri della sequenza; il metodo \texttt{charAt()}
+restituisce il \texttt{pos}-esimo carattere della sequenza e genera una \texttt{IndexOutOfBoundsException} se
+\texttt{pos} \`e negativo o maggiore o uguale di \texttt{length()}; il metodo \texttt{subSequence()}
+ritorna una sottosequenza dal carattere \texttt{start}-esimo (incluso) al carattere \texttt{end}-esimo (escluso)
+e genera una \texttt{IndexOutOfBoundsException} se \texttt{start} o \texttt{end} sono
+negativi o se \texttt{end} \`e maggiore di \texttt{length()} o se \texttt{start} \`e maggiore di \texttt{end};
+il metodo \texttt{toString()} ritorna una stringa formata dalla concatenazione dei caratteri della sequenza.
+Si noti che \texttt{java.lang.String} implementa \texttt{java.lang.CharSequence}.
+
+\begin{esercizio}
+\textbf{[4 punti]}
+%
+Si implementi una classe astratta \texttt{AbstractCharSequence}
+che implementa \texttt{CharSequence} lasciandone tutti i metodi
+astratti, tranne \texttt{toString()} che viene implementato e specificato come \texttt{final}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[9 punti]}
+%
+Si completi la seguente sottoclasse di \texttt{AbstractCharSequence},
+che specifica una sequenza di caratteri alfabetici che parte da un
+dato carattere \texttt{start} e continua con i successivi caratteri
+minuscoli dell'alfabeto inglese, ciclicamente, per una certa lunghezza
+specificata al costruttore: dopo la \texttt{'z'} si ricomincia dalla \texttt{'a'}.
+Nel costruttore, \texttt{start} deve essere tra \texttt{'a'} e
+\texttt{'z'} altrimenti deve venire lanciata una \texttt{IllegalArgumentException};
+il parametro \texttt{length} deve essere non negativo, altrimenti deve
+venire lanciata una \texttt{IndexOutOfBoundsException}:
+
+{\small\begin{verbatim}
+public class Alphabetical extends AbstractCharSequence {
+  ...
+  public Alphabetical(char start, int length) { ... }
+
+  @Override
+  public int length() { ... }
+
+  @Override
+  public char charAt(int index) { ... }
+
+  @Override
+  public Alphabetical subSequence(int start, int end) { ... }
+}
+\end{verbatim}}
+
+\noindent
+Si noti che il tipo di ritorno del metodo \texttt{subSequence()} \`e stato raffinato e questo
+dovr\`a venire rispettato dalla sua implementazione.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[9 punti]}
+Si completi la seguente sottoclasse di \texttt{AbstractCharSequence},
+che permette di costruire una sequenza identica a quella fonita al suo
+costruttore,
+ma con in pi\`u un carattere di controllo alfabetico in fondo. Tale carattere
+\`e definito come la somma dei codici dei caratteri della sequenza
+originale, modulo $26$, pi\`u il codice di \texttt{'a'}.
+
+{\small
+\begin{verbatim}
+public class ControlCode extends AbstractCharSequence {
+  ...
+  public ControlCode(CharSequence original) { ... }
+
+  @Override
+  public int length() { ... }
+
+  @Override
+  public char charAt(int index) { ... }
+
+  @Override
+  public CharSequence subSequence(int start, int end) { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\newpage
+
+Se tutto \`e corretto, l'esecuzione del seguente programma:
+
+{\small\begin{verbatim}
+public class Main {
+
+  private static int counter;
+
+  public static void main(String[] args) {
+    CharSequence a1 = new Alphabetical('c', 26);
+    CharSequence a2 = new Alphabetical('h', 60);
+    CharSequence a3 = a2.subSequence(5, 40);
+    print(a1);  // 1
+    print(a2);  // 2
+    print(a3);  // 3
+
+    CharSequence c1 = new ControlCode("Shakespeare");
+    CharSequence c2 = new ControlCode(a3);
+    print(c1);  // 4
+    print(c2);  // 5
+
+    CharSequence s1 = "There is no world without Verona walls";
+    CharSequence s2 = "But purgatory, torture, hell itself";
+    print(s1);  // 6
+    print(s2);  // 7
+
+    CharSequence app = s1.toString() + a2.toString();
+    print(app); // 8
+
+    CharSequence last = c2.subSequence(35, 36);
+    print(last);// 9
+  }
+
+  private static void print(CharSequence seq) {
+    System.out.println(++counter + ": " + seq + " length = " + seq.length());
+  }
+}
+\end{verbatim}}
+
+\noindent
+dovr\`a stampare:
+
+{\small\begin{verbatim}
+1: cdefghijklmnopqrstuvwxyzab length = 26
+2: hijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmno length = 60
+3: mnopqrstuvwxyzabcdefghijklmnopqrstu length = 35
+4: Shakespeareo length = 12
+5: mnopqrstuvwxyzabcdefghijklmnopqrstuq length = 36
+6: There is no world without Verona walls length = 38
+7: But purgatory, torture, hell itself length = 35
+8: There is no world without Verona wallshijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmno length = 98
+9: q length = 1
+\end{verbatim}}
+
+\end{document}
