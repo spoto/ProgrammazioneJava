@@ -1,0 +1,150 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 3 febbraio 2016}\end{center}
+%\`
+
+Si consideri un'enumerazione di tutti i partiti che si presentano alle elezioni:
+
+{\small\begin{verbatim}
+public enum Partito {
+  PENSIONATI,
+  FELICE,
+  FLOREALE,
+  CAOTICO,
+  BASSOTTI;
+
+  public final static int NUMERO_PARTITI = elementi().length;
+
+  public static Partito[] elementi() {
+    return values();
+  }
+
+  public int indice() {
+    for (int pos = 0; pos < NUMERO_PARTITI; pos++)
+      if (elementi()[pos] == this)
+        return pos;
+
+    throw new RuntimeException("impossibile");
+  }
+}
+\end{verbatim}
+}
+
+\noindent
+Si noti che questa enumerazione definisce una costante per il numero
+totale dei partiti, un metodo \texttt{elementi()} che permette di ottenere l'array
+di tutti i partiti e un metodo \texttt{indice()} che restituisce l'indice di un dato partito
+dentro l'array di tutti i partiti.
+
+\begin{esercizio}
+\textbf{[11 punti]}
+Si completi la classe che rappresenta un'elezione. Essa permette di registrare i voti per
+i vari partiti:
+
+{\small\begin{verbatim}
+public class Elezioni {
+  ...
+  public void vota(Partito partito) { ...registra un altro voto per il partito indicato }
+
+  @Override
+  public String toString() {
+    ...sulla base dei voti registrati per ciascun partito, restituisce una stringa del tipo:
+
+    Risultati elezioni:
+
+    1      PENSIONATI:  7762 voti (33.03%)
+    2          FELICE:  3216 voti (13.68%)
+    3        FLOREALE:  5695 voti (24.23%)
+    4         CAOTICO:  5731 voti (24.39%)
+    5        BASSOTTI:  1098 voti (4.67%)    
+  }
+
+  protected final int numeroVotiEspressi() {
+    ...restituisce il numero totale di voti registrati
+  }
+
+  protected final int votiPer(Partito partito) {
+    ...restituisce il numero totale di voti registrati per il partito indicato
+  }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+  \textbf{[10 punti]}
+  Si definisca una sottoclasse \texttt{ElezioniIstogramma} di
+  \texttt{Elezioni}, la cui unica differenza rispetto alla sua superclasse
+  \`e nel metodo \texttt{toString()} che, \emph{oltre a generare la stessa stringa
+  che nella superclasse}, deve aggiungere un istogramma di 50 caratteri
+  che indicano in propozione i voti ottenuti per ciascun partito. Per esempio
+  deve restituire una stringa del tipo:
+
+  {\small\begin{verbatim}
+    Risultati elezioni:
+
+1      PENSIONATI:  7762 voti (33.03%)
+2          FELICE:  3216 voti (13.68%)
+3        FLOREALE:  5695 voti (24.23%)
+4         CAOTICO:  5731 voti (24.39%)
+5        BASSOTTI:  1098 voti (4.67%)
+
+111111111111111122222233333333333344444444444455
+  \end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+  \textbf{[10 punti, facoltativo per chi ha gi\`a fatto il progetto degli anni passati]}
+  Si consideri la seguente classe che rappresenta una coppia di un partito e dei voti
+  che ha ottenuto a un'elezione:
+
+  {\small\begin{verbatim}
+public class VotiPerPartito {
+  private final Partito partito;
+  private final int voti;
+
+  public VotiPerPartito(Partito partito, int voti) {
+    this.partito = partito;
+    this.voti = voti;
+  }
+
+  @Override
+  public String toString() {
+    return partito + ": " + voti;
+  }
+}
+  \end{verbatim}}
+
+  \noindent
+  Scrivete le modifiche al codice fin qui realizzato in modo da rendere gli oggetti
+  di classe \texttt{Elezioni} ed \texttt{ElezioniIstogramma} iterabili su
+  \texttt{VotiPerPartito} (questo significa che iterando
+  su tali oggetti si deve ottenere oggetti \texttt{VotiPerPartito}
+  che rappresentano i voti per ciascun partito, uno dopo l'altro).
+  
+\end{esercizio}
+
+\end{document}
