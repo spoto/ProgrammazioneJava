@@ -88,7 +88,7 @@ public class Utente implements Comparable<Utente> {
   ...
   public Utente(String nome, String cognome) { ... }
   public boolean equals(Object other) { devono avere stesso nome e stesso cognome }
-  public int hashCode() { ... }
+  public int hashCode() { non deve essere banale }
   public int compareTo(Utente other) { li mette in ordine per cognome e poi per nome }
   public String toString() { ritorna il nome, uno spazio e il cognome }
 }
@@ -112,13 +112,13 @@ public class Iscrizione implements Comparable<Iscrizione> {
   public Iscrizione(Utente utente, Mese meseInizio, int annoInizio, Mese meseFine, int annoFine)
       throws IscrizioneTroppoLungaException, IscrizioneVuotaException {
     ...
-    se il mese di inizio viene cronologicamente prima del mese di fine, lancia una IscrizioneVuotaException
+    se il mese di inizio viene cronologicamente dopo il mese di fine, lancia una IscrizioneVuotaException
     se l'iscrizione va oltre i 12 mesi, lancia una IscrizioneTroppoLungaException
   }
 
   public Utente getUtente() { ritorna l'utente che si e' iscritto }
   public boolean equals(Object other) { devono avere stesso utente, stesso inizio e stessa fine }
-  public int hashCode() { ... }
+  public int hashCode() { non deve essere banale }
   public int compareTo(Iscrizione other) {
     li mette in ordine per inizio. A parita' di inizio, li mette in ordine per utente.
     A parita' di inizio e di utente, li mette in ordine per fine
@@ -164,8 +164,8 @@ public class Registro {
   }
 
   public Registro proiettaSu(int anno) {
-    ritorna un registro che contiene tutte e sole le iscrizioni di questo registro che
-    riguardano l'anno indicato, anche parzialmente
+    ritorna un nuovo registro che contiene tutte e sole le iscrizioni di questo registro che
+    riguardano l'anno indicato, anche parzialmente. Questo registro non viene modificato
   }
 }
   \end{verbatim}}
