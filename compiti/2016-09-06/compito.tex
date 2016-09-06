@@ -1,0 +1,236 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 6 settembre 2016}\end{center}
+%\`
+
+\begin{esercizio}
+\textbf{[8 punti]}
+Un \texttt{PhoneBook} \`e una raccolta di record contenenti nome, cognome,
+numero di telefono e genere (maschile/femminile) di persone. Si completi
+la sua implementazione, riempiendo le parti mancanti nella classe che segue:
+
+{\scriptsize\begin{verbatim}
+public class PhoneBook extends View {
+  ...
+  public static class Entry {
+    public final String name;      public final String surname;
+    public final int phone;        public final boolean sex;
+    public final static boolean MALE = false, FEMALE = true;
+
+    private Entry(String name, String surname, int phone, boolean sex) {
+      this.name = name;    this.surname = surname;
+      this.phone = phone;  this.sex = sex;
+    }
+
+    @Override public String toString() {
+      return name + " " + surname + ": " + phone + (sex == MALE ? " [male]" : " [female]");
+    }
+  }
+
+  public void add(String name, String surname, int phone, boolean sex) { ...
+    // aggiunge l'entry; se gia' ne esisteva una con lo stesso nome e cognome, la sostituisce
+  }
+
+  public void remove(String name, String surname) { ...
+    // rimuove l'entry con tale nome e cognome; se non e' presente, lancia una UnknownEntryException
+  }
+
+  @Override public Iterator<Entry> iterator() { ...
+    // resituisce un iteratore sulle entry di questo PhoneBook
+  }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Si implementi l'eccezione \texttt{UnknownEntryException}.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[10 punti]}
+Una \texttt{View} \`e un iterabile di entry, cio\`e un oggetto che, se iterato, fornisce
+un'entry alla volta. La sua implementazione \`e la seguente. Si noti che si tratta
+di una classe astratta quindi il suo metodo \texttt{iterator()} deve essere
+implementato nelle sue sottoclassi concrete, come ad esempio il \texttt{PhoneBook}
+visto sopra:
+
+{\scriptsize\begin{verbatim}
+public abstract class View implements Iterable<Entry> {
+  protected View() {}
+
+  @Override public final String toString() {
+    String result = "";
+    for (Entry entry: this)
+      result += entry.toString() + "\n";
+
+    return result;
+  }
+}
+\end{verbatim}}
+
+\noindent
+Si definisca una sottoclasse concreta \texttt{SexView} di \texttt{View} che, data
+un'altra \texttt{View} padre, \`e un iterabile sulle sole entry del padre che abbiano
+un genere ben preciso, fornito al costruttore. Si completi a tal fine la seguente
+implementazione:
+
+{\scriptsize\begin{verbatim}
+public class SexView extends View {
+  private final View parent;  private final boolean sex;
+  public SexView(View parent, boolean sex) { this.parent = parent;  this.sex = sex; }
+  @Override public Iterator<Entry> iterator() { ... }
+}
+\end{verbatim}}
+
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[11 punti, solo per chi non ha gi\`a fatto il progetto degli anni passati]}
+Si definisca una sottoclasse concreta \texttt{SortedView} di \texttt{View} che, data
+un'altra \texttt{View} padre, \`e un iterabile sulle stesse entry del padre, ma nell'ordine
+specificato da un comparatore fornito al costruttore. Si completi a tal fine la seguente
+implementazione:
+
+{\scriptsize\begin{verbatim}
+public class SortedView extends View {
+  private final View parent;  private final Comparator<Entry> comparator;
+
+  public SortedView(View parent, Comparator<Entry> comparator) {
+    this.parent = parent; this.comparator = comparator;
+  }
+
+  @Override public Iterator<Entry> iterator() { ... }
+}
+\end{verbatim}}
+
+\noindent
+Si ricordi che l'interfaccia di libreria \texttt{java.util.Comparator} \`e la seguente:
+{\scriptsize\begin{verbatim}
+public interface Comparator<T> {
+  int compare(T o1, T o2);
+}
+\end{verbatim}}
+
+\noindent
+dove il metodo \texttt{compare()} ritorna un numero negativo se \texttt{o1} viene
+prima di \texttt{o2}, ritorna un numero positivo se \texttt{o2} viene prima di \texttt{o1}
+e ritorna $0$ altrimenti.
+
+Si ricordi inoltre che una \texttt{java.util.List entries} pu\`o essere convertita in array
+con l'istruzione:
+
+{\scriptsize\begin{verbatim}
+  Entry[] array = entries.toArray(new Entry[entries.size()])
+\end{verbatim}}
+
+\noindent
+e che un \texttt{array} pu\`o essere ordinato rispetto a un comparatore con l'istruzione:
+{\scriptsize\begin{verbatim}
+  java.util.Arrays.sort(array, comparator)
+\end{verbatim}}
+\end{esercizio}
+
+\hrule
+
+\mbox{}\\
+
+Se tutto \`e corretto, l'esecuzione del programma:
+{\scriptsize\begin{verbatim}
+public class Main {
+  public static void main(String[] args) {
+    PhoneBook book = new PhoneBook();
+    book.add("Primo", "Levi", 7569222, MALE);
+    book.add("Fausto", "Spoto", 1234567, MALE);
+    book.add("Giorgio", "Levi", 1563423, MALE);
+    book.add("Catherine", "Bach", 367745, FEMALE);
+    book.add("Pietro", "Ferrara", 7865634, MALE);
+    book.add("Alberto", "Lovato", 8746728, MALE);
+    book.add("Thomas", "Scudiero", 453678, MALE);
+    book.add("Pietro", "Ferrara", 333334, MALE); // sostituisce
+    book.add("Cybill", "Shepherd", 987567546, FEMALE);
+    book.add("Audrey", "Hepburn", 32444, FEMALE);
+    book.remove("Fausto", "Spoto");
+
+    View view = book;
+    System.out.println("DIRECT VIEW");
+    System.out.println(view);
+
+    view = new SexView(view, MALE);
+    System.out.println("MALE ONLY VIEW");
+    System.out.println(view);
+
+    Comparator<Entry> comparator = new Comparator<Entry>() { // ordina per cognome e poi per nome
+
+      @Override public int compare(Entry address1, Entry address2) {
+        int diff = address1.surname.compareTo(address2.surname);
+        if (diff != 0)
+          return diff;
+        else
+          return address1.name.compareTo(address2.name);
+      }
+    };
+
+    view = new SortedView(view, comparator);
+    System.out.println("SORTED MALE ONLY VIEW");
+    System.out.println(view);
+  }
+}
+\end{verbatim}}
+
+\noindent dovr\`a stampare:
+
+{\scriptsize\begin{verbatim}
+DIRECT VIEW
+Primo Levi: 7569222 [male]
+Giorgio Levi: 1563423 [male]
+Catherine Bach: 367745 [female]
+Alberto Lovato: 8746728 [male]
+Thomas Scudiero: 453678 [male]
+Pietro Ferrara: 333334 [male]
+Cybill Shepherd: 987567546 [female]
+Audrey Hepburn: 32444 [female]
+
+MALE ONLY VIEW
+Primo Levi: 7569222 [male]
+Giorgio Levi: 1563423 [male]
+Alberto Lovato: 8746728 [male]
+Thomas Scudiero: 453678 [male]
+Pietro Ferrara: 333334 [male]
+
+SORTED MALE ONLY VIEW
+Pietro Ferrara: 333334 [male]
+Giorgio Levi: 1563423 [male]
+Primo Levi: 7569222 [male]
+Alberto Lovato: 8746728 [male]
+Thomas Scudiero: 453678 [male]            
+\end{verbatim}}
+
+\begin{center}
+\textbf{\`E possibile definire campi, metodi, costruttori e classi aggiuntive, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
