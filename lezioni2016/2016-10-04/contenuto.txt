@@ -18,3 +18,9 @@
 - ordine di valutazione
 - divisione intera e in virgola mobile
 - cast numerici (conversione di tipo)
+- il tipo char
+- il tipo boolean
+- la classe java.lang.String (oggetti immutabili!)
+- letterali stringa
+- concatenzazione di stringhe con +
+- lunghezza delle stringhe, metodo length()

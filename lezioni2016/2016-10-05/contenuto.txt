@@ -1,7 +1,3 @@
-- la classe java.lang.String (oggetti immutabili!)
-- letterali stringa
-- concatenzazione di stringhe con +
-- lunghezza delle stringhe, metodo length()
 - altri metodi di java.lang.String: equals(), equalsIgnoreCase(),
   toLowerCase(), tuUpperCase(), trim(), charAt(), substring(), indexOf(),
   lastIndexOf(), compareTo(), compareToIgnoreCase()
@@ -19,5 +15,12 @@
   @        @
   @@@@@@@@@@
 
+- esercizio: si rifaccia lo stesso esercizio SENZA usare istruzioni
+  di stampa dentro a un ciclo:
+  
 - esercizio: scrivere un programma Java che stampa, una dopo l'altra,
   9 cornici, da quella 2 x 2 fino a quella 10 x 10
+
+- esercizio: scrivere un programma che stampa 26 volte la cornice 10 x 10,
+  usando ogni volta un carattere alfabetico diverso al posto di '@',
+  dalla 'a' alla 'z'
