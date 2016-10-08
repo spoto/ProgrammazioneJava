@@ -1,0 +1,15 @@
+- variabili d'istanza (campi)
+- valori di default dei campi
+- inizializzazione esplicita dei campi
+- costruttori
+- metodi d'istanza
+- oggetto ricevitore, riferimento this
+- metodi che ritornano un valore e metodi void
+- variabili locali ai metodi
+- lista dei parametri dei metodi
+- parametri formali e attuali (o argomenti)
+- passaggio dei parametri primitivi per valore (nessun side-effect)
+- metodi e campi private
+- incapsulazione
+- interfaccia pubblica di una classe
+
