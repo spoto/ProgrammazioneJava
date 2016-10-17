@@ -1,0 +1,33 @@
+- Si scriva una classe Data.java che rappresenta una data del calendario
+  dal primo gennaio 1900 in poi. Tale classe deve avere i costruttori:
+
+  * Data(int g, int m, int a), che costruisce una data che rappresenta
+    il giorno g del mese m (tra 1 e 12) dell'anno a
+  * Data(int g, int m), che costruisce una data che rappresenta
+    il giorno g del mese m (tra 1 e 12) dell'anno 2008
+  * Data(int g), che costruisce una data che rappresenta il giorno g
+    del mese di gennaio dell'anno 2008
+  * Data() che costruisce una data che rappresenta il 13 gennaio 1973
+
+  Se si tenta di costruire una data inesistente o precedente il
+  primo gennaio 1900, deve essere segnalato un messaggio di errore a video.
+  Si tenga conto degli anni bisestili.
+
+  Inoltre deve avere dei metodi
+  
+  * String toString(), che restituisce una stringa del tipo "12 marzo 2007"
+  * boolean precede(Data altra), che restituisce true se e solo se la data
+    viene strettamente prima dell'altra
+  * int passatiDallInizio(), che restituisce il numero di giorni passati
+    dal primo gennaio 1900 alla data (incluso il giorno rappresentato
+    dalla data stessa). Si tenga conto degli anni bisestili.
+  * int passatiDallInizioDellAnno(), che restituisce il numero di giorni passati
+    dall'inizio dell'anno alla data (incluso il giorno rappresentato
+    dalla data stessa). Si tenga conto degli anni bisestili.
+
+  Quindi si scriva una classe Main.java con un metodo main che crea
+  l'11 agosto 2008 e il 13 gennaio 1973, li stampa a video, stampa
+  il risultato di precede dell'uno rispetto all'altro, stampa
+  quanti giorni sono passati dall'inizio dell'anno per l'uno e per
+  l'altro e quanti giorni sono passati dal primo gennaio 1900, per l'uno
+  e per l'altro.
