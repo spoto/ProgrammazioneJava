@@ -1,16 +1,9 @@
 - uso di this() per la concatenazione dei costruttori
-- campi statici
+- campi statici: date con nazionalità personale o condivisa
 - variabili d'istanza: sono stato, non temporanei
 - stato di un oggetto e sua consistenza
 - metodi statici
 - classpath, jar 
-- esempio dei semafori
 - metodi statici di java.lang.Math
 - costanti definite con final
-- classi wrapper per i tipi primitivi e loro metodi statici
-- classi e oggetti mutabili e immutabili
-- privacy leak: metodi che ritornano componenti dello stato privato o
-  metodi che settano componenti dello stato privato o costruttori che
-  assegnano allo stato componenti mutabili
-- costruttore di copia
 - libreria JUnit per il testing

@@ -1,0 +1,7 @@
+- esempio dei semafori
+- classi wrapper per i tipi primitivi e loro metodi statici
+- classi e oggetti mutabili e immutabili
+- privacy leak: metodi che ritornano componenti dello stato privato o
+  metodi che settano componenti dello stato privato o costruttori che
+  assegnano allo stato componenti mutabili
+- costruttore di copia
