@@ -1,0 +1,132 @@
+Nota: in questo esercizio non si utilizzino gli array.
+Quando avremo studiato gli array, rifaremo questo esercizio utilizandoli.
+
+Si vuole implementare una carta del gioco del poker, che ha un valore fra
+
+2 3 4 5 6 7 8 9 10 J Q K 1
+
+e un seme tra
+
+spades (♠), hearts (♥), diamonds (♦) e clubs (♣).
+
+Si completi la seguente classe, che rappresenta una carta:
+
+public class Card {
+  ...
+
+  /**
+   * Genera una carta a caso da min (incluso) in su.
+   * 
+   * @param min la carta minima che può essere generata (2-14)
+   */
+  public Card(int min) { ... }
+  public Card() { ... }
+
+  public int getValue() { ...ritorna il valore della carta (2-14) }
+  public int getSuit() { ...ritorna il seme della carta (0-3) }
+
+  /**
+   * Ritorna una descrizione della carta sotto forma di stringa, del
+   * tipo 10♠ opure J♥.
+   */
+  public String toString() { ... }
+
+  /**
+   * Determina se questa carta e uguale ad other.
+   * 
+   * @param other l'altra carta
+   * @return true se e solo se le due carte sono uguali
+   */
+  public boolean equals(Card other) { ... }
+}
+
+Si completi quindi la seguente classe, che rappresenta
+una mano di cinque carte, diverse fra loro:
+
+public class Hand {
+  ...
+  
+  /**
+   * Costruisce una mano di cinque carte, a caso, ma senza ripetizioni.
+   * 
+   * @param min la carta minima che può essere generata
+   */
+  public Hand(int min) { ... }
+
+  /**
+   * Restituisce una descrizione stringa delle cinque carte, del tipo:
+   * Q♦ 10♠ K♠ 7♣ J♥
+   */
+  public String toString() { ... }
+
+  /**
+   * Ritorna la categoria di questa mano di carte:
+   * https://it.wikipedia.org/wiki/Punti_del_poker
+   * 
+   * Le possibilità sono:
+   * <lu>
+   * <li> "royal flush" (scala reale)
+   * <li> "straight flush" (scala a colore)
+   * <li> "four of a kind" (poker)
+   * <li> "full house" (full)
+   * <li> "flush" (colore)
+   * <li> "straight" (scala)
+   * <li> "three of a kind" (tris)
+   * <li> "two pairs" (doppia coppia)
+   * <li> "pair" (coppia)
+   * <li> "high card" (carta isolata)
+   * </lu>
+   * 
+   * @return
+   */
+  public String category() { ... }
+}
+
+Infine si scriva una classe Main con un metodo di partenza main che:
+
+1) crea e stampa 500000 mani di carte generate a caso
+2) a lato a ciascuna mano, stampa il nome della mano
+3) alla fine stampa delle statistiche su quante volte
+   si è verificata ogni categoria, con relativa percentuale
+   sul numero totali di mani generate a caso
+
+Per esempio, una stampa potrebbe essere:
+
+       ♥ 1♥ K♣ K♦ 1♠ : two pairs
+      Q♣ J♣ 8♥ K♣ 1♠ : high card
+      1♣ 7♦ 1♠ K♦ 1♦ : three of a kind
+    10♦ 8♦ 1♥ K♠ 10♠ : one pair
+      K♦ 1♣ 9♣ 7♠ J♠ : high card
+    10♥ 8♦ Q♣ 10♦ J♣ : one pair
+    J♥ 10♣ 10♥ 8♠ Q♦ : one pair
+    ............
+    ............    molte estrazioni intermedie
+    ............
+     Q♦ 10♠ K♠ 7♣ J♥ : high card
+     Q♠ 10♠ 1♥ 8♦ K♠ : high card
+    K♣ 10♣ K♦ 10♥ 1♣ : two pairs
+    J♥ Q♠ 10♥ 10♣ 8♣ : one pair
+      J♦ K♣ J♠ Q♥ 7♦ : one pair
+     K♣ 10♣ 7♠ 1♣ 9♣ : high card
+    9♥ 8♠ Q♦ 10♦ 10♥ : one pair
+      J♦ 7♠ J♣ K♠ Q♣ : one pair
+     Q♣ 10♦ J♥ 8♥ 8♠ : one pair
+     7♠ 10♥ J♠ 1♦ 9♥ : high card
+     J♦ Q♣ 10♥ 7♠ K♣ : high card
+     10♣ Q♥ 9♥ J♥ 7♥ : high card
+    10♣ 7♦ J♥ 10♥ 7♣ : two pairs
+     7♦ 9♥ 8♠ 10♥ 8♣ : one pair
+      1♥ K♠ Q♠ Q♥ Q♦ : three of a kind
+      9♥ J♥ 9♣ 8♠ Q♣ : one pair
+
+statistics:
+royal flush's: 13 (0.0026%)
+straight flush's: 20 (0.0040%)
+straight's: 10151 (2.0302%)
+flush's: 489 (0.0978%)
+four of a kind's: 605 (0.1210%)
+full house's: 3244 (0.6488%)
+three of a kind's: 26830 (5.3660%)
+two pairs's: 60644 (12.1288%)
+one pair's: 266340 (53.2680%)
+high card's: 131664 (26.3328%)
