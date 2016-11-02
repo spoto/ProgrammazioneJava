@@ -1,4 +1,9 @@
-- esempio dei semafori
+- javadoc
+- dichiarazione e creazione di array unidimensionali
+- inizializzazione degli elementi di un array
+- array come argomenti di funzione e come valore di ritorno
+- array multidimensionali
+- array sparsi
 - classi wrapper per i tipi primitivi e loro metodi statici
 - classi e oggetti mutabili e immutabili
 - privacy leak: metodi che ritornano componenti dello stato privato o
