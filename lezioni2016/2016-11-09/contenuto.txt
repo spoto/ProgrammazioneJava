@@ -1,0 +1,62 @@
+Nota: in questo esercizio si devono usare gli array.
+
+Si consideri la carta da gioco implementata nel precedente laboratorio.
+Si aggiunga alla classe Card un metodo:
+
+int compareTo(Card other)
+
+che determina la carta che vale di più: restituisce un numero negativo
+se vale di più this; restituisce un numero positivo se vale di più other;
+restituisce 0 se this e other sono uguali.
+
+Si completi quindi la seguente classe, che rappresenta
+una mano di cinque carte, diverse fra loro, questa volta usando gli array:
+
+public class Hand {
+  ...
+
+  /**
+   * Costruisce una mano di cinque carte, a caso, ma senza ripetizioni.
+   * 
+   * @param min la carta minima che può essere generata
+   */
+  public Hand(int min) { ... }
+
+  /**
+   * Costruisce una mano di cinque carte, da 7 in su,
+   * a caso, ma senza ripetizioni.
+   */
+  public Hand() { ... }
+  
+  /**
+   * Restituisce una descrizione stringa delle carte, del tipo:
+   * Q♦ 10♠ K♠ 7♣ J♥
+   */
+  public String toString() { ... }
+
+  /**
+   * Ritorna la categoria di questa mano di carte:
+   * https://it.wikipedia.org/wiki/Punti_del_poker
+   * 
+   * Se ci sono cinque carte, le possibilità sono:
+   * <lu>
+   * <li> "royal flush" (scala reale)
+   * <li> "straight flush" (scala a colore)
+   * <li> "four of a kind" (poker)
+   * <li> "full house" (full)
+   * <li> "flush" (colore)
+   * <li> "straight" (scala)
+   * <li> "three of a kind" (tris)
+   * <li> "two pairs" (doppia coppia)
+   * <li> "pair" (coppia)
+   * <li> "high card" (carta isolata)
+   * </lu>
+   */
+  public String category() { ... }
+}
+
+Si verifichi che il Main del laboratorio precedente continui a funzionare.
+
+Si aggiunga quindi un metodo compareTo anche alla classe Hand,
+in modo da confrontare una Hand con un'altra e
+determinare la mano di carte che vale di più.

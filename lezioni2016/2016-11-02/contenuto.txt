@@ -32,7 +32,7 @@ public class Card {
   public String toString() { ... }
 
   /**
-   * Determina se questa carta e uguale ad other.
+   * Determina se questa carta è uguale ad other.
    * 
    * @param other l'altra carta
    * @return true se e solo se le due carte sono uguali
