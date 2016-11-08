@@ -34,7 +34,7 @@ public class Card {
 	 * Genera una carta a caso.
 	 */
 	public Card() {
-		this(1);
+		this(2);
 	}
 
 	public int getValue() {

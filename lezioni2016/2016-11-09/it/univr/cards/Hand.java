@@ -159,6 +159,11 @@ public class Hand {
 		return countHowManyHaveValue(value) == 4;
 	}
 
+	private boolean threeHaveValue(int value) {
+		return countHowManyHaveValue(value) == 3;
+	}
+
+
 	private int countHowManyHaveValue(int value) {
 		int count = 0;
 		if (card1.getValue() == value)
@@ -173,13 +178,6 @@ public class Hand {
 			count++;
 		return count;
 	}
-
-	private boolean threeHaveValue(int value) {
-		int count = countHowManyHaveValue(value);
-
-		return count == 3;
-	}
-
 
 	/**
 	 * Determina se tre delle carte di questa mano hanno lo stesso valore e le altre due un altro valore (uguale).
@@ -196,7 +194,7 @@ public class Hand {
 			firstHowMany++;
 		else if (second == 0) {
 			second = card2.getValue();
-			secondHowMany++;
+			secondHowMany = 1;
 		}
 		else if (card2.getValue() == second)
 			secondHowMany++;
@@ -207,7 +205,7 @@ public class Hand {
 			firstHowMany++;
 		else if (second == 0) {
 			second = card3.getValue();
-			secondHowMany++;
+			secondHowMany = 1;
 		}
 		else if (card3.getValue() == second)
 			secondHowMany++;
@@ -218,7 +216,7 @@ public class Hand {
 			firstHowMany++;
 		else if (second == 0) {
 			second = card4.getValue();
-			secondHowMany++;
+			secondHowMany = 1;
 		}
 		else if (card4.getValue() == second)
 			secondHowMany++;
@@ -229,7 +227,7 @@ public class Hand {
 			firstHowMany++;
 		else if (second == 0) {
 			second = card5.getValue();
-			secondHowMany++;
+			secondHowMany = 1;
 		}
 		else if (card5.getValue() == second)
 			secondHowMany++;
@@ -245,14 +243,18 @@ public class Hand {
 	 * @return true se e solo se le carte sono in scala e senza buchi
 	 */
 	private boolean isStraight() {
-		int v1 = card1.getValue();
-		int v2 = card2.getValue();
-		int v3 = card3.getValue();
-		int v4 = card4.getValue();
-		int v5 = card5.getValue();
+		if (allHaveDifferentValues()) {
+			int v1 = card1.getValue();
+			int v2 = card2.getValue();
+			int v3 = card3.getValue();
+			int v4 = card4.getValue();
+			int v5 = card5.getValue();
 
-		return allHaveDifferentValues()
-			&& Math.max(v1, Math.max(v2, Math.max(v3, Math.max(v4, v5)))) - Math.min(v1, Math.min(v2, Math.min(v3, Math.min(v4, v5)))) == 4;
+			return Math.max(v1, Math.max(v2, Math.max(v3, Math.max(v4, v5))))
+				- Math.min(v1, Math.min(v2, Math.min(v3, Math.min(v4, v5)))) == 4;
+		}
+		else
+			return false;
 	}
 
 	private boolean allHaveDifferentValues() {
