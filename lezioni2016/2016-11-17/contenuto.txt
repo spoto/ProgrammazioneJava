@@ -1,0 +1,9 @@
+- Il ciclo for-each sugli array
+- Metodi con un numero variabile di argomenti
+- Esempio: implementazione di un insieme tramite array
+- Tipi enumerati, loro metodi tra cui values()
+- Tipi enumerati negli switch
+- Ereditarietà di campi e metodi (i costruttori non si ereditano)
+- Notazione super() per la concatenazione dei costruttori
+- Metodi ereditati
+- Notazione super. per disambiguare l'invocazione a un metodo della superclasse

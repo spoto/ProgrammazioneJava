@@ -1,0 +1,21 @@
+Tale classe deve avere:
+
+- un costruttore pubblico senza argomenti che crea il gioco configurato
+  con le 15 caselle posizionate a caso
+- un metodo pubblico toString() che restituisce una stringa che descrive
+  l'attuale configurazione del gioco, del tipo:
+
+    3  1  4 15
+   11 12  2  5
+   13 10 14  8
+    9     6  7
+
+- un metodo
+
+  public void sposta(int x, int y)
+
+  che sposta la casella in coordinata (x, y). Le coordinate vanno da 1 a 4
+  e sono centrate nell'angolo in alto a sinistra del gioco. Una casella si
+  può spostare se la cella vuota è nella sua stessa riga o nella sua stessa
+  colonna. Se la casella indicata non può spostarsi, il metodo non deve
+  fare nulla.
