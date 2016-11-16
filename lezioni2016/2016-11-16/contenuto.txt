@@ -1,3 +1,6 @@
+Si scriva una classe Gioco15 che implementa la
+creazione, stampa e movimento del gioco del 15.
+
 Tale classe deve avere:
 
 - un costruttore pubblico senza argomenti che crea il gioco configurato
