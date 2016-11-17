@@ -1,0 +1,5 @@
+- Tipi enumerati negli switch
+- Ereditarietà di campi e metodi (i costruttori non si ereditano)
+- Notazione super() per la concatenazione dei costruttori
+- Metodi ereditati
+- Notazione super. per disambiguare l'invocazione a un metodo della superclasse
