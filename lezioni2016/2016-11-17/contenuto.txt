@@ -1,5 +1,5 @@
-- Ricorsione: su parametri espliciti oppure espliciti
-- Tipi ricorsivi: l'esempio della lista
+- Ricorsione: su parametri espliciti oppure impliciti
+- Tipi ricorsivi: esempio della lista
 - Algoritmi ricorsivi di base sulle liste: lunghezza, stampa, confronto
 - Il ciclo for-each sugli array
 - Metodi con un numero variabile di argomenti
