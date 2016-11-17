@@ -3,3 +3,8 @@
 - Notazione super() per la concatenazione dei costruttori
 - Metodi ereditati
 - Notazione super. per disambiguare l'invocazione a un metodo della superclasse
+- Principio di Liskov
+- Modifica del tipo di ritorno e della visibilità dei metodi ridefiniti
+- La classe java.lang.Object e i suoi metodi toString() ed equals()
+- La notazione final per le variabili, i campi, i metodi e le classi
+
