@@ -1,4 +1,3 @@
-- Tipi enumerati negli switch
 - Ereditarietà di campi e metodi (i costruttori non si ereditano)
 - Notazione super() per la concatenazione dei costruttori
 - Metodi ereditati

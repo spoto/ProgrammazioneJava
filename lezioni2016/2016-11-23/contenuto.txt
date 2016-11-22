@@ -1,24 +1,63 @@
-- la notazione final per le variabili, i campi, i metodi e le classi
+Un albero binario è una struttura dati ricorsiva formata da un nodo
+contenente un valore e da due eventuali sottoalberi binari. In Java un
+albero binario per valori di tipo intero si può definire con la classe
 
-Un circuito logico proposizionale è una formula fatta da variabili, not, and e or. Il suo valore
-di verità può essere vero o falso e si può determinare una volta fissate le variabili che si
-considerano vere. Una enumerazione delle variabili da considerarsi vere è detta assegnamento di verità
-per le variabili.
+public class BinaryTree {
+  private int value;
+  private BinaryTree left;
+  private BInaryTree right;
+}
 
-Due circuiti sono detti equivalenti se hanno lo stesso valore di verità in ogni possibile assegnamento
-delle variabili. Per esempio, "and(a, a)" è equivalente ad "a" e "or(v, not(v))" è equivalente a "not(and(w, not(w)))".
+Quando il sottoalbero sinistro o quello destro (o entrambi) sono assenti,
+si usa null al loro posto.
 
-Le variabili libere in un circuito sono le variabili che sono usate nel circuito.
+Si espanda la classe BinaryTree con i costruttori:
 
-Trovate le classi Assignment.java e Circuit.java, già complete. Si noti che è già implementato il metodo equals()
-fra circuiti, che permette di determinare se due circuiti sono equivalenti. Scopo del lavoro sarà adesso
-completare le sottoclassi Variable.java, Not.java, And.java e Or.java di Circuit.java, completando i loro
-metodi isTrueIn(), freeVariables() e toString(). Il metodo isTrueIn() determina se il circuito è vero
-in un assegnamento. Il metodo freeVariables() restituisce un array contenente le variabili libere nel
-circuito, in un qualsiasi ordine ma senza ripetizioni. Il metodo toString() restituisce una rappresentazione
-stringa del circuito.
+- public BinaryTree(int value)
+  che costruisce l'albero binario con il valore indicato dentro la radice
+  e con sottoalberi sinistro e destro vuoti
 
-Trovate inoltre cinque classi di test JUnit. All'inizio la maggior parte dei test falliranno, poiché il codice
-non è completo. Quando avrete realizzato tutto correttamente, i test dovranno avere tutti successo. Si noti che
-questi test possono essere utili prima di iniziare l'implementazione del codice mancante, come documentazione
-di quello che si intende ottenere alla fine.
+- public BinaryTree(int value, BinaryTree left, BinaryTree right)
+  che costruisce l'albero binario con il valore indicato dentro la radice
+  e con sottoalberi sinistro e destro indicati (eventualmente null)
+
+Si aggiunga quindi un metodo
+
+- public String toString()
+  che restituisce una stringa che descrive l'albero con la radice posta
+  a sinistra
+
+Si scriva quindi una classe Main che crea e stampa il seguente albero:
+
+      22
+    3
+      13
+11
+      -7
+   -4
+      
+
+(la radice è 11, posta a sinistra; il sottoalbero sinistro ha -4 come radice
+e il sottoalbero destro ha 3 come radice: il sottoalbero sinistro ha solo
+sottoalbero destro ma non ha sottoalbero sinistro)
+
+Si scrivano i metodi
+
+- public int sum()
+  che restituisce la somma dei valori presenti nell'intero albero
+
+- public int max()
+  che restituisce il massimo valore fra quelli presenti nell'albero
+
+Si scriva una classe di testing con JUnit in modo da controllare alcune
+esecuzioni di min() e max()
+
+Infine (difficile!) si provi a scrivere un metodo di BinaryTree:
+
+- public String toStringHorizontally()
+  che restituisce una stringa che descrive l'albero con la radice in alto,
+  come ad esempio:
+
+              11
+        -4           3
+           -7     13   22
