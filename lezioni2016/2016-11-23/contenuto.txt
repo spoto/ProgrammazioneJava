@@ -5,7 +5,7 @@ albero binario per valori di tipo intero si può definire con la classe
 public class BinaryTree {
   private int value;
   private BinaryTree left;
-  private BInaryTree right;
+  private BinaryTree right;
 }
 
 Quando il sottoalbero sinistro o quello destro (o entrambi) sono assenti,
@@ -50,7 +50,7 @@ Si scrivano i metodi
   che restituisce il massimo valore fra quelli presenti nell'albero
 
 Si scriva una classe di testing con JUnit in modo da controllare alcune
-esecuzioni di min() e max()
+esecuzioni di sum() e max()
 
 Infine (difficile!) si provi a scrivere un metodo di BinaryTree:
 
