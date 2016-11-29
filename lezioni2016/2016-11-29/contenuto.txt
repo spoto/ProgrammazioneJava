@@ -3,10 +3,8 @@
 - differenze e somiglianze fra cast e conversioni di tipo
 - l'operatore instanceof
 - ereditarietà singola e multipla
-- tipi generici: variabili di tipo nella dichiarazione di una classe/interfaccia
-- interfacce
-- esempio dell'interfaccia java.lang.Comparable<T> applicata a felini e persone
-- classi interne, statiche e non statiche
+- tipi generici: variabili di tipo nella dichiarazione di una classe
 - la classe java.util.ArrayList<T> e i suoi metodi
 - la classe java.util.Vector<T>: deprecata ma ancora usata
 - la classe java.util.LinkedList<T>
+- la classe java.util.HashSet<T>
