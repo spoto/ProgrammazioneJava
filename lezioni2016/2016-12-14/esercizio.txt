@@ -5,6 +5,7 @@ Si scriva una programma che:
 - conta quante parole ci sono in totale nel file
 - stampa il numero di parole calcolato
 
-Si assuma che le parole siano separate da spazi o dal carattere '-' .
+Si assuma che le parole siano separate
+da spazi, newline, tabulazione o dal carattere '-' .
 
 Si provi a processare il file moby.txt
