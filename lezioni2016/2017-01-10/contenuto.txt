@@ -1,12 +1,8 @@
 - interfacce
 - esempio dell'interfaccia java.lang.Comparable<T> applicata a felini e persone
 - interfaccia java.lang.Iterable<T>
-- interfaccia java.util.Iterator<T>
 - ciclo foreach su tipi iterabili
 - l'utilizzo di equals() e hashCode() per gli HashSet
 - le classi java.util.SortedSet<T> e java.util.TreeSet<T>
 - le classi java.util.Map<K,V> e java.util.HashMap<K,V>
-- A <= B implica A[] <= B[]
-- A <= B non implica Classe<A> <= Classe<B>
-- classi interne, statiche e non statiche
 
