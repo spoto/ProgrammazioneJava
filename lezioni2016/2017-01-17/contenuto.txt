@@ -1,6 +1,4 @@
 - interfaccia java.util.Iterator<T>
 - definizione di classi iterabili
-- A <= B implica A[] <= B[]
-- A <= B non implica Classe<A> <= Classe<B>
 - classi interne, statiche e non statiche
 - concorrenza, definizione di Thread e sincronizzazione
