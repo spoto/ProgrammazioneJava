@@ -1,0 +1,216 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 28 luglio 2017}\end{center}
+%\`
+
+Si consideri un'implementazione di un negozio, al quale \`e possibile
+aggiungere dei prodotti in vendita e fare degli ordini di acquisto. Per esempio:
+
+{\scriptsize\begin{verbatim}
+public class Main {
+  public static void main(String[] args) throws MissingProductException {
+    Product bike = new Product("bike", 300.0, 7); // una bicicletta costa 300 euro ed e' disponibile per la spedizione in 7 giorni
+    Product phone = new Product("phone", 129.9, 1); // un telefono costa 129.9 euro ed e' disponibile per la spedizione in un giorno
+    Shop amazing = new Shop(); amazing.add(bike, 3); amazing.add(phone, 4); // il negozio amazing ha disponibili 3 bici e 4 telefoni
+    // creiamo tre ordini, due semplici e uno dividendo i prodotti per attesa di spedizione
+    Order order1 = new SimpleOrder(amazing, bike, phone, phone); // una bici e due telefoni
+    Order order2 = new SplitOrder(amazing, phone, bike, phone); // una bici e due telefoni
+    Order order3 = new SimpleOrder(amazing, bike, phone); // una bici e un telefono
+    // effettuiamo i tre ordini e stampiamo le spedizioni che ne risultano
+    printShipping("FIRST ORDER:", order1.ship());
+    printShipping("SECOND ORDER:", order2.ship());
+    printShipping("THIRD ORDER:", order3.ship());
+  }
+
+  private static void printShipping(String title, Iterable<Shipping> shippings) {
+    System.out.println(title + '\n');
+    int counter = 1;
+    for (Shipping shipping: shippings)
+      System.out.println("shipping #" + counter++ + '\n' + shipping);
+    System.out.println();
+  }
+}
+\end{verbatim}}
+  
+\noindent
+stamper\`a:
+{\scriptsize\begin{verbatim}
+FIRST ORDER:
+
+shipping #1
+bike: 300.00 euros, available in 7 days
+phone: 129.90 euros, available in 1 days
+phone: 129.90 euros, available in 1 days
+
+SECOND ORDER:
+
+shipping #1
+phone: 129.90 euros, available in 1 days
+phone: 129.90 euros, available in 1 days
+
+shipping #2
+bike: 300.00 euros, available in 7 days
+
+Exception in thread "main" it.univr.ecommerce.MissingProductException
+...
+\end{verbatim}}
+
+\noindent
+terminando con un'eccezione. Si noti che un \texttt{SimpleOrder} viene spedito mettendo
+tutti i prodotti in un'unica spedizione, mentre uno \texttt{SplitOrder} fa tante spedizioni,
+dividendo i prodotti per giorni di attesa prima della loro disponibilit\`a alla spedizione.
+La spedizione dell'ultimo \texttt{SimpleOrder} va in eccezione poich\'e non ci sono pi\`u
+telefoni disponibile nel negozio, essendo stati gi\`a tutti spediti con i primi due ordini.
+
+\vspace*{2ex}
+\hrule
+
+\begin{esercizio}
+\textbf{[4 punti]}
+Si completi la seguente classe \texttt{Product}:
+%
+{\small\begin{verbatim}
+public class Product {
+  private final String name;
+  private final double price;
+  private final int daysBeforeShipping;
+
+  public Product(String name, double price, int daysBeforeShipping) { ... }
+
+  @Override public String toString() {
+    return String.format("%s: %.2f euros, available in %d days", name, price, daysBeforeShipping);
+  }
+
+  @Override public boolean equals(Object other) { ...confronta tutti e tre i campi }
+  @Override public int hashCode() { ...consistente con equals() e non banale }
+
+  public int getDaysBeforeShipping() {
+    return daysBeforeShipping;
+  }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[9 punti]}
+Si completi la seguente classe che rappresenta un negozio a cui \`e possibile aggiungere prodotti
+in vendita e da cui \`e possibile comprare prodotti (se disponibili):
+
+{\small\begin{verbatim}
+public class Shop {
+  ...
+  public void add(Product product, int howMany) {
+    ...aggiunge howMany volte il prodotto indicato, che poteva gia' essere presente in negozio
+  }
+
+  void buy(Product[] productsToBuy) throws MissingProductException {
+    ...rimuove i prodotti indicati da quelli disponibili in questo negozio;
+    se non fossero disponibili tutti i prodotti, lancia una MissingProductException;
+    in tal caso, il negozio dovra' restare immutato e nessun prodotto dovra' venire tolto
+  }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[1 punti]}
+Si implementi l'eccezione controllata \texttt{MissingProductException}.  
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si completi la seguente classe, che rappresenta una spedizione di alcuni prodotti:
+
+{\small\begin{verbatim}
+public class Shipping {
+  ...
+  Shipping(Iterable<Product> products) { ...crea una spedizione dei prodotti indicati }
+  @Override public String toString() { ...ritorna la concatenzione del toString() dei prodotti spediti }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[5 punti]}
+Si consideri la classe astratta che rappresenta un ordine da passare a un negozio per acquistare certi prodotti:
+%
+{\small\begin{verbatim}
+public abstract class Order {
+  private final Shop shop; // il negozio a cui si passa l'ordine
+  private final Product[] products; // i prodotti che si vuole acquistare in tale negozio
+
+  protected Order(Shop shop, Product... products) {
+    this.shop = shop; this.products = products;
+  }
+
+  protected final Product[] getProducts() { return products; }
+
+  // acquista i prodotti di questo ordine, andando in eccezione se non sono tutti disponibili in negozio
+  protected final void buy() throws MissingProductException { shop.buy(products); }
+
+  // acquista i prodotti di questo ordine, andando in eccezione se non sono tutti disponibili in negozio,
+  // e ritorna le spedizioni da fare per inviarli
+  public abstract Iterable<Shipping> ship() throws MissingProductException;
+}
+\end{verbatim}}
+
+\noindent
+Se ne completi la sottoclasse che spedisce tutti i prodotti in un'unica spedizione:
+%
+{\small\begin{verbatim}
+public class SimpleOrder extends Order {
+  public SimpleOrder(Shop shop, Product... products) { ... }
+  @Override public Iterable<Shipping> ship() throws MissingProductException {
+    ...compra i prodotti e ritorna un iterabile con un'unica spedizione
+  }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[9 punti]}
+Si completi l'altra sottoclasse di \texttt{Order}, che spedice i prodotti da acquistare in
+tante spedizioni, dividendoli per giorni di attesa prima della loro disponibilit\`a all'invio:
+%
+{\small\begin{verbatim}
+public class SplitOrder extends Order {
+  public SplitOrder(Shop shop, Product... products) { ... }
+  @Override public Iterable<Shipping> ship() throws MissingProductException {
+    ...compra i prodotti e ritorna una o piu' spedizioni
+  }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{center}
+\textbf{\`E possibile definire campi, metodi, costruttori e classi aggiuntive, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
