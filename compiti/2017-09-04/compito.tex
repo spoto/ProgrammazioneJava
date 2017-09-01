@@ -99,7 +99,7 @@ Specifica anche il costo minimo e massimo dei biglietti in quel periodo:
 {\scriptsize\begin{verbatim}
 public abstract class Bookings {
   ...
-  public Bookings(Date start, Date end, int minimalPrice, int maximalPrice, Fleet fleet) {
+  protected Bookings(Date start, Date end, int minimalPrice, int maximalPrice, Fleet fleet) {
     ...lancia una IllegalArgumentException se start viene dopo di end oppure se minimalPrice e' superiore a maximalPrice o negativo
   }
 
