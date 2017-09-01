@@ -1,0 +1,222 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 4 settembre 2017}\end{center}
+%\`
+
+Si consideri un'implementazione di un sistema di prenotazione di compagnie aeree
+che, per semplicit\`a, gestiscono solo una linea. Deve essere possibile prenotare
+dei biglietti per una data specifica, purch\'e ci siano ancora posti per quella data.
+I posti dipendono dall'aereo che la compagnia mette a disposizione per quella data:
+aerei diversi possono avere un numero di posti diverso. Il prezzo del biglietto
+dipende da quanti posti ci sono ancora disponibili per la data richiesta.
+
+\begin{esercizio}
+\textbf{[4 punti]}
+Si completi la seguente classe che rappresenta una data. Non ci si preoccupi di verificare che le date siano esistenti:
+%
+{\small\begin{verbatim}
+public class Date {
+  ...
+  public Date(int day, int month, int year) { ... }
+  @Override public boolean equals(Object other) { ... }
+  @Override public int hashCode() { ... }
+  @Override public int compareTo(Date other) { ...mette in ordine cronologico... }
+  @Override public String toString() { ...ritorna una stringa del tipo dd/mm/yyyy... }
+  public boolean isXmas() { ...determina se this e' il 25/12... }
+  public boolean isNewYearsEve() { ...determina se this e' il 31/12... }
+  public boolean isThanksgiving() { ...determina se this e' il 23/11... }
+  public boolean isAllSaintsDay() { ...determina se this e' l'1/11... }
+  public boolean isColumbusDay() { ...determina se this e' il 9/10... }
+  public boolean isLincolnBirthday() { ...determina se this e' il 12/2... }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[3 punti]}
+Si crei la seguente gerarchia di eccezioni controllate:
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+\item \texttt{BookingException}, astratta;
+\item \texttt{QuoteException}, astratta e sottoclasse di \texttt{BookingException};
+\item \texttt{PriceChangedException}, concreta, sottoclasse di \texttt{BookingException} con messaggio \texttt{"flight price has changed"};
+\item \texttt{IllegalBookingDatesException}, concreta, sottoclasse di \texttt{QuoteException} con messaggio \texttt{"illegal booking dates"};
+\item \texttt{FlightSoldOutException}, concreta, sottoclasse di \texttt{QuoteException} con messaggio \texttt{"flight soldout"}.
+\end{itemize}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[1 punti]}
+Si completi la seguente classe che rappresenta un modello di aereo, cio\`e ne indica il nome e il numero di posti:
+{\small\begin{verbatim}
+public class Aircraft {
+  ...
+  public Aircraft(String name, int capacity) { ... }
+  public int getCapacity() { ... }
+  @Override public String toString() { ...restituisce il nome dell'aereo... }
+}
+\end{verbatim}}
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[1 punti]}
+Si definisca un'interfaccia \texttt{Fleet} che specifica la flotta messa a disposizione da una compagnia aerea. Dovr\`a avere
+un unico metodo \texttt{getAircraftFor()} che, fornita una \texttt{Date}, restituisce l'\texttt{Aircraft} disponibile
+per quella data.
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[15 punti]}
+Si completi la seguente classe, che gestisce le prenotazioni in un certo periodo temporale con una data flotta.
+Specifica anche il costo minimo e massimo dei biglietti in quel periodo:
+
+{\scriptsize\begin{verbatim}
+public abstract class Bookings {
+  ...
+  public Bookings(Date start, Date end, int minimalPrice, int maximalPrice, Fleet fleet) {
+    ...lancia una IllegalArgumentException se start viene dopo di end oppure se minimalPrice e' superiore a maximalPrice o negativo
+  }
+
+  // ritorna il prezzo del biglietto per la data indicata
+  public int getQuoteFor(Date when) throws QuoteException {
+    ...lancia una IllegalBookingDatesException se when non e' tra start ed end incluse
+    ...lancia una FlightSoldOutException se per la data when non ci sono piu' posti nell'aereo
+    ...ritorna il prezzo del biglietto per la data when, distribuendo uniformemente il prezzo:
+    ...se l'aereo e' vuoto, il prezzo e' minimalPrice, se rimane l'ultimo biglietto, il prezzo e' maximalPrice
+  }
+
+  // compra un biglietto per la data indicata,purche' costi il prezzo indicato
+  public void book(Date when, int price) throws BookingException {
+    ...lancia una IllegalBookingDatesException se when non e' tra start ed end incluse
+    ...lancia una FlightSoldOutException se per la data when non ci sono piu' posti nell'aereo
+    ...lancia una PriceChangedException se price non e' il prezzo per la data indicata
+    ...altrimenti prenota un biglietto per la data indicata
+  }
+
+  public int book(Date when) throws BookingException {
+    ...lancia una IllegalBookingDatesException se when non e' tra start ed end incluse
+    ...lancia una FlightSoldOutException se per la data when non ci sono piu' posti nell'aereo
+    ...altrimenti prenota un biglietto per la data indicata, a qualsiasi prezzo, e ritorna tale prezzo
+  }
+
+  @Override public String toString() {
+    ...ritorna una tabella con le date per cui si sono venduti biglietti, indicando quanti ne sono stati venduti per ogni data
+    ...e che tipo di aereo e' previsto per quella data. La tabella deve essere in ordine cronologico
+  }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[1 punti]}
+La classe \texttt{Bookings} \`e astratta ma non ha metodi astratti. \`E corretto? Perch\'e?
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[4 punti]}
+%
+Si scriva un'implementazione \texttt{AirBustFleet} di \texttt{Fleet}, per la flotta della compagnia AirBust,
+che usa i seguenti aerei:
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+\item un A380, con 388 posti, per Natale (25 dicembre), Thanksgiving e San Silvestro (31 dicembre);
+\item un A330, con 277 posti, per il Columbus day;
+\item un A320, con 200 posti, per tutti gli altri giorni.
+\end{itemize}
+%
+\end{esercizio}
+
+\begin{esercizio}
+\textbf{[2 punti]}
+Si completi la classe \texttt{AirBustBookings} che specifica le prenotazioni
+della compagnia AirBust per un intero anno indicato, dal primo gennaio al 31 dicembre di quell'anno.
+I prezzi minimi e massimo dei biglietti sono 100 e 500, rispettivamente. La flotta utilizzata \`e una
+\texttt{AirBustFleet}:
+
+{\small\begin{verbatim}
+public class AirBustBookings extends Bookings {
+  public AirBustBookings(int year) { ... }
+}
+\end{verbatim}}
+%
+\end{esercizio}
+
+\hrule
+\vspace*{2ex}
+
+Se tutto \`e corretto, il seguente programma:
+
+{\scriptsize\begin{verbatim}
+public class Main {
+  public static void main(String[] args) throws BookingException {
+    Bookings bookings = new AirBustBookings(2018); Date Xmas = new Date(25, 12, 2018); Date d = new Date(5, 9, 2018);
+
+    // prenotiamo 300 biglietti per Natale, a qualsiasi prezzo
+    for (int count = 0; count < 300; count++)
+      System.out.println("Booked Xmas flight at " + bookings.book(Xmas) + " dollars");
+
+    try {
+      // prenotiamo altri 800 biglietti
+      for (int count = 0; count < 800; count++) {
+        bookings.book(Xmas); // per Natale, a qualsiasi prezzo
+        int quote = bookings.getQuoteFor(d); // per il 5/9/2018, purche' costino meno di 120 dollari
+        if (quote < 120)
+          bookings.book(d, quote);
+      }
+    }
+    catch (BookingException e) {
+      System.out.println(e.getMessage()); System.out.println(bookings);
+    }
+  }
+}
+\end{verbatim}}
+  
+\noindent
+stamper\`a:
+{\scriptsize\begin{verbatim}
+Booked Xmas flight at 100 dollars
+Booked Xmas flight at 101 dollars
+Booked Xmas flight at 102 dollars
+.................................
+.................................
+Booked Xmas flight at 408 dollars
+Booked Xmas flight at 409 dollars
+flight soldout
+ 5/ 9/2018: 10 [A320]
+25/12/2018: 388 [A380]
+\end{verbatim}}
+
+\begin{center}
+\textbf{\`E possibile definire campi, metodi, costruttori e classi aggiuntive, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
