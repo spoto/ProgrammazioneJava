@@ -1,0 +1,207 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 7 febbraio 2018}\end{center}
+%\`
+
+Si consideri un'implementazione di un sistema di prenotazione di stanze \emph{HairBnB}.
+Le stanze possono essere aggiunte al sistema di prenotazione, specificando il numero
+massimo di ospiti e il prezzo richiesto al giorno. I clienti possono scrivere delle
+recensioni (\emph{review}) per le stanze, indicando una valutazione da una a cinque stelle.
+Il sistema di prenotazione permette di selezionare tutte le stanze che soddisfano dei
+requisiti di ricerca (numero ospiti e prezzo), eventualmente ordinate rispetto a un qualche
+criterio di ordinamento.
+
+\textbf{Nota: } in questo compito non si ridefiniscano i metodi \texttt{equals()} e
+\texttt{hashCode()}, anche se si aggiungessero oggetti in \texttt{HashSet}: vanno bene
+quelli ereditati da \texttt{Object}.
+
+\begin{esercizio}~\textbf{[5 punti]}
+Si completi la seguente classe, che rappresenta una recensione di un utente:
+%
+\begin{lstlisting}
+public class Review {
+  public enum Stars { ONE, TWO, THREE, FOUR, FIVE }
+  ...
+
+  // costruisce una recensione con autore, testo e valutazione da 1 a 5 stelle
+  public Review(String author, String text, Stars stars) { ... }
+
+  // ritorna una stringa di asterischi, lunga da 1 a 5, sulla base delle stelle della recensione
+  private String stars() { ... }
+
+  // ritorna l'autore seguito dal risultato di stars() seguito dal testo della recensione
+  @Override public String toString() { ... }
+
+  // ritorna il numero di stelle della recensione, da 1 a 5
+  public int howManyStars() { ... }
+}
+\end{lstlisting}
+%
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[6 punti]}
+Si completi la seguente classe, che rappresenta una stanza:
+%
+\begin{lstlisting}
+public class Room {
+  ...
+
+  // costruisce una stanza con una descrizione, un numero massimo di occupanti e un prezzo giornaliero
+  public Room(String description, int people, int pricePerDay) { .... }
+
+  // aggiunge la review a quelle di questa stanza
+  public void addReview(Review review) { ... }
+
+  // restituisce la descrizione della stanza, seguita dal numero medio di stelle, seguito
+  // dal numero massimo di persone, seguito dal prezzo giornaliero richiesto,
+  // seguito dal toString() di ciascuna recensione ricevuta da questa stanza
+  @Override public String toString() { ... }
+
+  // ritorna il numero massimo di persone che possono occupare la stanza
+  public int getPeople() { ... }
+
+  // ritorna il prezzo giornaliero richiesto
+  public int getPriceForDay() { ... }
+
+  // ritorna la media delle stelle delle recensioni ricevute; ritorna 0.0 in caso di nessuna recensione
+  public double averageStars() { ... }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[6 punti]}
+Si completi la seguente classe, che rappresenta il sistema di prenotazione di
+un insieme di stanze. \`E possibile aggiungere stanze al sistema ed \`e possibile
+ottenere l'insieme delle stanze compatibili con il criterio di selezione prescelto
+(numero minimo di persone e prezzo giornaliero massimo richiesto):
+%
+\begin{lstlisting}
+public class HairBnB {
+  ...
+
+  // aggiunge a questo sistema le stanze fornite come argomenti
+  public void addRooms(Room... rooms) { ... }
+
+  // restituisce l'insieme delle stanze che abbiano spazio per almeno minPeople
+  // e che costino al massimo maxPrice al giorno; questo metodo deve lanciare
+  // una NoRoomAvailableException se nessuna stanza soddisfacesse tali richieste
+  public Set<Room> availableFor(int minPeople, int maxPrice) { ... }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[1 punto]}
+Si definisca l'eccezione \texttt{NoRoomAvailableException} per l'esercizio~3.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[7 punti]}
+%
+Si aggiunga il seguente metodo alla classe \texttt{HairBnB} dell'esercizio~3:
+%
+\begin{lstlisting}
+public SortedSet<Room> sortedAvailableFor(int minPeople, int maxPrice, Comparator<Room> comparator) {
+  ...
+}
+\end{lstlisting}
+%
+che si comporta esattamente come \texttt{availableFor()}, incluso il lancio dell'eccezione,
+ma si differenzia solo per il fatto che restituisce un insieme ordinato di stanze.
+L'ordinamento \`e specificato dal parametro \texttt{comparator}, che implementa l'interfaccia della
+libreria standard:
+%
+\begin{lstlisting}
+public interface Comparator<T> {
+  // restituisce:
+  // un numero negativo se o1 viene prima di o2;
+  // un numero positivo se o2 viene prima di o1;
+  // 0 se o1 e o2 sono uguali
+  int compare(T o1, T o2);
+}
+\end{lstlisting}
+%
+\textbf{Suggerimento: } normalmente la classe di libreria \texttt{TreeSet<T>} realizza
+un insieme ordinato di \texttt{T} e tale tipo generico deve implementare \texttt{Comparable<T>}.
+\`E per\`o possibile definire dei \texttt{TreeSet<T>} anche per tipi \texttt{T} che non
+implementino \texttt{Comparable<T>}, purch\'e il criterio di confronto venga fornito al
+momento della costruzione dell'insieme, tramite un \texttt{Comparator<T>}, cos\`{\i}: \texttt{new TreeSet<T>(comparator)}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[7 punti]}
+Si completi la seguente classe di prova, inizializzando le variabili
+\texttt{queryByPrice} e \texttt{queryByStars}:
+%
+\begin{lstlisting}
+public class Main {
+  public static void main(String[] args) {
+    Room room1 = new Room("Room with view in Borgo Roma", 2, 30);
+    Room room2 = new Room("Nice flat in Chievo", 4, 70);
+    Room room3 = new Room("Historic room in Verona", 1, 80);
+
+    room1.addReview(new Review("Albert Einstein",
+      "I loved the room, large and with view on the hospital", Review.Stars.FOUR));
+    room1.addReview(new Review("Liz Taylor", "Ugly place, full of hair", Review.Stars.ONE));
+    room2.addReview(new Review("Vasco Rossi", "Really lovely", Review.Stars.FIVE));
+
+    HairBnB bnb = new HairBnB();
+    bnb.addRooms(room1, room2, room3);
+
+    // queryByPrice devono essere le stanze per almeno una persona, che costano al massimo 70 al giorno,
+    // ordinate per prezzo crescente (cioe' prima quelle che costano meno)
+    SortedSet<Room> queryByPrice = ...
+
+    // come queryByPrice, ma ordinate per valutazione decrescente (cioe' prima quelle con valutazione maggiore)
+    SortedSet<Room> queryByStars = ...
+  }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{center}
+\textbf{\`E possibile definire campi, metodi, costruttori e classi aggiuntive, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
