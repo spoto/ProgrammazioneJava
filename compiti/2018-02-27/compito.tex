@@ -1,0 +1,222 @@
+\documentclass{article}[10pt]
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 27 febbraio 2018}\end{center}
+%\`
+
+Si consideri un'implementazione di un sistema di gestione degli esami universitari.
+Agli esami \`e possibile iscrivere studenti e poi verbalizzare l'esito. La verbalizzazione
+\`e possibile solo per studenti che siano gi\`a iscritti e non \`e possibile
+verbalizzare due volte l'esito a uno studente. Per esempio, il seguente codice:
+
+\begin{lstlisting}[frame=l,numbers=left]
+public class Main {
+  public static void main(String[] args)
+      throws VerbalizzazioneGiaEffettuataException, StudenteNonIscrittoException {
+
+    Esame esame = new EsamePerEsito();
+    Studente s1 = new Studente(151535, "Giorgio", "Levi");
+    Studente s2 = new Studente(200345, "Fausto", "Spoto");
+    Studente s3 = new Studente(324422, "Albert", "Einstein");
+    Studente s4 = new Studente(145066, "Camilla", "De Sanctis");
+    Studente s5 = new Studente(111044, "Eleonora", "Botticelli");
+    esame.iscrivi(s1, s2, s4, s5);
+    esame.verbalizza(s1, Esito.VENTI);
+    esame.verbalizza(s4, Esito.TRENTAELODE);
+    esame.verbalizza(s2, Esito.RITIRATO);
+    esame.verbalizza(s5, Esito.VENTI);
+    System.out.println(esame);  |\label{line:println}|
+    esame.verbalizza(s3, Esito.TRENTA);  |\label{line:exception}|
+  }
+}
+\end{lstlisting}
+%
+deve stampare alla linea~\ref{line:println}:
+%
+\begin{lstlisting}
+200345                Spoto               Fausto: rit
+111044           Botticelli             Eleonora: 20
+151535                 Levi              Giorgio: 20
+145066           De Sanctis              Camilla: 30L
+\end{lstlisting}  
+%
+e terminare alla linea~\ref{line:exception} con una \texttt{StudenteNonIscrittoException: Lo studente Albert Einstein non e' iscritto all'esame}.
+
+L'enumerazione degli esiti di un esame \`e gi\`a scritta:
+%
+\begin{lstlisting}
+public enum Esito {
+  RITIRATO("rit"), INSUFFICIENTE("ins"), DICIOTTO("18"), DICIANNOVE("19"), VENTI("20"), VENTUNO("21"),
+  VENTIDUE("22"), VENTITRE("23"), VENTIQUATTRO("24"), VENTICINQUE("25"), VENTISEI("26"),
+  VENTISETTE("27"), VENTOTTO("28"), VENTINOVE("29"), TRENTA("30"), TRENTAELODE("30L");
+
+  private final String name;
+  private Esito(String name) { this.name = name; }
+  @Override public String toString() { return name; }
+}
+\end{lstlisting}
+%
+Si ricordi che i suoi elementi sono gi\`a \texttt{Comparable<Esito>} secondo l'ordine
+con cui sono enumerati nel codice.
+
+\begin{esercizio}~\textbf{[5 punti]}
+Si completi la seguente classe, che implementa uno studente. Uno studente \`e
+\texttt{equals()} solo a un altro studente con la stessa matricola:
+%
+\begin{lstlisting}
+public class Studente {
+  public final int matricola;
+  public final String nome;
+  public final String cognome;
+ 
+  public Studente(int matricola, String nome, String cognome) { ... }
+  @Override public boolean equals(Object other) { ... }
+  @Override public int hashCode() { ... }  // non deve ritornare banalmente una costante
+}
+\end{lstlisting}
+%
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[2 punti]}
+  Si scrivano le due
+  eccezioni controllate \texttt{VerbalizzazioneGiaEffettuataException}
+  e \texttt{StudenteNonIscrittoException} il cui costruttore deve ricevere come argomento uno
+  \texttt{Studente} per potere costruire un messaggio di eccezione che includa il suo nome e
+  cognome (si veda l'esempio dell'eccezione generata dal \texttt{Main}).
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[12 punti]}
+  Si completi la seguente classe, che implementa un esame a cui gli
+  studenti possono iscriversi e per il quale \`e possibile verbalizzare
+  un esito dopo l'iscrizione:
+%
+\begin{lstlisting}
+public abstract class Esame implements Iterable<Esame.Verbalizzazione> {
+  private final Set<Studente> iscritti = new HashSet<>();
+  private final SortedSet<Verbalizzazione> verbalizzazioni = ...; // si completi questa linea!
+
+  // iscrive all'esame tutti gli studenti indicati
+  public final void iscrivi(Studente... studenti) { ... }
+
+  // verbalizza l'esito per uno studente;
+  // - lancia una StudenteNonIscrittoException se lo studente non era iscritto all'esame
+  // - lancia una VerbalizzazioneGiaEffettuataException se lo studente aveva gia' verbalizzato
+  public final void verbalizza(Studente studente, Esito esito)
+    throws VerbalizzazioneGiaEffettuataException, StudenteNonIscrittoException { ... }
+
+  // ritorna la concatenazione del toString() delle verbalizzazioni, separate da "\n"
+  @Override public final String toString() { ... }
+
+  // ritorna l'iteratore sulle verbalizzazioni effettuate, nell'ordine dato da getComparator()
+  @Override public final Iterator<Verbalizzazione> iterator() { ... }
+
+  // ritorna il comparatore da usare per creare le verbalizzazioni: attenzione, e' abstract!
+  protected abstract Comparator<Verbalizzazione> getComparator();
+
+  public final static class Verbalizzazione {    // classe interna
+    private final Studente studente;   private final Esito esito;
+    private Verbalizzazione(Studente studente, Esito esito) { ... }
+    public Studente getStudente() { ... }
+    public Esito getEsito() { ... }
+
+    // una Verbalizzazione e' equals() a un'altra che abbia stesso esito e stesso studente
+    @Override public boolean equals(Object other) { ... }
+    @Override public int hashCode() { ... }    // non deve ritornare banalmente una costante
+    @Override public String toString() {
+      return String.format("%6d %20s %20s: %s", studente.matricola, studente.cognome, studente.nome, esito); 
+    }
+  }
+}
+\end{lstlisting}
+%
+  Si noti che \`e possibile iterare
+  su un \texttt{Esame}, ottenendo una dopo l'altra le verbalizzazioni
+  effettuate, nell'ordine specificato dal comparatore restituito da
+  \texttt{getComparator()}. Un comparatore infatti \`e una interfaccia
+  di libreria che ha un unico metodo che
+  specifica chi viene prima fra due elementi:
+%
+\begin{lstlisting}
+public interface Comparator<T> {
+  // restituisce un numero negativo se o1 viene prima di o2;
+  // un numero positivo se o2 viene prima di o1; 0 se o1 e o2 sono uguali
+  int compare(T o1, T o2);
+}
+\end{lstlisting}
+
+\textbf{Suggerimento: } normalmente la classe di libreria \texttt{TreeSet<T>} realizza
+un insieme ordinato di \texttt{T} e tale tipo generico deve implementare \texttt{Comparable<T>}.
+\`E per\`o possibile definire dei \texttt{TreeSet<T>} anche per tipi \texttt{T} che non
+implementino \texttt{Comparable<T>}, purch\'e il criterio di confronto venga fornito al
+momento della costruzione dell'insieme, tramite un \texttt{Comparator<T>}, cos\`{\i}: \texttt{new TreeSet<T>(comparator)}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[9 punti]}
+%
+  Si definisca una classe concreta \texttt{EsamePerMatricola} che estende
+  \texttt{Esame} fissando come ordinamento delle verbalizzazioni
+  quello crescente per matricola.
+  Si definisca una classe concreta \texttt{EsamePerEsito} che estende
+  \texttt{Esame} fissando come ordinamento delle verbalizzazioni
+  quello crescente per esito e, a parit\`a di esito, quello crescente per matricola.
+%
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[3 punti]}
+%
+  Nella definizione della classe interna \texttt{Verbalizzazione} dell'Esercizio~3:
+  \begin{enumerate}
+  \item \`E possibile dichiarare tale classe \texttt{private} al posto che \texttt{public}? Perch\'e ?
+  \item \`E possibile eliminare la parola chiave \texttt{static}? Cosa cambierebbe?
+  \end{enumerate}
+%
+\end{esercizio}
+
+%\begin{center}
+%\textbf{\`E possibile definire campi, metodi, costruttori e classi aggiuntive, ma solo \texttt{private}.}
+%\end{center}
+
+\end{document}
