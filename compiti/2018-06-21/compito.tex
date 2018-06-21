@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 21 giugno 2018}\end{center}
+%\`
+
+Si consideri un'interfaccia che rappresenta un numero non negativo,
+in una qualsiasi base di numerazione:
+%
+\begin{lstlisting}
+public interface Number {
+  int getValue();
+}
+\end{lstlisting}
+
+\begin{esercizio}~\textbf{[8 punti]}
+Si completi la seguente implementazione astratta
+di un \texttt{Number}, che fornisce le funzionalit\`a comuni a tutti i numeri,
+cio\`e il controllo sulla non negativit\`a del valore, l'accesso al valore, la traduzione
+in stringa e i metodi per il test di uguaglianza:
+%
+\begin{lstlisting}
+public abstract class AbstractNumber implements Number {
+  private final int value;
+
+  protected AbstractNumber(int value) {
+    // lancia una IllegalArgumentException se value e' negativo,
+    // altrimenti inizializza il campo value
+    ...
+  }
+
+  // restituisce il valore di questo numero
+  @Override public final int getValue() { ... }
+
+  // restituice la base di numerazione di questo numero
+  protected abstract int getBase();
+
+  // restituisce il carattere che rappresenta la cifra "digit" nella base di numerazione
+  // di questo numero. Sara' sempre vero che 0 <= digit < getBase()
+  protected abstract char getCharForDigit(int digit);
+
+  // restituisce una stringa che rappresenta il numero nella sua base di numerazione
+  @Override public String toString() { ... }
+
+  @Override public final boolean equals(Object other) {
+    // due numeri sono uguali se e solo se hanno lo stesso valore
+    ...
+  }
+
+  @Override public final int hashCode() {
+    // deve essere compatibile con equals() e non banale
+    ...
+  }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[6 punti]}
+  Si scrivano le sottoclassi concrete \texttt{DecimalNumber},
+  \texttt{BinaryNumber}, \texttt{OctalNumber} e \texttt{HexNumber} di
+  \texttt{AbstractNumber}, che rappresentano, rispettivamente, un numero
+  in base $10$, $2$, $8$ e $16$. Queste classi si instanziano con
+  il loro costruttore, a cui viene passato il valore del numero.
+  Non si ridefinisca, in queste quattro sottoclassi,
+  il metodo \texttt{toString()}: quello ereditato da \texttt{AbstractNumber}
+  dovr\`a funzionare per tutte queste sottoclassi, traducendo il valore del numero
+  nella giusta base di numerazione.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[5 punti]}
+  Nella codifica binaria con parit\`a, un numero binario viene esteso con un'ulteriore cifra
+  binaria di controllo,
+  in modo da rendere pari il numero totale di cifre \texttt{1}. Se quindi il numero
+  binario aveva una quantit\`a pari di \texttt{1}, si aggiunger\`a una cifra di controllo
+  \texttt{0}. Se invece il numero binario aveva una quantit\`a dispari di \texttt{1},
+  si aggiunger\`a una cifra di controllo \texttt{1}. Questa modifica riduce il rischio
+  di trasmissione di dati corrotti, permettendo di implementare un rudimentale sistema di
+  rilevazione dell'errore. Si implementi una sottoclasse concreta
+  \texttt{BinaryNumberWithParity} di \texttt{BinaryNumber}, ridefinendo il metodo
+  \texttt{toString()} in modo da aggiungere in fondo la cifra di controllo opportuna.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[5 punti]}
+  Nella codifica in base 58, si utilizzano 58 cifre diverse, scelte fra i numeri arabi e le lettere
+  inglesi maiuscole e minuscole. Si evitano i caratteri \texttt{0OIl}, che potrebbero
+  essere confusi a video, perch\'e graficamente simili. Si implementi una sottoclasse
+  concreta \texttt{Base58Number} di \texttt{AbstractNumber}, in modo da implementare
+  questa numerazione in base 58. Le 58 cifre sono quindi
+  \texttt{123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz}.
+  Non si ridefinisca il metodo \texttt{toString()} ereditato da \texttt{AbstractNumber}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[5 punti]}
+  Si completi la seguente classe di prova:
+
+\begin{lstlisting}
+public class Main {
+  public static void main(String[] args) {
+    try (Scanner keyboard = new Scanner(System.in)) {
+      System.out.print("Inserisci un numero non negativo: ");
+      int n = keyboard.nextInt();
+
+      List<Number> numbersAsList = new ArrayList<>();
+      // si aggiunga a numbersAsList il numero n, 6 volte:
+      // prima in base 10, poi in base 2, poi 2 con parita', poi 8, poi 16 e infine 58
+      ...
+      System.out.println("lista: " + numbersAsList);
+
+      Set<Number> numbersAsSet = ...
+      // si copino tutti gli elementi della lista numbersAsList dentro l'insieme numbersAsSet
+      ...
+      System.out.println("insieme: " + numbersAsSet);
+    }
+    // se si verifica una IllegalArgumentException, la si intercetti, stampando su video
+    // un messaggio che chiarisca che ci si aspettava un numero non negativo
+    ...
+  }
+}
+\end{lstlisting}
+\end{esercizio}
+%
+Se tutto \`e  corretto, l'esecuzione della classe \texttt{Main} dovr\`a stampare ad esempio:
+%
+\begin{lstlisting}
+Inserisci un numero non negativo: 1234567
+lista: [1234567, 100101101011010000111, 1001011010110100001111, 4553207, 12D687, 7Kze]
+insieme: ...
+\end{lstlisting}  
+%
+\begin{esercizio}~\textbf{[2 punti]}
+  Cosa verr\`a stampato alla linea precedente, al posto dei puntini di sospensione?
+\end{esercizio}
+
+\begin{center}
+\textbf{Si possono definire altri campi, metodi, costruttori e classi, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
