@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 28 settembre 2018}\end{center}
+%\`
+
+Le note musicali sono distinte in $12$ semitoni e vengono scritte diversamente
+fra italiano e inglese, come si vede nella tabella seguente:
+%
+\begin{center}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{semitono} & \textbf{italiano} & \textbf{inglese} \\\hline\hline
+    0  & do    & C   \\\hline
+    1  & do\#  & C\# \\\hline
+    2  & re    & D   \\\hline
+    3  & re\#  & D\# \\\hline
+    4  & mi    & E   \\\hline
+    5  & fa    & F   \\\hline
+    6  & fa\#  & F\# \\\hline
+    7  & sol   & G   \\\hline
+    8  & sol\# & G\# \\\hline
+    9  & la    & A   \\\hline
+    10 & la\#  & A\# \\\hline
+    11 & si    & B   \\\hline
+  \end{tabular}
+\end{center}
+%
+Il simbolo \# in italiano si pronuncia \emph{diesis} e in inglese \emph{sharp}.
+
+\begin{esercizio}~\textbf{[6 punti]}
+  Si completi la seguente classe astratta che implementa una nota,
+  genericamente, senza ancora distinguere fra italiana e inglese:
+%
+\begin{lstlisting}
+public abstract class Note implements Comparable<Note> {
+  protected final int semitone;
+
+  // inizializza la nota per il semitono indicato;
+  // se il semitono non e' fra 0 e 11, deve lanciare una IllegalArgumentException
+  protected Note(int semitone) { ... }
+
+  @Override public abstract String toString();
+
+  // due note sono uguali se e solo se hanno lo stesso semitono
+  @Override public final boolean equals(Object other) { ... }
+
+  // compatibile con equals() e non banale
+  @Override public final int hashCode() { ... }
+
+  // le note sono ordinate per semitono crescente
+  @Override public final int compareTo(Note other) { ... }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[8 punti]}
+  Si scriva la sottoclasse concreta \texttt{ItalianNote} di \texttt{Note},
+  il cui metodo \texttt{toString()} usa la rappresentazione italiana delle note (\texttt{do}, \texttt{do\#}, \ldots).
+  Tale sottoclasse dovr\`a definire $12$ costanti pubbliche \texttt{DO},
+  \texttt{DO\_DIESIS}, \texttt{RE}, \ldots, \texttt{SI} di tipo \texttt{ItalianNote}, che contengono le note
+  con tali nomi. Tali costanti devono essere gli unici oggetti
+  di classe \texttt{ItalianNote} disponibili, nel senso che l'utilizzatore di \texttt{ItalianNote}
+  non deve potere costruirne altri. Si definisca similmente la sottoclasse \texttt{EnglishNote} di
+  \texttt{Note}, il cui metodo \texttt{toString()} usa la rappresentazione inglese delle note.
+  Tale classe dovr\`a definire $12$ costanti pubbliche \texttt{C}, \texttt{C\_SHARP}, \texttt{D}, \ldots,
+  \texttt{B} di tipo \texttt{EnglishNote} e dovr\`a impedire la costruzione di altre \texttt{EnglishNote}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[5 punti]}
+  Si completi la seguente classe di test JUnit:
+\begin{lstlisting}
+public class NoteTest {
+  // asserisce che il toString() del do italiano e' la stringa "do"
+  @Test public void testToString() { ... }
+
+  // asserisce che l'italiano re# e l'inglese D# sono equals()
+  @Test public void testEquals() { ... }
+
+  // asserisce che l'italiano re# e l'inglese D# hanno lo stesso hashCode()
+  @Test public void testHashCode() { ... }
+
+  // asserisce che l'italiano re# e l'inglese E hanno hashCode() diversi
+  @Test public void testHashCodeNonTrivial() { ... }
+
+  // asserisce che l'italiano do viene prima dell'inglese D
+  @Test public void testCompareTo() { ... }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[11 punti]}
+  Si completi la seguente classe, che rappresenta una canzone: contiene il testo
+  della canzone (di una sola riga) e permette di posizionare delle note sul testo:
+\begin{lstlisting}
+public class Song {
+  ...
+  public Song(String lyrics) { ... } // lyrics e' il testo della canzone (una riga)
+
+  // posiziona la nota alla posizione indicata. Deve lanciare una IllegalArgumentException
+  // se position non e' dentro il testo della canzone. Deve lanciare una
+  // NoteAtSamePositionException se c'e' gia' una nota alla posizione indicata
+  public void add(Note note, int position) { ... }
+
+  @Override public String toString() { ... }
+}
+\end{lstlisting}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[2 punti]}
+  Si definisca l'eccezione non controllata \texttt{NoteAtSamePositionException}.
+\end{esercizio}
+%
+\mbox{}\\
+\hrule
+\mbox{}\\
+
+Se tutto \`e  corretto, l'esecuzione del seguente codice:
+%
+\begin{lstlisting}
+Song yellowSubmarine = new Song("In the town where I was born lived a man who sailed the sea");
+yellowSubmarine.add(EnglishNote.C_SHARP, 7);  // C# su "town"
+yellowSubmarine.add(EnglishNote.C_SHARP, 56); // C# su "sea"
+yellowSubmarine.add(EnglishNote.F_SHARP, 24); // F# su "born"
+yellowSubmarine.add(EnglishNote.G_SHARP, 37); // G# su "man"
+// yellowSubmarine.add(EnglishNote.A, 24); // -> NoteAtSamePositionException
+System.out.println(yellowSubmarine);
+\end{lstlisting}
+%
+dovr\`a stampare:
+%
+\begin{verbatim}
+       C#               F#           G#                 C# 
+In the town where I was born lived a man who sailed the sea
+\end{verbatim}
+
+\begin{center}
+\textbf{Si possono definire altri campi, metodi, costruttori e classi, ma solo \texttt{private}.}
+\end{center}
+
+\end{document}
