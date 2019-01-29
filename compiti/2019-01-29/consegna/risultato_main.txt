@@ -1,0 +1,19 @@
+Agency Hartz. Available models:
+-------------------------------
+Fiat Panda	28 euros per day
+Fiat Panda plus	30 euros per day
+HD Pan American	75 euros per day
+Renault Captur	75 euros per day
+Renault Iliade	500 euros per day
+
+Models available with license A
+[HD Pan American]
+Models available with license B
+[HD Pan American, Fiat Panda plus, Fiat Panda, Renault Captur]
+Models available with license C
+[HD Pan American, Fiat Panda plus, Fiat Panda, Renault Captur]
+Models available with license D
+[HD Pan American, Fiat Panda plus, Fiat Panda, Renault Captur, Renault Iliade]
+
+Most rented model: Fiat Panda plus
+Cannot rent Renault Iliade with license B

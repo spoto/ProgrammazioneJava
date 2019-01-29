@@ -1,0 +1,106 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{multirow,bigdelim}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 29 gennaio 2019}\end{center}
+%\`
+
+\emph{
+Si crei un progetto Eclipse e, nella directory dei sorgenti,
+si crei il package \texttt{it.univr.rent}. Si copi al suo interno
+le classi del compito, tranne \texttt{Main.java} che va copiato
+dentro il package di default.
+Se si realizzano nuove classi, le si creino dentro
+il package \texttt{it.univr.rent}.
+Non si modifichino le dichiarazioni dei metodi. Si possono definire altri campi,
+metodi, costruttori e classi, ma devono essere \texttt{private}.
+La consegna fornita compila (tranne il \texttt{Main} per il quale mancano delle classi).
+Anche la soluzione che verr\`a consegnata dovr\`a compilare (incluso il \texttt{Main}),
+altrimenti non verr\`a corretta.
+}
+
+\mbox{}\\
+
+L'interfaccia \texttt{Model} (gi\`a completa, non la si modifichi)
+rappresenta un modello di un veicolo che pu\`o essere preso a noleggio.
+Ha metodi per conoscerne il nome, il prezzo giornaliero di noleggio e per sapere
+se pu\`o essere guidato con una data patente. I tipi delle patenti sono definiti
+dall'enumerazione \texttt{License} (gi\`a completa, non la si modifichi). Si noti
+che i quattro tipi di patente permettono di guidare tipi diversi di veicoli.
+
+\begin{esercizio}~\textbf{[9 punti]}
+  La classe astratta \texttt{AbstractModel} implementa \texttt{Model} e
+  fornisce il codice di quasi tutti i suoi metodi, nonch\'e un costruttore.
+  La si modifichi dove indicato con \texttt{TODO}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[6 punti]}
+  Si definiscano quattro sottoclassi concrete \texttt{Motorbike}, \texttt{Car}, \texttt{Truck} e
+  \texttt{Bus} di \texttt{AbstractModel}, che implementano i metodi lasciati abstract in
+  \texttt{AbstractModel} e che
+  forniscono un costruttore che richiede il nome del modello e il suo prezzo giornaliero di noleggio.
+  Per esempio, si definisca \texttt{public Car(String name, int pricePerDay)} dentro \texttt{Car}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[2 punti]}
+  Si implementino due classi di eccezione \texttt{IllegalLicenseException} e
+  \texttt{ModelNotAvailableException}, sottoclassi di \texttt{java.lang.IllegalArgumentException}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[14 punti]}
+  Si completi la classe \texttt{Agency}, che implementa un'agenzia di noleggio
+  di veicoli.
+  La si modifichi dove indicato con \texttt{TODO}.
+\end{esercizio}
+
+\mbox{}\\
+
+\emph{Se tutto \`e  corretto, l'esecuzione del \texttt{Main}
+  (gi\`a completo, non lo si modifichi)
+  stamper\`a quanto riportato nel file di testo \texttt{risultato\_main.txt}.
+}
+
+\end{document}
