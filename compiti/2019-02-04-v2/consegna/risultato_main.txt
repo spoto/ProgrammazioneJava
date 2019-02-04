@@ -1,0 +1,12 @@
+04/02/2019 and 35Q1 2019 are equals? true
+04/02/2019 and 35Q2 2019 are equals? false
+29/02/2020 and 60Q1 2020 are equals? true
+31/12/2020 and 92Q4 2020 are equals? true
+illegale
+legale
+28/02/2011 after one day becomes 01/03/2011
+28/02/2012 after one day becomes 29/02/2012
+31/12/2019 after one day becomes 01/01/2020
+90Q1 2019 after one day becomes 01Q2 2019
+Lezioni di Programmazione I@01/10/2018 for 100 days and Christmas Vacation@83Q4 2018 for 12 days overlap: true
+Lezioni di Ingegneria del Software@60Q1 2019 for 100 days and Christmas Vacation@83Q4 2018 for 12 days overlap: false

@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{multirow,bigdelim}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 4 febbraio 2019, turno 1}\end{center}
+%\`
+
+\emph{
+Si crei un progetto Eclipse e, nella directory dei sorgenti,
+si crei il package \texttt{it.univr.agenda}. Si copi al suo interno
+le classi del compito, tranne \texttt{Main.java} che va copiato
+dentro il package di default.
+Se si realizzano nuove classi, le si creino dentro
+il package \texttt{it.univr.agenda}.
+Non si modifichino le dichiarazioni dei metodi. Si possono definire altri campi,
+metodi, costruttori e classi, ma devono essere \texttt{private}.
+La consegna fornita compila.
+Anche la soluzione che verr\`a consegnata dovr\`a compilare,
+altrimenti non verr\`a corretta.
+}
+
+\mbox{}\\
+
+Un istante temporale della giornata viene rappresentato in Italia
+con ore, minuti e secondi, separati dal carattere due punti, con le ore che
+vanno da 0 a 23. Negli Stati Uniti, invece, si usa una
+rappresentazione su dodici ore, da 1 a 12, e si distingue tra prima e seconda
+parte della giornata tramite i suffissi AM e PM. Per esempio, alcuni istanti
+sono rappresentati in questo modo in Italia e Stati Uniti:
+
+\begin{center}
+  \begin{tabular}{|c|c|}
+    \hline
+    Italia & Stati Uniti \\\hline\hline
+    00:00:00 & 12:00:00AM \\\hline
+    00:23:08 & 12:23:08AM \\\hline
+    01:23:08 & 01:23:08AM \\\hline
+    02:23:08 & 02:23:08AM \\\hline
+    11:23:08 & 11:23:08AM \\\hline\hline
+    12:00:00 & 12:00:00PM \\\hline
+    12:23:08 & 12:23:08PM \\\hline
+    13:23:08 & 01:23:08PM \\\hline
+    14:23:08 & 02:23:08PM \\\hline
+    23:23:08 & 11:23:08PM \\\hline
+  \end{tabular}
+\end{center}
+%
+Si faccia attenzione in particolare alla rappresentazione della mezzanotte
+e del mezzogiorno usata negli Stati Uniti, che pu\`o essere
+sorprendente e indurre in errore.
+
+\begin{esercizio}~\textbf{[4 punti]}
+  La classe astratta \texttt{Time} rappresenta un istante della giornata,
+  tramite il numero di secondi passati
+  dall'inizio della giornata. La si modifichi
+  dove indicato con \texttt{TODO}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[6 punti]}
+  La sottoclasse \texttt{ItalianTime} di \texttt{Time} implementa
+  un istante temporale con notazione italiana. La si modifichi dove
+  indicato con \texttt{TODO}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[10 punti]}
+  La sottoclasse \texttt{AmericanTime} di \texttt{Time} implementa
+  un istante temporale con notazione degli Stati Uniti. La si modifichi dove
+  indicato con \texttt{TODO}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[11 punti]}
+  La classe \texttt{Event} rappresenta un evento della giornata, che ha
+  un nome, un istante di inizio e una durata in minuti. La si modifichi dove
+  indicato con \texttt{TODO}.
+\end{esercizio}
+
+\mbox{}\\
+
+\emph{Se tutto \`e  corretto, l'esecuzione del \texttt{Main}
+  (gi\`a completo, non lo si modifichi)
+  stamper\`a quanto riportato nel file di testo \texttt{risultato\_main.txt}.
+}
+
+\end{document}

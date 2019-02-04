@@ -1,0 +1,10 @@
+12:01:05 and 12:01:05PM are equals? true
+00:01:05 and 12:01:05AM are equals? true
+23:20:35 and 11:20:35PM are equals? true
+00:20:35 and 12:20:35PM are equals? false
+illegale
+legale
+11:59:30PM after one minute becomes 12:00:30AM
+23:59:30 after one minute becomes 00:00:30
+shopping@15:10:00 for 60 minutes and exam@04:00:00PM for 120 minutes overlap: true
+dentist@15:00:00 for 60 minutes and exam@04:00:00PM for 120 minutes overlap: false
