@@ -1,0 +1,58 @@
+ | | 
+-----
+ | | 
+-----
+ | | 
+Gioca Alessandra
+x: 2
+y: 2
+
+ | | 
+-----
+ |X| 
+-----
+ | | 
+Gioca Giovanni
+x: 4
+y: 3
+coordinates must be between 1 and 3
+Gioca Giovanni
+x: 1
+y: 1
+
+O| | 
+-----
+ |X| 
+-----
+ | | 
+Gioca Alessandra
+x: 2
+y: 1
+
+O|X| 
+-----
+ |X| 
+-----
+ | | 
+Gioca Giovanni
+x: 2
+y: 1
+the selected tile is not empty
+Gioca Giovanni
+x: 1
+y: 2
+
+O|X| 
+-----
+O|X| 
+-----
+ | | 
+Gioca Alessandra
+x: 2
+y: 3
+
+O|X| 
+-----
+O|X| 
+-----
+ |X| 
