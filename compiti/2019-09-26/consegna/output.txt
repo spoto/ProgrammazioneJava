@@ -1,0 +1,24 @@
+digraph {
+  node0 [label="hello"]
+  node0 -> node0
+  node0 -> node2
+  node0 -> node4
+  node1 [label="how", style="filled", fillcolor="red"]
+  node2 [label="are", style="filled", fillcolor="red"]
+  node2 -> node2
+  node2 -> node4
+  node3 [label="you?"]
+  node4 [label="hello"]
+  node4 -> node0
+}
+
+digraph {
+  node0 [label="17", style="filled", fillcolor="red"]
+  node0 -> node1
+  node1 [label="42"]
+  node1 -> node0
+}
+
+Exception in thread "main" java.lang.IllegalArgumentException: Cannot link nodes from distinct graphs
+	at it.univr.graph.Graph$Node.linkTo(Graph.java:62)
+	at it.univr.graph.Main.main(Main.java:32)
