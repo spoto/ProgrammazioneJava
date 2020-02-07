@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{multirow,bigdelim}
+\usepackage{relsize}
+\usepackage{fdsymbol}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+\def\codesize{\smaller}
+\def\<#1>{\codeid{#1}}
+\newcommand{\codeid}[1]{\ifmmode{\mbox{\codesize\ttfamily{#1}}}\else{\codesize\ttfamily #1}\fi}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+%\begin{tabular}{llclcr}
+% \hspace{-35pt} &{\bf COGNOME:} & \hspace{100pt}        &{\bf NOME:}    & \hspace{100pt}        &{\bf MATRICOLA:}%\hspace{35pt} \\
+%\hline
+%\end{tabular}
+\begin{center} {\bf Esame di Programmazione II, 5 febbraio 2020}\end{center}
+%\`
+
+\emph{
+Si crei un progetto Eclipse e, nella directory dei sorgenti,
+si crei il package \texttt{it.univr.cards}. Si copi al suo interno
+le classi del compito.
+Non si modifichino le dichiarazioni dei metodi. Si possono definire altri campi,
+metodi, costruttori e classi, ma devono essere \texttt{private}.
+Questo significa che eventuali classi aggiuntive potranno solo essere interne o anonime.
+La consegna fornita compila.
+Anche la soluzione che verr\`a consegnata dovr\`a compilare,
+altrimenti non verr\`a corretta.
+Alla fine si consegnino soltanto \<Card.java>, \<Deck.java>, \<Ranking.java> e \<Main.java>,
+separati (cio\`e non in un file zip).
+}
+
+\mbox{}\\
+
+\begin{esercizio}~\textbf{[6 punti]}
+  La classe \texttt{Card} rappresenta una carta del gioco del poker,
+  fatta da un valore (enumerazione \<Value>, gi\`a fatta e da non modificare: 2,3,4,5,6,7,8,9,10,J,Q,K,1: si noti che l'asso ha il valore massimo)
+  e da un seme (enumerazione \<Suit>, gi\`a fatta e da non modificare: $\spadesuit,\clubsuit,\vardiamondsuit,\varheartsuit$).
+  La si completi dove indicato con \texttt{TODO}.
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[3 punti]}
+  L'enumerazione \<Ranking> rappresenta il ranking, o punteggio,
+  di una mano di poker, cio\`e di cinque carte
+  diverse del mazzo da poker. Si completi questa enumerazione in modo da enumerare le possibilit\`a,
+  oltre a \<NONE>, nel seguente ordine crescente per ranking:
+  \begin{description}
+  \item[\<THREE\_OF\_KIND>:] in italiano sarebbe \emph{tris}, cio\`e tre carte di ugual valore e le altre di valore diverso, come per esempio $[10\vardiamondsuit, J\spadesuit, Q\clubsuit, J\varheartsuit, J\clubsuit]$
+  \item[\<STRAIGHT>:] in italiano sarebbe \emph{scala}, cio\`e cinque carte non dello stesso seme che si possono mettere in sequenza, come per esempio $[10\vardiamondsuit, 1\spadesuit, K\spadesuit, Q\varheartsuit, J\varheartsuit]$
+    (si ricordi che l'asso ha il valore massimo)
+  \item[\<FLUSH>:] in italiano sarebbe \emph{colore}, cio\`e cinque carte dello stesso seme ma non scala, come per esempio $[5\spadesuit, 6\spadesuit, 10\spadesuit, J\spadesuit, K\spadesuit]$
+  \item[\<FULL\_HOUSE>:] in italiano sarebbe \emph{full}, cio\`e un tris e una coppia, come per esempio $[1\spadesuit, 3\clubsuit, 3\varheartsuit, 1\clubsuit, 3\vardiamondsuit]$
+  \item[\<FOUR\_OF\_KIND>:] in italiano sarebbe \emph{poker}, cio\`e quattro carte dello stesso valore, come per esempio $[K\vardiamondsuit, K\spadesuit, K\clubsuit, 7\vardiamondsuit, K\varheartsuit]$
+  \item[\<STRAIGHT\_FLUSH>:] in italiano sarebbe \emph{scala reale}, cio\`e una scala con tutte le carte dello stesso seme, come per esempio $[9\varheartsuit, Q\varheartsuit, J\varheartsuit, 10\varheartsuit, K\varheartsuit]$
+  \end{description}
+
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[13 punti]}
+  La classe \<Deck> rappresenta una mano di poker fatta da cinque carte diverse.
+  La si completi dove indicato con \<TODO>. In particolare, vanno completati
+  i costruttori e i metodi di test del ranking, come
+  ad esempio \<isStraight()>, che determinano se le cinque carte hanno il ranking corrispondente.
+  Per esempio, \<isStraight()> determina se le cinque carte formano una scala.
+  Va completato anche il metodo \<getRanking()>, che restituisce il ranking della
+  mano, e il metodo \<hasRankingFrom()>, che determina se la mano ha almeno un dato ranking minimo
+  indicato.
+
+  \mbox{}\\
+  
+  \noindent
+  \textbf{Suggerimenti:}
+  \begin{enumerate}
+  \item non dimenticatevi di lanciare l'eccezione prevista nel secondo costruttore di \<Deck>
+    (guardate i commenti prima di esso)
+  \item la classe \<Deck> dovr\`a in qualche modo contenere le cinque carte.
+    Riflettete su quale struttura dati sia la pi\`u semplice per i vostri scopi
+    e su come pu\`o convenirvi mantenere le cinque carte al suo interno;
+  \item leggete bene i commenti del codice riportati sopra i metodi di test, come
+    \<isStraight()>. Tali commenti sono la descrizione di una soluzione semplice
+    per implementare i metodi. Pu\`o aiutarvi implementare qualche metodo privato di supporto?
+  \end{enumerate}
+\end{esercizio}
+
+\begin{esercizio}~\textbf{[10 punti]}
+  Modificate la classe \texttt{Main} dove indicato con \<TODO>,
+  in modo da farle stampare un output simile a quello che trovate in \<stampa.txt>:
+  \begin{enumerate}
+  \item prima genera e stampa $4$ full house a caso
+  \item poi $6$ four of a kind a caso
+  \item poi $8$ straight a caso
+  \item poi $5$ straight flush a caso
+  \item poi $9$ three of a kind a caso
+  \item poi $5$ flush a caso
+  \item poi $10$ mani di poker a caso con ranking da flush in su
+  \item infine crea tre mani \<d1>, \<d2> e \<d3> e verifica che siano tutte e tre dei tris.
+  \end{enumerate}
+  Questa classe chiama ripetutamente il suo metodo \<print(howMany, when)>,
+  che dovrete completare.
+  Tale metodo stampa \<howMany> esempi di \<Deck> a caso che soddisfano la condizione
+  \<when>. Tale condizione \`e un'istanza dell'interfaccia di libreria (gi\`a esistente)
+  \<java.lang.function.Predicate$\langle$Deck$\rangle$>, che ha un unico metodo \<test(Deck)>
+  per sapere se un deck soddisfa o meno il predicato.
+
+  \mbox{}\\
+  
+  \noindent
+  \textbf{Suggerimento:}
+  Dovrete passare a \<print(howMany, when)> vostre implementazioni dell'interfaccia di libreria
+  \<java.lang.function.Predicate$\langle$Deck$\rangle$>. Ci sono tanti modi per farlo.
+  Ricordatevi che quell'interfaccia ha un unico metodo.
+\end{esercizio}
+
+\end{document}
