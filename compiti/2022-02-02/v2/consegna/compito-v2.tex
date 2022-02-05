@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{mdframed}
+\usepackage{listings, xcolor}
+\usepackage{textcomp}
+
+\definecolor{verylightgray}{rgb}{.97,.97,.97}
+
+\definecolor{myBlue}{rgb}{0.5,0.5,1}
+\definecolor{myLightBlue}{rgb}{0.35,0.6,0.8}
+\definecolor{myBlack}{rgb}{0,0,0}
+\definecolor{myGreen}{rgb}{0.1,0.6,0.2}
+\definecolor{myGray}{rgb}{0.5,0.5,0.5}
+\definecolor{myLightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{myMauve}{rgb}{0.58,0,0.82}
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+
+\thispagestyle{empty}
+\setlength{\textwidth}{18.5cm}
+\setlength{\topmargin}{-2.5cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\oddsidemargin}{-1cm}
+\setlength{\evensidemargin}{-1cm}
+
+\begin{document}
+\begin{center}{\LARGE Esame di Programmazione 2}\\
+\begin{center}
+  \large 2 febbraio 2022, turno delle 11:30 (tempo disponibile: 2 ore)
+\end{center}
+\end{center}
+
+Gli identificatori di un linguaggio di programmazione sono spesso scritti
+in \emph{snake-style}, in cui le parole sono separate da
+underscore, come ad esempio \texttt{snakes\_Are\_sloW\_food}
+(il maiuscolo o minuscolo \`e a libera scelta del programmatore).
+Si immagini un altro modo di scrivere gli identificatori, in cui le parole
+vengono concatenate, le vocali si scrivono maiuscole e le lettere minuscole.
+Per esempio \texttt{snAkEsArEslOwfOOd}. Questo modo alternativo di scrivere
+gli identificatori lo chiameremo \emph{vowel-style}.
+Entrambi sono esempio di identificatori \emph{multiword}, cio\`e composti
+a partire da pi\`u parole.
+
+L'interfaccia che definisce un \emph{identificatore} ha un unico metodo che
+permette di tradurre un identificare in stringa:
+
+{\small\begin{verbatim}
+public interface Identifier {
+  String toString();
+}
+\end{verbatim}}
+
+\vspace*{1ex}
+\begin{center}{\Large Esercizio 1} ($13$ punti)\\
+  \textbf{(si consegni \texttt{MultiWordIdentifier.java})}
+\end{center}
+
+Si completi la classe astratta \texttt{MultiWordIdentifier} che rappresenta
+un identificatore multiword.
+\textbf{\`E possibile aggiungere campi o metodi ma solamente se privati}.
+Si noti la presenza di due metodi \texttt{toString}:
+il primo richiamer\`a il secondo su ciascuna parola componente dell'identificatore
+e concatener\`a il risultato in un'unica stringa.
+
+{\small\begin{verbatim}
+@Override public final String toString() {
+  // TODO: si richiami il metodo ausiliario toString(pos, word) sulle componenti
+  // e si concateni il risultato in un'unica stringa
+  return "";
+}
+
+// restituisce la stringa con cui si stampa la componente pos-esima dell'identificatore
+protected abstract String toString(int pos, String word);
+\end{verbatim}}
+
+\vspace*{1ex}
+\begin{center}{\Large Esercizio 2} ($9$ punti)\\
+  \textbf{(si consegni \texttt{VowelStyleIdentifier.java})}
+\end{center}
+
+Si completi la classe concreta \texttt{VowelStyleIdentifier}, sottoclasse
+di \texttt{MultiWordIdentifier}. Si noti che la classe ha tre costruttori:
+il primo costruisce l'identificatore a partire dalle stringhe componenti,
+il secondo a partire da un qualsiasi iterabile e il terzo concatenando le
+componenti di altri identificatori:
+
+{\small\begin{verbatim}
+public VowelStyleIdentifier(String... words) {
+  // TODO
+}
+
+public VowelStyleIdentifier(Iterable<String> words) {
+  // TODO
+}
+
+public VowelStyleIdentifier(MultiWordIdentifier... ids) {
+  // TODO
+}
+\end{verbatim}}
+
+\vspace*{1ex}
+\begin{center}{\Large Esercizio 3} ($9$ punti)\\
+  \textbf{(si consegni \texttt{SnakeStyleIdentifier.java})}
+\end{center}
+
+Si completi la classe concreta \texttt{SnakeStyleIdentifier}, sottoclasse
+di \texttt{MultiWordIdentifier}, analogamente a quanto fatto per
+\texttt{VowelStyleIdentifier}.
+
+\begin{center}
+  * * *
+\end{center}
+
+Per esempio, un'esecuzione del file \texttt{Main.java} fornito \`e:
+
+\begin{mdframed}[backgroundcolor=lightgrey] 
+\begin{verbatim}
+Inserisci una parola alla volta e termina con END
+ciao
+Amico
+comE
+va
+END
+id1 = cIAOAmIcOcOmEvA
+id2 = ciao_Amico_comE_va
+id3 = cIAOAmIcOcOmEvAcIAOAmIcOcOmEvA
+id3 snake style = ciao_Amico_comE_va_ciao_Amico_comE_va
+\end{verbatim}
+\end{mdframed}
+
+\end{document}

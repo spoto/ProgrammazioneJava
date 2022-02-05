@@ -50,8 +50,9 @@ public class Elezione {
 		if (coalizioni.contains(coalizione))
 			throw new CoalizioneGiàPresenteException(coalizione);
 
+		Set<Colazione> clone = new HashSet<Coalizione>(coalizioni);
 		// rimuoviamo i partiti di questa coalizione dalle altre coalizione
-		for (Coalizione altraCoalizione: new HashSet<Coalizione>(coalizioni))
+		for (Coalizione altraCoalizione: clone)
 			for (Partito partito: coalizione)
 				if (altraCoalizione.rimuovi(partito))
 					// se un'altra coalizione è diventata vuota, la rimuoviamo
