@@ -1,0 +1,196 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{multirow,bigdelim}
+\usepackage{relsize}
+\usepackage{fdsymbol}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+\def\codesize{\smaller}
+\def\<#1>{\codeid{#1}}
+\newcommand{\codeid}[1]{\ifmmode{\mbox{\codesize\ttfamily{#1}}}\else{\codesize\ttfamily #1}\fi}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      480pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+\begin{center} {\bf Esame di Programmazione II, 4 marzo 2022}\end{center}
+
+\emph{
+Si crei un progetto Eclipse e
+il package \texttt{it.univr.supermarket}. Si copino al suo interno
+le classi del compito.
+Non si modifichino le dichiarazioni dei metodi. Si possono definire altri campi,
+metodi, costruttori e classi, ma devono essere \texttt{private}.
+La soluzione che verr\`a consegnata dovr\`a compilare,
+altrimenti non verr\`a corretta.}
+
+\vspace*{2ex}
+
+\begin{center}{\Large Esercizio 1} ($9$ punti)\\
+  \textbf{(si consegni \texttt{Product.java})}
+\end{center}
+
+Si completi la classe astratta \texttt{Product.java}. Essa
+rappresenta un prodotto di un supermercato, con
+un nome e un prezzo in euro.
+Si noti che \<Product> \`e una classe astratta, quindi ci sono dei metodi che dovranno
+essere implementati solo nelle sue sottoclassi.
+Si noti che ci sono due metodi \<getPrice>: quello che restituisce il prezzo come
+era fornito al costruttore e quello che restituisce il prezzo in un certo momento di tempo:
+se fosse nelle 24 ore prima della scadenza, questo secondo prezzo \`e scontato del 40\%
+rispetto al prezzo fornito al costruttore.
+Tale momento di tempo \`e espresso
+in millisecondi dall'1/1/1970, che \`e lo stesso formato ritornato da \<System.currentTimeMillis()>.
+
+\vspace*{2ex}
+
+\begin{center}{\Large Esercizio 2} ($9$ punti)\\
+  \textbf{(si consegni \texttt{ProductNotExpiring.java} e \texttt{ProductWithExpiration.java})}
+\end{center}
+  
+Si completino
+le classi concrete \<ProductNotExpiring.java> e \<ProductWithExpiration.java>, che estendono
+\<Product> e rappresentano, rispettivamente, prodotti che non scadono mai (e quindi non vengono
+mai scontati) e prodotti che hanno
+un momento di scadenza. Si leggano bene i commenti sopra i metodi per capire come implementarli.
+
+\vspace*{2ex}
+
+\begin{center}{\Large Esercizio 3} ($8$ punti)\\
+  \textbf{(si consegni \texttt{Supermarket.java})}
+\end{center}
+
+Si completi la classe \<Supermarket.java>, che contiene dei prodotti.
+Si noti che tale classe ha due metodi \<toString>: quello che riceve come parametro
+il momento in cui descrivere
+il supermercato e quello che descrive il supermercato al momento attuale (\<System.currentTimeMillis()>).
+Si leggano bene i commenti dei metodi.
+
+\vspace*{2ex}
+
+\begin{center}{\Large Esercizio 4} ($5$ punti)\\
+  \textbf{(si consegni \texttt{Main.java})}
+\end{center}
+
+Si completi la classe \<Main.java>.
+
+\vspace*{2ex}
+\hrule
+\vspace*{2ex}
+
+Se tutto \`e corretto, l'esecuzione del \<Main> deve stampare:
+
+{\scriptsize\begin{verbatim}
+melone marcio: expired
+pane: 1.20 euros
+pane: 1.00 euros
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: 0.72 euros (special offer)
+pane: 1.00 euros
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: 0.60 euros (special offer)
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: 1.20 euros (special offer)
+cipolle: 1.02 euros (special offer)
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: expired
+cipolle: expired
+mozzarella: 2.70 euros (special offer)
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: expired
+cipolle: expired
+mozzarella: expired
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+\end{verbatim}}
+
+\end{document}

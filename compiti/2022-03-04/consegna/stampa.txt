@@ -1,0 +1,76 @@
+melone marcio: expired
+pane: 1.20 euros
+pane: 1.00 euros
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: 0.72 euros (special offer)
+pane: 1.00 euros
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: 0.60 euros (special offer)
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: 2.00 euros
+cipolle: 1.70 euros
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: 1.20 euros (special offer)
+cipolle: 1.02 euros (special offer)
+mozzarella: 4.50 euros
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: expired
+cipolle: expired
+mozzarella: 2.70 euros (special offer)
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
+
+melone marcio: expired
+pane: expired
+pane: expired
+carote: expired
+cipolle: expired
+mozzarella: expired
+uova: 2.50 euros
+acqua: 2.20 euros
+bagnoschiuma: 4.90 euros
+dentifricio: 2.98 euros
