@@ -22,6 +22,9 @@ public class Vulcanian extends LowerCase {
 	 * Genera una stringa vulcaniana casuale lunga length.
 	 */
 	private static String randomVulcanian(int length) {
+		if (length < 0)
+			throw new IllegalArgumentException("lunghezza negativa");
+
 		// ci sono molti modi per farlo; qui per esempio prima si genera
 		// un array casuale di lettere alfabetiche minuscole
 		char[] arr = new char[length];
