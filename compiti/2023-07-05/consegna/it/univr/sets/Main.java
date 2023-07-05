@@ -56,7 +56,7 @@ public class Main {
 		int counter = 0;
 
 		for (int pos = 0; pos < s.length(); pos++)
-			if ("aeiou".indexOf(s.charAt(pos)) != -1)
+			if ("aeiouAEIOU".indexOf(s.charAt(pos)) != -1)
 				counter++;
 
 		return counter;
