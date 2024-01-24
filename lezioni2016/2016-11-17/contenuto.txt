@@ -1,6 +1,0 @@
-- Ricorsione: su parametri espliciti oppure impliciti
-- Tipi ricorsivi: esempio della lista
-- Algoritmi ricorsivi di base sulle liste: lunghezza, stampa, confronto
-- Il ciclo for-each sugli array
-- Metodi con un numero variabile di argomenti
-- Tipi enumerati, loro metodi tra cui values()

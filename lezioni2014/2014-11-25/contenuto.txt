@@ -1,3 +1,0 @@
-- principio di Liskov
-- modifica del tipo di ritorno e della visibilità dei metodi ridefiniti
-- la classe java.lang.Object e i suoi metodi toString() ed equals()

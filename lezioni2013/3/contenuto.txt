@@ -1,7 +1,0 @@
-- System.out.println, System.out.printf
-- pacchetti e classi
-- import
-- java.util.Scanner
-- if/else e il tipo boolean
-- switch su interi e stringhe
-- operatore condizionale ?:

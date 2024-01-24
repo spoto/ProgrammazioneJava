@@ -1,3 +1,0 @@
-- soluzione dell'esercizio delle date
-- uso di this() per la concatenazione dei costruttori
-- campi statici

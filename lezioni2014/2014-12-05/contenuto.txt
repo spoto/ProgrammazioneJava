@@ -1,6 +1,0 @@
-- Il class tag degli oggetti
-- Differenze e somiglianze fra cast e conversioni di tipo
-- L'operatore instanceof
-- Eccezioni
-- Il costrutto try/catch/finally
-- Lancio di un'eccezione col comando throw

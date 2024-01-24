@@ -1,2 +1,0 @@
-Regole della mossa per il gioco del 15.
-Intelligenza artificiale greedy per il gioco del 15.

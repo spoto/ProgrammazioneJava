@@ -1,5 +1,0 @@
-- Definizione di classi di eccezioni personalizzate
-- Gerarchia delle eccezioni
-- Eccezioni controllate e non controllate
-- La dichiarazione throws
-- Il blocco finally

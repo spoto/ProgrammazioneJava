@@ -1,8 +1,0 @@
-- Eccezioni
-- Il costrutto try/catch
-- Lancio di un'eccezione col comando throw
-- Definizione di classi di eccezioni personalizzate
-- Gerarchia delle eccezioni
-- Eccezioni controllate e non controllate
-- La dichiarazione throws
-- Il blocco finally

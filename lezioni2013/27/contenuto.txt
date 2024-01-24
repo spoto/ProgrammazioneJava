@@ -1,2 +1,0 @@
-- il concetto di listener
-- lancio di una eccezione in caso di parametri errati

@@ -1,9 +1,0 @@
-- parametri formali e attuali (o argomenti)
-- passaggio dei parametri primitivi per valore (nessun side-effect)
-- metodi e campi private
-- incapsulazione
-- interfaccia pubblica di una classe
-- overloading di metodi e costruttori
-- risoluzione dell'overloading a tempo di compilazione
-- valori di default dei campi
-- inizializzazione esplicita dei campi

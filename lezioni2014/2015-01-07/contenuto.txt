@@ -1,2 +1,0 @@
-- le classi java.util.Set e java.util.HashSet
-- l'utilizzo di equals() e hashCode() per gli HashSet

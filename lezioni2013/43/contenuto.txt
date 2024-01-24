@@ -1,5 +1,0 @@
-- multithreading: la classe java.lang.Thread
-- il costrutto synchronized
-- esempio di programmi multithreaded
-- race conditions, deadlock e livelock
-- esercizio d'esame dagli anni passati

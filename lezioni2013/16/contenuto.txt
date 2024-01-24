@@ -1,4 +1,0 @@
-- privacy leak: metodi che ritornano componenti dello stato privato o
-  metodi che settano componenti dello stato privato
-- il principio di Demetra
-- classi e oggetti mutabili e immutabili

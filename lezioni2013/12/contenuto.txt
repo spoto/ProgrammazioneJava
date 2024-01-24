@@ -1,3 +1,0 @@
-- variabili d'istanza: sono stato, non temporanei
-- stato di un oggetto e sua consistenza
-- metodi statici

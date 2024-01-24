@@ -1,7 +1,0 @@
-- la classe java.util.LinkedList<T>
-- interfaccia java.lang.Iterable<T>
-- interfaccia java.util.Iterator<T>
-- ciclo foreach su tipi iterabili
-- A <= B implica A[] <= B[]
-- A <= B non implica Classe<A> <= Classe<B>
-

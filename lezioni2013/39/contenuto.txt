@@ -1,2 +1,0 @@
-- i pannelli javax.swing.JPanel
-- organizzazione gerarchica del layout grafico

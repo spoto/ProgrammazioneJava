@@ -1,4 +1,0 @@
-- interfaccia java.util.Iterator<T>
-- definizione di classi iterabili
-- classi interne, statiche e non statiche
-- concorrenza, definizione di Thread e sincronizzazione

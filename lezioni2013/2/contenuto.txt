@@ -1,9 +1,0 @@
-- la classe java.lang.String (oggetti immutabili!)
-- letterali stringa
-- concatenzazione di stringhe con +
-- lunghezza delle stringhe, metodo length()
-- altri metodi di java.lang.String: equals(), equalsIgnoreCase(),
-  toLowerCase(), tuUpperCase(), trim(), charAt(), substring(), indexOf(),
-  lastIndexOf(), compareTo(), compareToIgnoreCase()
-- costanti (parola chiave final)
-- commenti

@@ -1,5 +1,0 @@
-- differenze e somiglianze fra cast e conversioni di tipo
-- l'operatore instanceof
-- il class tag degli oggetti
-- metodi e classi abstract
-

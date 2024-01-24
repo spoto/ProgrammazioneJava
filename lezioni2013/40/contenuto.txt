@@ -1,4 +1,0 @@
-- gioco del 15 generalizzato
-- schema model/view/controller
-- classi javax.swing.JTextField e javax.swing.JTextArea
-- definizione di componenti grafici personalizzati

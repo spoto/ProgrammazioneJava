@@ -1,1 +1,0 @@
-- costruttore di copia: superficiale e profonda
