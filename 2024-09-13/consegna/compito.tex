@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{multirow,bigdelim}
+\usepackage{relsize}
+\usepackage{fdsymbol}
+\usepackage{mdframed}
+
+\definecolor{grey}{rgb}{0.3,0.3,0.3}
+\definecolor{verylightgray}{rgb}{.97,.97,.97}
+\definecolor{lightred}{rgb}{1,.70,.70}
+
+\usepackage{listings, framed}
+\lstset{
+  language=Java,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  frame=none,
+  numbers=none,
+  keywordstyle=\bfseries\color{grey},
+  commentstyle=\itshape\color{red},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+  numberstyle={\ttfamily},
+%  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapechar=|
+}
+
+\mdfsetup{font=\scriptsize}
+
+\def\codesize{\smaller}
+\def\<#1>{\codeid{#1}}
+\newcommand{\codeid}[1]{\ifmmode{\mbox{\codesize\ttfamily{#1}}}\else{\codesize\ttfamily #1}\fi}
+
+%****************enlarge layout
+\textheight     243.5mm
+\topmargin      -20.0mm
+\textwidth      500pt
+\hoffset        -80pt
+%*****************theorems and such
+\newcounter{esnu}
+\newenvironment{esercizio}{\medskip \noindent {\bf Esercizio\addtocounter{esnu}{1} \arabic{esnu}}}{}
+\pagestyle{empty}
+\newcommand{\liff}{\mathrel{\leftrightarrow}}   % Logical IFF Symbol
+\newcommand{\metaiff}{\Longleftrightarrow}      %iff in metatheory
+
+\begin{document}
+
+\begin{center}
+  \textbf{Esame di Programmazione II, 13 settembre 2024}\\
+  (si consegni \<Corso.java>, \<Esame.java>, \<MainEsame.java>, \<Studente.java>, \<StudenteIllegaleException.java> e \<StudenteLavoratore.java>)
+\end{center}
+
+\emph{
+Si crei un progetto Eclipse e
+il package \<it.univr.corso>. Si copino al suo interno
+le classi del compito.
+Non si modifichino le dichiarazioni dei metodi e delle classi. Si possono definire altri campi,
+metodi o costruttori non richiesti dal compito, ma devono essere \<private>. Si possono definire altre classi,
+che in tal caso vanno consegnate.
+La soluzione che verr\`a consegnata dovr\`a compilare,
+altrimenti non verr\`a corretta.}
+
+\vspace*{2ex}
+
+\vspace*{2ex}\textbf{Esercizio 1 ($3$ punti).}
+Si completi la classe \<Corso.java>, che rappresenta un corso di laurea (per esempio, \emph{Informatica}),
+con un nome e una durata in anni.
+
+\vspace*{2ex}\textbf{Esercizio 2 ($2$ punti).}
+Si crei la classe di eccezione controllata \<StudenteIllegaleException.java>, che ha solo un costruttore, il quale riceve il messaggio di eccezione e lo passa alla superclasse.
+
+\vspace*{2ex}\textbf{Esercizio 3 ($8$ punti).}
+Si completi la classe \<Studente.java> che rappresenta uno studente, con un nome, cognome,
+matricola e anno di iscrizione.
+Non si dimentichi di implementare il lancio dell'eccezione dentro il costruttore.
+
+\vspace*{2ex}\textbf{Esercizio 4 ($4$ punti).}
+Si completi la classe \<StudenteLavoratore.java>, sottoclasse di \<Studente.java>. Rispetto a uno
+sudente \emph{normale}, uno studente
+lavoratore impiega il doppio degli anni per finire fuori corso (per esempio, sei anni per un corso
+che abbia una durata di tre anni). Serve forse ridefinire qualche metodo della superclasse?
+
+\vspace*{2ex}\textbf{Esercizio 5 ($7$ punti).}
+Si completi la classe \<Esame.java>, che rappresenta un esame di un corso di laurea,
+a cui si possono iscrivere degli studenti (per esempio, \emph{Programmazione Quantistica}).
+Non si dimentichi di implementare il lancio dell'eccezione dentro il metodo \<iscrivi>.
+
+\vspace*{2ex}\textbf{Esercizio 6 ($7$ punti).}
+Si completi la classe di prova \<MainEsame.java>, nei tre punti indicati. Nel primo
+va letto uno studente da tastiera, nel secondo e terzo vanno selezionati
+solo alcuni degli studenti iscritti all'esame e poi ne fanno stampate le matricole (secondo punto)
+o l'intero studente (terzo punto).
+
+\vspace*{2ex}\textbf{Suggerimento 1:} per conoscere l'anno in cui ci troviamo, si pu\`o
+usare \<Year.now().getValue()>, dove \<Year> \`e la classe di libreria \<java.time.Year>.
+
+\vspace*{2ex}\textbf{Suggerimento 2:} in questo compito non serve usare n\'e lambda espressioni n\'e stream,
+ma \`e ovviamente possibile farlo se ritenete che cos\`{\i} si semplifichi il codice. In tal caso,
+\`e possibile concatenare le stringhe di uno stream di stringhe \<s>, andando a capo
+tra una e l'altra stringa, scrivendo
+\<s.collect(Collectors.joining("\textbackslash n"))>, dove \<Collectors> \`e la classe di libreria
+\<java.util.stream.Collectors>.
+
+\noindent
+\rule{\textwidth}{1pt}
+
+\begin{center}
+  \textbf{ESEMPIO DI ESECUZIONE ALLA PAGINA SEGUENTE $\Rightarrow$}
+\end{center}
+
+\newpage
+
+Se tutto \`e corretto, una esecuzione di \<MainEsame.java> potrebbe essere:
+
+\begin{mdframed}[backgroundcolor=lightred]
+  {\small\begin{verbatim}
+Nome: Alessandro
+Cognome: Manzoni
+Matricola: 123456
+Anno di immatricolazione: 2025
+
+Studente illegale, riprova
+
+Nome: Alessandro
+Cognome: Manzoni
+Matricola: 123456
+Anno di immatricolazione: 2024
+
+Esame di Programmazione Quantistica del corso di Informatica:
+34555 Giulio Andreotti immatricolato nel 2017
+98034 Giordano Bruni immatricolato nel 2018
+111564 Giulio Rossi immatricolato nel 2021
+123456 Alessandro Manzoni immatricolato nel 2024
+151535 Antonietta Reale immatricolato nel 2020
+178066 Alessandra Allegri immatricolato nel 2024
+
+Matricole degli studenti fuori corso:
+34555
+151535
+
+Studenti lavoratori:
+34555 Giulio Andreotti immatricolato nel 2017
+98034 Giordano Bruni immatricolato nel 2018
+\end{verbatim}}
+\end{mdframed}
+%
+Si noti che l'inserimento di
+Alessandro Manzoni avviene da tastiera e che la prima volta tale inserimento
+viene rifiutato perch\'e non \`e possibile
+creare studenti immatricolari nel 2025, visto che al momento siamo nel 2024.
+
+\end{document}
