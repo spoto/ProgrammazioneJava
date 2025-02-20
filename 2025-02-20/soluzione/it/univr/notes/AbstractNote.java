@@ -14,7 +14,7 @@ public abstract class AbstractNote implements Note {
 	 * @throws IllegalNoteException se il semitono è fuoti dai limiti 0...MAX_SEMITONE
 	 */
 	protected AbstractNote(int semitone) throws IllegalNoteException {
-		if (semitone < 0 || semitone >= MAX_SEMITONE)
+		if (semitone < 0 || semitone > MAX_SEMITONE)
 			throw new IllegalNoteException("Le note devono avere un semitono tra 0 e " + MAX_SEMITONE + " inclusi");
 
 		this.semitone = semitone;

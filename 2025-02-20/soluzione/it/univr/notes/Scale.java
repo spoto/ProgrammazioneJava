@@ -22,6 +22,7 @@ public class Scale extends AbstractSong {
 	public Scale(Note start) throws IllegalNoteException {
 		this.start = start;
 
+		// è sufficiente controllare l'ultima nota, quella più acuta
 		if (start.getSemitone() + LENGTH - 1 > Note.MAX_SEMITONE)
 			throw new IllegalNoteException("Le note devono avere un semitono tra 0 e " + Note.MAX_SEMITONE + " inclusi");
 	}
